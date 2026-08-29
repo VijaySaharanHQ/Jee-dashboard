@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b14">
+
+<title>Daily Mission | Vijay JEE Command Center</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#070b14;
+    color:#f5f7fb;
+    min-height:100vh;
+}
+
+button,input,textarea,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* =========================
+   APP
+========================= */
+
+.app{
+    min-height:100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    width:245px;
+    background:#0a101a;
+    border-right:1px solid #1b2638;
+    padding:22px 14px;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    overflow-y:auto;
+    z-index:100;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px 25px;
+    font-weight:800;
+}
+
+.logo-box{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#3478ff,#7b4dff);
+}
+
+.logo-text{
+    font-size:14px;
+}
+
+.logo-text span{
+    color:#69778c;
+}
+
+.nav-title{
+    font-size:9px;
+    color:#56657a;
+    letter-spacing:.15em;
+    margin:15px 10px 8px;
+}
+
+.nav-link{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 12px;
+    margin:3px 0;
+    border-radius:9px;
+    color:#77859a;
+    font-size:12px;
+    transition:.2s;
+}
+
+.nav-link:hover{
+    background:#111a29;
+    color:#fff;
+}
+
+.nav-link.active{
+    background:#15233b;
+    color:#79a7ff;
+}
+
+.nav-link .icon{
+    width:18px;
+    text-align:center;
+}
+
+.sidebar-bottom{
+    margin-top:30px;
+    border-top:1px solid #182437;
+    padding-top:15px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:245px;
+    padding:28px;
+}
+
+.container{
+    width:min(1200px,100%);
+    margin:auto;
+}
+
+/* =========================
+   TOP
+========================= */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.title-area h1{
+    font-size:28px;
+    letter-spacing:-.04em;
+}
+
+.title-area p{
+    color:#65738a;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.date-box{
+    padding:11px 15px;
+    background:#0d1420;
+    border:1px solid #1d2a3d;
+    border-radius:10px;
+    color:#8090a6;
+    font-size:10px;
+}
+
+/* =========================
+   HERO MISSION
+========================= */
+
+.mission-hero{
+    display:grid;
+    grid-template-columns:1.5fr .5fr;
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.hero-card{
+    background:
+        linear-gradient(
+            145deg,
+            #111c2d,
+            #0c131f
+        );
+    border:1px solid #24334a;
+    border-radius:17px;
+    padding:25px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero-card::after{
+    content:"";
+    position:absolute;
+    width:250px;
+    height:250px;
+    right:-100px;
+    top:-120px;
+    background:rgba(52,120,255,.12);
+    filter:blur(70px);
+    border-radius:50%;
+}
+
+.hero-label{
+    color:#6f9fff;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.15em;
+}
+
+.hero-card h2{
+    font-size:27px;
+    margin:10px 0 7px;
+}
+
+.hero-card p{
+    color:#68778d;
+    font-size:11px;
+    max-width:600px;
+}
+
+.progress-card{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:17px;
+    padding:22px;
+    text-align:center;
+}
+
+.progress-title{
+    color:#68768b;
+    font-size:9px;
+    letter-spacing:.12em;
+    font-weight:800;
+}
+
+.progress-ring{
+    width:125px;
+    height:125px;
+    margin:13px auto;
+    border-radius:50%;
+    background:conic-gradient(
+        #3478ff 0deg,
+        #182438 0deg
+    );
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+}
+
+.progress-ring::before{
+    content:"";
+    position:absolute;
+    width:97px;
+    height:97px;
+    border-radius:50%;
+    background:#0d1420;
+}
+
+.progress-value{
+    position:relative;
+    z-index:2;
+    font-size:25px;
+    font-weight:800;
+}
+
+.progress-note{
+    color:#59677c;
+    font-size:9px;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.content-grid{
+    display:grid;
+    grid-template-columns:1.35fr .65fr;
+    gap:15px;
+}
+
+.card{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:15px;
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.card-title{
+    font-size:13px;
+    font-weight:800;
+}
+
+.card-subtitle{
+    color:#627087;
+    font-size:9px;
+    margin-top:4px;
+}
+
+.badge{
+    font-size:8px;
+    color:#6e9dff;
+    border:1px solid #273b5c;
+    background:#0c1625;
+    padding:6px 8px;
+    border-radius:7px;
+}
+
+/* =========================
+   TASKS
+========================= */
+
+.task-list{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.task{
+    display:grid;
+    grid-template-columns:28px 1fr auto;
+    align-items:center;
+    gap:10px;
+    background:#0a111c;
+    border:1px solid #182437;
+    padding:12px;
+    border-radius:11px;
+    transition:.2s;
+}
+
+.task:hover{
+    border-color:#2b405d;
+}
+
+.task.completed{
+    opacity:.55;
+}
+
+.task.completed .task-name{
+    text-decoration:line-through;
+}
+
+.checkbox{
+    width:22px;
+    height:22px;
+    border:1px solid #34445d;
+    background:#0c1421;
+    border-radius:6px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:transparent;
+    cursor:pointer;
+}
+
+.task.completed .checkbox{
+    background:#287d59;
+    border-color:#287d59;
+    color:#fff;
+}
+
+.task-name{
+    font-size:11px;
+    color:#a2aec0;
+}
+
+.task-type{
+    color:#56657b;
+    font-size:8px;
+    margin-top:3px;
+}
+
+.task-target{
+    font-size:9px;
+    color:#6c7b91;
+}
+
+/* =========================
+   ADD TASK
+========================= */
+
+.add-task{
+    display:grid;
+    grid-template-columns:1fr 130px 100px;
+    gap:8px;
+    margin-top:12px;
+}
+
+.input{
+    width:100%;
+    padding:11px;
+    border-radius:9px;
+    border:1px solid #1e2c41;
+    background:#080e18;
+    color:#fff;
+    outline:none;
+    font-size:10px;
+}
+
+.input:focus{
+    border-color:#3866a5;
+}
+
+.add-btn{
+    border:1px solid #2d4c78;
+    background:#142642;
+    color:#78a6ff;
+    border-radius:9px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.add-btn:hover{
+    background:#1a3153;
+}
+
+/* =========================
+   STUDY HOURS
+========================= */
+
+.hours-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.hour-input{
+    background:#0a111c;
+    border:1px solid #182437;
+    border-radius:10px;
+    padding:14px;
+}
+
+.hour-input label{
+    display:block;
+    color:#647289;
+    font-size:8px;
+    margin-bottom:7px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+}
+
+.hour-input input{
+    width:100%;
+    border:0;
+    outline:0;
+    background:transparent;
+    color:#fff;
+    font-size:20px;
+    font-weight:800;
+}
+
+/* =========================
+   TARGETS
+========================= */
+
+.target-list{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.target-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:11px 0;
+    border-bottom:1px solid #182437;
+}
+
+.target-row:last-child{
+    border-bottom:0;
+}
+
+.target-row span:first-child{
+    color:#68778c;
+    font-size:10px;
+}
+
+.target-row strong{
+    font-size:11px;
+}
+
+/* =========================
+   SCORE
+========================= */
+
+.score-box{
+    text-align:center;
+    padding:15px;
+}
+
+.score-number{
+    font-size:38px;
+    font-weight:800;
+    background:linear-gradient(135deg,#fff,#70a5ff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.score-label{
+    color:#59677b;
+    font-size:8px;
+    letter-spacing:.14em;
+}
+
+/* =========================
+   CONTROLS
+========================= */
+
+.action-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.action{
+    padding:11px;
+    border-radius:9px;
+    border:1px solid #1e2d43;
+    background:#0a111c;
+    color:#7c8ba0;
+    font-size:9px;
+    font-weight:700;
+}
+
+.action:hover{
+    border-color:#36537d;
+    color:#fff;
+}
+
+.action.danger{
+    color:#d48686;
+    border-color:#382727;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+.mobile-menu{
+    display:none;
+    position:fixed;
+    right:15px;
+    top:15px;
+    width:40px;
+    height:40px;
+    background:#0d1420;
+    color:#fff;
+    border:1px solid #27364c;
+    border-radius:10px;
+    z-index:200;
+}
+
+@media(max-width:950px){
+
+    .mission-hero{
+        grid-template-columns:1fr;
+    }
+
+    .content-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+
+    .topbar{
+        padding-right:50px;
+    }
+
+    .add-task{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:500px){
+
+    .hours-box{
+        grid-template-columns:1fr;
+    }
+
+    .topbar{
+        display:block;
+    }
+
+    .date-box{
+        display:inline-block;
+        margin-top:10px;
+    }
+
+    .hero-card h2{
+        font-size:23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <a href="index.html" class="logo">
+        <div class="logo-box">V</div>
+        <div class="logo-text">
+            VIJAY<span>.JEE</span>
+        </div>
+    </a>
+
+    <div class="nav-title">COMMAND</div>
+
+    <a href="dashboard.html" class="nav-link">
+        <span class="icon">⌂</span>
+        Dashboard
+    </a>
+
+    <a href="daily-target.html" class="nav-link active">
+        <span class="icon">✓</span>
+        Daily Mission
+    </a>
+
+    <div class="nav-title">PREPARATION</div>
+
+    <a href="syllabus.html" class="nav-link">
+        <span class="icon">▣</span>
+        Syllabus
+    </a>
+
+    <a href="backlog.html" class="nav-link">
+        <span class="icon">◫</span>
+        Backlog
+    </a>
+
+    <a href="revision.html" class="nav-link">
+        <span class="icon">↻</span>
+        Revision
+    </a>
+
+    <a href="questions.html" class="nav-link">
+        <span class="icon">?</span>
+        Questions
+    </a>
+
+    <a href="pyq-tracker.html" class="nav-link">
+        <span class="icon">◷</span>
+        PYQ Tracker
+    </a>
+
+    <a href="mistakes.html" class="nav-link">
+        <span class="icon">!</span>
+        Mistake Book
+    </a>
+
+    <div class="nav-title">TESTING</div>
+
+    <a href="mock-tests.html" class="nav-link">
+        <span class="icon">▤</span>
+        Mock Tests
+    </a>
+
+    <a href="analytics.html" class="nav-link">
+        <span class="icon">⌁</span>
+        Analytics
+    </a>
+
+    <div class="nav-title">PERSONAL</div>
+
+    <a href="journal.html" class="nav-link">
+        <span class="icon">✎</span>
+        Journal
+    </a>
+
+    <a href="achievements.html" class="nav-link">
+        <span class="icon">★</span>
+        Achievements
+    </a>
+
+    <div class="sidebar-bottom">
+
+        <a href="settings.html" class="nav-link">
+            <span class="icon">⚙</span>
+            Settings
+        </a>
+
+        <a href="index.html" class="nav-link">
+            <span class="icon">←</span>
+            Home
+        </a>
+
+    </div>
+
+</aside>
+
+
+<button
+    class="mobile-menu"
+    onclick="toggleSidebar()"
+>
+    ☰
+</button>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+<div class="container">
+
+    <!-- TOP -->
+
+    <div class="topbar">
+
+        <div class="title-area">
+
+            <h1>
+                Daily Mission
+            </h1>
+
+            <p>
+                One day. One mission. No zero days.
+            </p>
+
+        </div>
+
+        <div
+            class="date-box"
+            id="todayDate"
+        >
+            Loading...
+        </div>
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="mission-hero">
+
+        <div class="hero-card">
+
+            <div class="hero-label">
+                TODAY'S COMMAND
+            </div>
+
+            <h2>
+                Execute the plan.
+            </h2>
+
+            <p>
+
+                Your goal is not to have a perfect day.
+                Your goal is to complete the highest-value
+                work planned for today.
+
+            </p>
+
+        </div>
+
+
+        <div class="progress-card">
+
+            <div class="progress-title">
+                MISSION COMPLETION
+            </div>
+
+            <div
+                class="progress-ring"
+                id="progressRing"
+            >
+
+                <div
+                    class="progress-value"
+                    id="progressValue"
+                >
+                    0%
+                </div>
+
+            </div>
+
+            <div class="progress-note">
+                Tasks completed
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="content-grid">
+
+        <!-- =================================================
+             LEFT
+        ================================================== -->
+
+        <div>
+
+            <!-- TASK LIST -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <div class="card-title">
+                            Mission Tasks
+                        </div>
+
+                        <div class="card-subtitle">
+                            Complete the work, not just the checklist.
+                        </div>
+
+                    </div>
+
+                    <div class="badge">
+                        HARD MODE
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="task-list"
+                    id="taskList"
+                >
+
+                    <!-- TASK 1 -->
+
+                    <div
+                        class="task"
+                        data-id="lecture"
+                    >
+
+                        <div
+                            class="checkbox"
+                            onclick="toggleTask('lecture')"
+                        >
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <div class="task-name">
+                                Complete planned lectures
+                            </div>
+
+                            <div class="task-type">
+                                CONCEPT BUILDING
+                            </div>
+
+                        </div>
+
+                        <div class="task-target">
+                            2+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TASK 2 -->
+
+                    <div
+                        class="task"
+                        data-id="questions"
+                    >
+
+                        <div
+                            class="checkbox"
+                            onclick="toggleTask('questions')"
+                        >
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <div class="task-name">
+                                Complete question practice
+                            </div>
+
+                            <div class="task-type">
+                                PROBLEM SOLVING
+                            </div>
+
+                        </div>
+
+                        <div class="task-target">
+                            100+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TASK 3 -->
+
+                    <div
+                        class="task"
+                        data-id="revision"
+                    >
+
+                        <div
+                            class="checkbox"
+                            onclick="toggleTask('revision')"
+                        >
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <div class="task-name">
+                                Complete planned revision
+                            </div>
+
+                            <div class="task-type">
+                                RETENTION
+                            </div>
+
+                        </div>
+
+                        <div class="task-target">
+                            60m
+                        </div>
+
+                    </div>
+
+
+                    <!-- TASK 4 -->
+
+                    <div
+                        class="task"
+                        data-id="pyq"
+                    >
+
+                        <div
+                            class="checkbox"
+                            onclick="toggleTask('pyq')"
+                        >
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <div class="task-name">
+                                Solve JEE PYQs
+                            </div>
+
+                            <div class="task-type">
+                                EXAM PRACTICE
+                            </div>
+
+                        </div>
+
+                        <div class="task-target">
+                            20+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TASK 5 -->
+
+                    <div
+                        class="task"
+                        data-id="mistakes"
+                    >
+
+                        <div
+                            class="checkbox"
+                            onclick="toggleTask('mistakes')"
+                        >
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <div class="task-name">
+                                Review mistake book
+                            </div>
+
+                            <div class="task-type">
+                                ERROR CORRECTION
+                            </div>
+
+                        </div>
+
+                        <div class="task-target">
+                            20m
+                        </div>
+
+                    </div>
+
+
+                    <!-- TASK 6 -->
+
+                    <div
+                        class="task"
+                        data-id="analysis"
+                    >
+
+                        <div
+                            class="checkbox"
+                            onclick="toggleTask('analysis')"
+                        >
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <div class="task-name">
+                                Analyze today's performance
+                            </div>
+
+                            <div class="task-type">
+                                SELF AUDIT
+                            </div>
+
+                        </div>
+
+                        <div class="task-target">
+                            10m
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADD CUSTOM TASK -->
+
+                <div class="add-task">
+
+                    <input
+                        id="customTaskName"
+                        class="input"
+                        placeholder="Add custom mission..."
+                    >
+
+                    <input
+                        id="customTaskTarget"
+                        class="input"
+                        placeholder="Target"
+                    >
+
+                    <button
+                        class="add-btn"
+                        onclick="addCustomTask()"
+                    >
+                        + ADD TASK
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDY HOURS -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <div class="card-title">
+                            Study Time
+                        </div>
+
+                        <div class="card-subtitle">
+                            Record actual productive study time.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hours-box">
+
+                    <div class="hour-input">
+
+                        <label>
+                            Target Hours
+                        </label>
+
+                        <input
+                            id="targetHours"
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="10"
+                            onchange="saveHours()"
+                        >
+
+                    </div>
+
+
+                    <div class="hour-input">
+
+                        <label>
+                            Completed Hours
+                        </label>
+
+                        <input
+                            id="completedHours"
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="0"
+                            onchange="saveHours()"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT
+        ================================================== -->
+
+        <div>
+
+            <!-- HARD TARGET -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+                        Hard Mode Targets
+                    </div>
+
+                </div>
+
+
+                <div class="target-list">
+
+                    <div class="target-row">
+
+                        <span>
+                            Productive Study
+                        </span>
+
+                        <strong>
+                            10h
+                        </strong>
+
+                    </div>
+
+
+                    <div class="target-row">
+
+                        <span>
+                            Questions
+                        </span>
+
+                        <strong>
+                            100+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="target-row">
+
+                        <span>
+                            PYQs
+                        </span>
+
+                        <strong>
+                            20+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="target-row">
+
+                        <span>
+                            Revision
+                        </span>
+
+                        <strong>
+                            60m+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="target-row">
+
+                        <span>
+                            Mistake Review
+                        </span>
+
+                        <strong>
+                            DAILY
+                        </strong>
+
+                    </div>
+
+
+                    <div class="target-row">
+
+                        <span>
+                            Zero Backlog
+                        </span>
+
+                        <strong>
+                            GOAL
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DAILY SCORE -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+                        Mission Score
+                    </div>
+
+                </div>
+
+                <div class="score-box">
+
+                    <div
+                        class="score-number"
+                        id="missionScore"
+                    >
+                        0
+                    </div>
+
+                    <div class="score-label">
+                        DAILY EXECUTION SCORE
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+                        Mission Control
+                    </div>
+
+                </div>
+
+
+                <div class="action-row">
+
+                    <button
+                        class="action"
+                        onclick="saveAll()"
+                    >
+                        SAVE
+                    </button>
+
+                    <button
+                        class="action"
+                        onclick="completeAll()"
+                    >
+                        COMPLETE ALL
+                    </button>
+
+                    <button
+                        class="action danger"
+                        onclick="resetToday()"
+                    >
+                        RESET TODAY
+                    </button>
+
+                    <a
+                        href="dashboard.html"
+                        class="action"
+                        style="text-align:center;"
+                    >
+                        DASHBOARD
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- RULE -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+                        Rule of the Day
+                    </div>
+
+                </div>
+
+                <p
+                    style="
+                    color:#6c798e;
+                    font-size:10px;
+                    line-height:1.7;
+                    "
+                >
+
+                    Never sacrifice accuracy just to increase
+                    question count. The objective is high-quality
+                    learning, deliberate practice and repeated
+                    correction of mistakes.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div
+        style="
+        text-align:center;
+        color:#48566a;
+        font-size:9px;
+        padding:20px 0;
+        "
+    >
+        Vijay's IIT JEE 2027 Command Center • Daily Mission
+    </div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const STORAGE_KEY = "vijayJEEData";
+
+const DAILY_KEY = "vijayJEEDailyMission";
+
+
+function getMainData(){
+
+    const saved =
+        localStorage.getItem(STORAGE_KEY);
+
+    if(saved){
+
+        try{
+            return JSON.parse(saved);
+        }catch(e){}
+
+    }
+
+    return {
+        physics:0,
+        chemistry:0,
+        maths:0,
+        studyHours:0,
+        questions:0,
+        correct:0,
+        streak:0
+    };
+
+}
+
+
+function saveMainData(data){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =========================================================
+   DATE KEY
+========================================================= */
+
+function getDateKey(){
+
+    const now = new Date();
+
+    const year =
+        now.getFullYear();
+
+    const month =
+        String(
+            now.getMonth()+1
+        ).padStart(2,"0");
+
+    const day =
+        String(
+            now.getDate()
+        ).padStart(2,"0");
+
+    return `${year}-${month}-${day}`;
+
+}
+
+
+/* =========================================================
+   DEFAULT DAILY DATA
+========================================================= */
+
+function defaultDailyData(){
+
+    return {
+
+        date:getDateKey(),
+
+        targetHours:10,
+
+        completedHours:0,
+
+        tasks:{
+
+            lecture:false,
+
+            questions:false,
+
+            revision:false,
+
+            pyq:false,
+
+            mistakes:false,
+
+            analysis:false
+
+        },
+
+        customTasks:[]
+
+    };
+
+}
+
+
+/* =========================================================
+   LOAD DAILY
+========================================================= */
+
+function getDailyData(){
+
+    const saved =
+        localStorage.getItem(
+            DAILY_KEY
+        );
+
+    if(!saved){
+
+        const fresh =
+            defaultDailyData();
+
+        localStorage.setItem(
+            DAILY_KEY,
+            JSON.stringify(fresh)
+        );
+
+        return fresh;
+
+    }
+
+
+    try{
+
+        const data =
+            JSON.parse(saved);
+
+        /*
+           If the stored date is not today,
+           create a new daily mission.
+        */
+
+        if(data.date !== getDateKey()){
+
+            const fresh =
+                defaultDailyData();
+
+            localStorage.setItem(
+                DAILY_KEY,
+                JSON.stringify(fresh)
+            );
+
+            return fresh;
+
+        }
+
+        return data;
+
+    }catch(e){
+
+        const fresh =
+            defaultDailyData();
+
+        localStorage.setItem(
+            DAILY_KEY,
+            JSON.stringify(fresh)
+        );
+
+        return fresh;
+
+    }
+
+}
+
+
+function saveDailyData(data){
+
+    localStorage.setItem(
+        DAILY_KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =========================================================
+   DATE DISPLAY
+========================================================= */
+
+function showDate(){
+
+    const now =
+        new Date();
+
+    document.getElementById(
+        "todayDate"
+    ).textContent =
+        now.toLocaleDateString(
+            "en-IN",
+            {
+                weekday:"long",
+                year:"numeric",
+                month:"long",
+                day:"numeric"
+            }
+        );
+
+}
+
+
+/* =========================================================
+   TASK TOGGLE
+========================================================= */
+
+function toggleTask(id){
+
+    const data =
+        getDailyData();
+
+    if(!data.tasks){
+
+        data.tasks = {};
+
+    }
+
+    data.tasks[id] =
+        !data.tasks[id];
+
+    saveDailyData(data);
+
+    render();
+
+}
+
+
+/* =========================================================
+   CUSTOM TASK
+========================================================= */
+
+function addCustomTask(){
+
+    const nameInput =
+        document.getElementById(
+            "customTaskName"
+        );
+
+    const targetInput =
+        document.getElementById(
+            "customTaskTarget"
+        );
+
+    const name =
+        nameInput.value.trim();
+
+    const target =
+        targetInput.value.trim();
+
+    if(!name){
+
+        alert(
+            "Please enter a task."
+        );
+
+        return;
+
+    }
+
+
+    const data =
+        getDailyData();
+
+
+    if(!data.customTasks){
+
+        data.customTasks = [];
+
+    }
+
+
+    data.customTasks.push({
+
+        id:
+            "custom_" +
+            Date.now(),
+
+        name:name,
+
+        target:
+            target || "CUSTOM",
+
+        completed:false
+
+    });
+
+
+    saveDailyData(data);
+
+
+    nameInput.value = "";
+
+    targetInput.value = "";
+
+
+    render();
+
+}
+
+
+/* =========================================================
+   CUSTOM TASK TOGGLE
+========================================================= */
+
+function toggleCustomTask(id){
+
+    const data =
+        getDailyData();
+
+    const task =
+        data.customTasks.find(
+            t => t.id === id
+        );
+
+    if(task){
+
+        task.completed =
+            !task.completed;
+
+    }
+
+    saveDailyData(data);
+
+    render();
+
+}
+
+
+/* =========================================================
+   DELETE CUSTOM TASK
+========================================================= */
+
+function deleteCustomTask(id){
+
+    const data =
+        getDailyData();
+
+    data.customTasks =
+        data.customTasks.filter(
+            t => t.id !== id
+        );
+
+    saveDailyData(data);
+
+    render();
+
+}
+
+
+/* =========================================================
+   RENDER CUSTOM TASKS
+========================================================= */
+
+function renderCustomTasks(data){
+
+    const list =
+        document.getElementById(
+            "taskList"
+        );
+
+
+    document
+        .querySelectorAll(
+            ".custom-task"
+        )
+        .forEach(
+            element =>
+                element.remove()
+        );
+
+
+    if(!data.customTasks){
+
+        return;
+
+    }
+
+
+    data.customTasks.forEach(task => {
+
+        const item =
+            document.createElement(
+                "div"
+            );
+
+        item.className =
+            "task custom-task" +
+            (
+                task.completed
+                    ? " completed"
+                    : ""
+            );
+
+
+        item.innerHTML = `
+
+            <div
+                class="checkbox"
+                onclick="toggleCustomTask('${task.id}')"
+            >
+                ✓
+            </div>
+
+            <div>
+
+                <div class="task-name">
+                    ${escapeHTML(task.name)}
+                </div>
+
+                <div class="task-type">
+                    CUSTOM MISSION
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="task-target">
+                    ${escapeHTML(task.target)}
+                </div>
+
+                <button
+                    onclick="deleteCustomTask('${task.id}')"
+                    style="
+                    border:0;
+                    background:none;
+                    color:#725b5b;
+                    font-size:8px;
+                    margin-top:5px;
+                    "
+                >
+                    DELETE
+                </button>
+
+            </div>
+
+        `;
+
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   HOURS
+========================================================= */
+
+function saveHours(){
+
+    const data =
+        getDailyData();
+
+
+    const target =
+        Number(
+            document.getElementById(
+                "targetHours"
+            ).value
+        ) || 0;
+
+
+    const completed =
+        Number(
+            document.getElementById(
+                "completedHours"
+            ).value
+        ) || 0;
+
+
+    data.targetHours =
+        target;
+
+
+    data.completedHours =
+        completed;
+
+
+    saveDailyData(data);
+
+
+    /*
+       Also send today's study hours
+       to main dashboard data.
+    */
+
+    const main =
+        getMainData();
+
+
+    main.studyHours =
+        completed;
+
+
+    saveMainData(main);
+
+
+    updateProgress();
+
+}
+
+
+/* =========================================================
+   COMPLETE ALL
+========================================================= */
+
+function completeAll(){
+
+    const data =
+        getDailyData();
+
+
+    Object.keys(data.tasks)
+        .forEach(
+            key =>
+                data.tasks[key] = true
+        );
+
+
+    if(data.customTasks){
+
+        data.customTasks
+            .forEach(
+                task =>
+                    task.completed = true
+            );
+
+    }
+
+
+    saveDailyData(data);
+
+    render();
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetToday(){
+
+    const confirmReset =
+        confirm(
+            "Reset today's mission? This cannot be undone."
+        );
+
+    if(!confirmReset){
+
+        return;
+
+    }
+
+
+    const fresh =
+        defaultDailyData();
+
+    saveDailyData(fresh);
+
+    render();
+
+}
+
+
+/* =========================================================
+   SAVE ALL
+========================================================= */
+
+function saveAll(){
+
+    saveHours();
+
+    alert(
+        "Today's mission data has been saved."
+    );
+
+}
+
+
+/* =========================================================
+   CALCULATE PROGRESS
+========================================================= */
+
+function calculateProgress(){
+
+    const data =
+        getDailyData();
+
+
+    let total = 0;
+
+    let completed = 0;
+
+
+    Object.keys(data.tasks)
+        .forEach(key => {
+
+            total++;
+
+            if(data.tasks[key]){
+
+                completed++;
+
+            }
+
+        });
+
+
+    if(data.customTasks){
+
+        total +=
+            data.customTasks.length;
+
+
+        data.customTasks.forEach(task => {
+
+            if(task.completed){
+
+                completed++;
+
+            }
+
+        });
+
+    }
+
+
+    if(total === 0){
+
+        return 0;
+
+    }
+
+
+    return Math.round(
+        (completed / total) * 100
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE PROGRESS
+========================================================= */
+
+function updateProgress(){
+
+    const data =
+        getDailyData();
+
+
+    const percent =
+        calculateProgress();
+
+
+    document.getElementById(
+        "progressValue"
+    ).textContent =
+        percent + "%";
+
+
+    document.getElementById(
+        "progressRing"
+    ).style.background =
+        `conic-gradient(
+            #3478ff ${percent * 3.6}deg,
+            #182438 ${percent * 3.6}deg
+        )`;
+
+
+    /*
+       Mission Score:
+       70% task completion
+       30% study-hour completion
+    */
+
+    const target =
+        Number(
+            data.targetHours
+        ) || 0;
+
+
+    const completed =
+        Number(
+            data.completedHours
+        ) || 0;
+
+
+    let hourPercent = 0;
+
+
+    if(target > 0){
+
+        hourPercent =
+            Math.min(
+                100,
+                Math.round(
+                    (completed / target) *
+                    100
+                )
+            );
+
+    }
+
+
+    const score =
+        Math.round(
+            (percent * 0.70) +
+            (hourPercent * 0.30)
+        );
+
+
+    document.getElementById(
+        "missionScore"
+    ).textContent =
+        score;
+
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render(){
+
+    const data =
+        getDailyData();
+
+
+    /*
+       Update default tasks
+    */
+
+    Object.keys(data.tasks)
+        .forEach(id => {
+
+            const task =
+                document.querySelector(
+                    `.task[data-id="${id}"]`
+                );
+
+            if(!task){
+
+                return;
+
+            }
+
+
+            if(data.tasks[id]){
+
+                task.classList.add(
+                    "completed"
+                );
+
+            }else{
+
+                task.classList.remove(
+                    "completed"
+                );
+
+            }
+
+        });
+
+
+    /*
+       Hours
+    */
+
+    document.getElementById(
+        "targetHours"
+    ).value =
+        data.targetHours;
+
+
+    document.getElementById(
+        "completedHours"
+    ).value =
+        data.completedHours;
+
+
+    renderCustomTasks(data);
+
+    updateProgress();
+
+}
+
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+showDate();
+
+render();
+
+</script>
+
+</body>
+</html>
