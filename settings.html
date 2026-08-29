@@ -1,0 +1,2663 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Settings | Vijay JEE</title>
+
+<style>
+
+/* =====================================================
+   VIJAY JEE — SETTINGS
+===================================================== */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+
+    --bg:#070b12;
+    --panel:#0d141f;
+    --panel2:#111a27;
+
+    --border:#1d2a3c;
+
+    --text:#f4f7fb;
+    --muted:#78879b;
+
+    --blue:#6fa3ff;
+    --green:#3ddd99;
+    --yellow:#ffc857;
+    --red:#ff7182;
+    --purple:#a17cff;
+
+}
+
+body{
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    min-height:100vh;
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:240px;
+
+    background:#09101a;
+
+    border-right:
+        1px solid var(--border);
+
+    padding:18px 13px;
+
+    overflow-y:auto;
+
+    z-index:100;
+
+    transition:.3s;
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:
+        8px
+        10px
+        25px;
+
+    text-decoration:none;
+
+    color:white;
+
+}
+
+.logo-box{
+
+    width:38px;
+    height:38px;
+
+    border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-weight:900;
+
+    background:
+        linear-gradient(
+            135deg,
+            #3478ff,
+            #7a4dff
+        );
+
+}
+
+.logo-text{
+
+    font-size:14px;
+
+    font-weight:900;
+
+}
+
+.logo-text span{
+
+    color:#617089;
+
+}
+
+.nav-title{
+
+    color:#4f6077;
+
+    font-size:8px;
+
+    letter-spacing:.16em;
+
+    font-weight:900;
+
+    margin:
+        16px
+        10px
+        8px;
+
+}
+
+.nav-link{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:
+        10px
+        11px;
+
+    border-radius:8px;
+
+    margin:3px 0;
+
+    color:#78869a;
+
+    font-size:11px;
+
+    text-decoration:none;
+
+}
+
+.nav-link:hover{
+
+    background:#111b2a;
+
+    color:white;
+
+}
+
+.nav-link.active{
+
+    background:#17243a;
+
+    color:#79a8ff;
+
+}
+
+.icon{
+
+    width:18px;
+
+    text-align:center;
+
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+.menu{
+
+    display:none;
+
+    position:fixed;
+
+    right:14px;
+    top:14px;
+
+    width:40px;
+    height:40px;
+
+    border-radius:9px;
+
+    border:
+        1px solid #29384c;
+
+    background:#0d141f;
+
+    color:white;
+
+    z-index:200;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+
+    margin-left:240px;
+
+    padding:28px;
+
+}
+
+.container{
+
+    width:min(
+        1100px,
+        100%
+    );
+
+    margin:auto;
+
+}
+
+.header{
+
+    margin-bottom:18px;
+
+}
+
+.header h1{
+
+    font-size:30px;
+
+    letter-spacing:-.04em;
+
+}
+
+.header p{
+
+    margin-top:6px;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.section{
+
+    background:var(--panel);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:14px;
+
+    margin-bottom:13px;
+
+    overflow:hidden;
+
+}
+
+.section-head{
+
+    padding:16px 18px;
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+.section-title{
+
+    font-size:12px;
+
+    font-weight:900;
+
+}
+
+.section-description{
+
+    color:#687990;
+
+    font-size:8px;
+
+    margin-top:4px;
+
+}
+
+.section-body{
+
+    padding:18px;
+
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:12px;
+
+}
+
+.field{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+.field.full{
+
+    grid-column:
+        1 / -1;
+
+}
+
+label{
+
+    color:#8a99ac;
+
+    font-size:8px;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+
+    letter-spacing:.06em;
+
+}
+
+input,
+select{
+
+    width:100%;
+
+    background:#09111c;
+
+    color:white;
+
+    border:
+        1px solid #243249;
+
+    border-radius:8px;
+
+    padding:11px;
+
+    outline:none;
+
+    font-size:10px;
+
+}
+
+input:focus,
+select:focus{
+
+    border-color:#5273a7;
+
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.actions{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+    margin-top:14px;
+
+}
+
+button{
+
+    cursor:pointer;
+
+}
+
+.btn{
+
+    border:
+        1px solid #293a53;
+
+    background:#111b2a;
+
+    color:#a9bad0;
+
+    border-radius:8px;
+
+    padding:
+        10px
+        14px;
+
+    font-size:9px;
+
+    font-weight:900;
+
+}
+
+.btn:hover{
+
+    background:#18263a;
+
+    color:white;
+
+}
+
+.btn.primary{
+
+    background:#182a49;
+
+    border-color:#3d6094;
+
+    color:#8db8ff;
+
+}
+
+.btn.green{
+
+    background:#11271f;
+
+    border-color:#275b47;
+
+    color:#59dca6;
+
+}
+
+.btn.danger{
+
+    background:#29151a;
+
+    border-color:#63303a;
+
+    color:#ff8491;
+
+}
+
+
+/* =====================================================
+   TARGET
+===================================================== */
+
+.target-box{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+
+}
+
+.target{
+
+    background:#09111c;
+
+    border:
+        1px solid #1f2d41;
+
+    border-radius:10px;
+
+    padding:14px;
+
+}
+
+.target-label{
+
+    color:#62728a;
+
+    font-size:8px;
+
+    font-weight:900;
+
+}
+
+.target-value{
+
+    margin-top:8px;
+
+    font-size:18px;
+
+    font-weight:900;
+
+}
+
+
+/* =====================================================
+   TOGGLE
+===================================================== */
+
+.setting-row{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:
+        13px
+        0;
+
+    border-bottom:
+        1px solid #172334;
+
+}
+
+.setting-row:last-child{
+
+    border-bottom:0;
+
+}
+
+.setting-name{
+
+    font-size:10px;
+
+    font-weight:900;
+
+}
+
+.setting-description{
+
+    margin-top:4px;
+
+    color:#64748a;
+
+    font-size:8px;
+
+    line-height:1.5;
+
+}
+
+.toggle{
+
+    width:42px;
+
+    height:23px;
+
+    border-radius:20px;
+
+    background:#1a2637;
+
+    border:
+        1px solid #304159;
+
+    position:relative;
+
+    flex-shrink:0;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.toggle::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:3px;
+    left:3px;
+
+    width:15px;
+    height:15px;
+
+    border-radius:50%;
+
+    background:#65748a;
+
+    transition:.2s;
+
+}
+
+.toggle.on{
+
+    background:#214b3b;
+
+    border-color:#367a60;
+
+}
+
+.toggle.on::after{
+
+    left:22px;
+
+    background:#55dda4;
+
+}
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+.theme-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+
+}
+
+.theme{
+
+    padding:14px;
+
+    border:
+        1px solid #223148;
+
+    border-radius:10px;
+
+    background:#09111c;
+
+    cursor:pointer;
+
+}
+
+.theme:hover{
+
+    border-color:#405574;
+
+}
+
+.theme.selected{
+
+    border-color:#557db5;
+
+    background:#101c2c;
+
+}
+
+.theme-preview{
+
+    height:45px;
+
+    border-radius:7px;
+
+    margin-bottom:9px;
+
+    border:
+        1px solid #29384c;
+
+}
+
+.preview-dark{
+
+    background:
+        linear-gradient(
+            135deg,
+            #070b12,
+            #172131
+        );
+
+}
+
+.preview-midnight{
+
+    background:
+        linear-gradient(
+            135deg,
+            #08111d,
+            #142b46
+        );
+
+}
+
+.preview-light{
+
+    background:
+        linear-gradient(
+            135deg,
+            #e8edf4,
+            #ffffff
+        );
+
+}
+
+.theme-name{
+
+    font-size:9px;
+
+    font-weight:900;
+
+}
+
+
+/* =====================================================
+   DATA
+===================================================== */
+
+.data-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:10px;
+
+}
+
+.data-card{
+
+    border:
+        1px solid #202f44;
+
+    background:#09111c;
+
+    border-radius:10px;
+
+    padding:15px;
+
+}
+
+.data-card h3{
+
+    font-size:10px;
+
+}
+
+.data-card p{
+
+    color:#687990;
+
+    font-size:8px;
+
+    line-height:1.5;
+
+    margin-top:5px;
+
+}
+
+
+/* =====================================================
+   DANGER
+===================================================== */
+
+.danger-box{
+
+    border:
+        1px solid #4b272f;
+
+    background:#160e12;
+
+    border-radius:10px;
+
+    padding:16px;
+
+}
+
+.danger-box h3{
+
+    color:#ff7887;
+
+    font-size:11px;
+
+}
+
+.danger-box p{
+
+    color:#8b6870;
+
+    font-size:8px;
+
+    line-height:1.6;
+
+    margin-top:5px;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status{
+
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    padding:
+        10px
+        14px;
+
+    background:#101b29;
+
+    border:
+        1px solid #2d415d;
+
+    border-radius:9px;
+
+    color:#9db2cd;
+
+    font-size:9px;
+
+    font-weight:900;
+
+    opacity:0;
+
+    transform:
+        translateY(10px);
+
+    pointer-events:none;
+
+    transition:.25s;
+
+}
+
+.status.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+
+    text-align:center;
+
+    color:#455368;
+
+    font-size:8px;
+
+    padding:10px 0 25px;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:800px){
+
+    .sidebar{
+
+        transform:
+            translateX(-100%);
+
+    }
+
+    .sidebar.open{
+
+        transform:
+            translateX(0);
+
+    }
+
+    .menu{
+
+        display:block;
+
+    }
+
+    .main{
+
+        margin-left:0;
+
+        padding:18px;
+
+    }
+
+    .form-grid,
+    .data-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .target-box{
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+@media(max-width:550px){
+
+    .theme-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .header h1{
+
+        font-size:24px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+SIDEBAR
+===================================================== -->
+
+<aside
+class="sidebar"
+id="sidebar"
+>
+
+<a
+href="index.html"
+class="logo"
+>
+
+<div class="logo-box">
+V
+</div>
+
+<div class="logo-text">
+VIJAY<span>.JEE</span>
+</div>
+
+</a>
+
+
+<div class="nav-title">
+COMMAND
+</div>
+
+<a
+href="index.html"
+class="nav-link"
+>
+<span class="icon">⌂</span>
+Home
+</a>
+
+<a
+href="command-center.html"
+class="nav-link"
+>
+<span class="icon">▣</span>
+Command Center
+</a>
+
+
+<div class="nav-title">
+PREPARATION
+</div>
+
+<a
+href="syllabus.html"
+class="nav-link"
+>
+<span class="icon">▤</span>
+Syllabus
+</a>
+
+<a
+href="daily-target.html"
+class="nav-link"
+>
+<span class="icon">✓</span>
+Daily Mission
+</a>
+
+<a
+href="backlog.html"
+class="nav-link"
+>
+<span class="icon">◫</span>
+Backlog
+</a>
+
+<a
+href="revision.html"
+class="nav-link"
+>
+<span class="icon">↻</span>
+Revision
+</a>
+
+<a
+href="pyq-tracker.html"
+class="nav-link"
+>
+<span class="icon">◷</span>
+PYQ Tracker
+</a>
+
+<a
+href="mistakes.html"
+class="nav-link"
+>
+<span class="icon">!</span>
+Mistake Book
+</a>
+
+
+<div class="nav-title">
+TESTING
+</div>
+
+<a
+href="mock-tests.html"
+class="nav-link"
+>
+<span class="icon">▤</span>
+Mock Tests
+</a>
+
+<a
+href="analytics.html"
+class="nav-link"
+>
+<span class="icon">⌁</span>
+Analytics
+</a>
+
+<a
+href="rank-strategy.html"
+class="nav-link"
+>
+<span class="icon">⚔</span>
+Rank Strategy
+</a>
+
+
+<div class="nav-title">
+PERSONAL
+</div>
+
+<a
+href="journal.html"
+class="nav-link"
+>
+<span class="icon">✎</span>
+Journal
+</a>
+
+<a
+href="achievements.html"
+class="nav-link"
+>
+<span class="icon">★</span>
+Achievements
+</a>
+
+
+<div class="nav-title">
+SYSTEM
+</div>
+
+<a
+href="settings.html"
+class="nav-link active"
+>
+<span class="icon">⚙</span>
+Settings
+</a>
+
+</aside>
+
+
+<button
+class="menu"
+onclick="toggleMenu()"
+>
+☰
+</button>
+
+
+<!-- =====================================================
+MAIN
+===================================================== -->
+
+<main class="main">
+
+<div class="container">
+
+
+<header class="header">
+
+<h1>
+Settings
+</h1>
+
+<p>
+Configure your JEE command system, targets, preferences and data.
+</p>
+
+</header>
+
+
+<!-- =====================================================
+PROFILE
+===================================================== -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+👤 PROFILE & EXAM
+</div>
+
+<div class="section-description">
+Your core JEE journey configuration.
+</div>
+
+</div>
+
+
+<div class="section-body">
+
+<div class="form-grid">
+
+
+<div class="field">
+
+<label>
+Name
+</label>
+
+<input
+id="name"
+type="text"
+placeholder="Your name"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Exam Attempt
+</label>
+
+<select id="attempt">
+
+<option>
+JEE 2027
+</option>
+
+<option>
+JEE 2028
+</option>
+
+<option>
+JEE 2029
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Primary Goal
+</label>
+
+<select id="target">
+
+<option value="99">
+2-Digit AIR
+</option>
+
+<option value="100">
+AIR 100
+</option>
+
+<option value="500">
+AIR 500
+</option>
+
+<option value="1000">
+AIR 1000
+</option>
+
+<option value="5000">
+AIR 5000
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Preparation Mode
+</label>
+
+<select id="mode">
+
+<option>
+JEE Main + Advanced
+</option>
+
+<option>
+JEE Main Focus
+</option>
+
+<option>
+JEE Advanced Focus
+</option>
+
+</select>
+
+</div>
+
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="btn primary"
+onclick="saveProfile()"
+>
+SAVE PROFILE
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+TARGETS
+===================================================== -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+🎯 PREPARATION TARGETS
+</div>
+
+<div class="section-description">
+Set measurable daily targets instead of relying on motivation.
+</div>
+
+</div>
+
+
+<div class="section-body">
+
+<div class="target-box">
+
+
+<div class="target">
+
+<div class="target-label">
+DAILY STUDY TARGET
+</div>
+
+<div class="target-value">
+
+<input
+id="dailyHours"
+type="number"
+min="1"
+max="24"
+step=".5"
+>
+
+</div>
+
+</div>
+
+
+<div class="target">
+
+<div class="target-label">
+DAILY PYQ TARGET
+</div>
+
+<div class="target-value">
+
+<input
+id="dailyPYQ"
+type="number"
+min="0"
+>
+
+</div>
+
+</div>
+
+
+<div class="target">
+
+<div class="target-label">
+WEEKLY MOCK TARGET
+</div>
+
+<div class="target-value">
+
+<input
+id="weeklyMocks"
+type="number"
+min="0"
+>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="btn primary"
+onclick="saveTargets()"
+>
+SAVE TARGETS
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+PREFERENCES
+===================================================== -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+⚙️ PREFERENCES
+</div>
+
+<div class="section-description">
+Control how the dashboard behaves.
+</div>
+
+</div>
+
+
+<div class="section-body">
+
+
+<div class="setting-row">
+
+<div>
+
+<div class="setting-name">
+Auto-save progress
+</div>
+
+<div class="setting-description">
+Automatically save tracker changes to your browser.
+</div>
+
+</div>
+
+<div
+class="toggle"
+id="autoSave"
+onclick="toggleSetting('autoSave')"
+></div>
+
+</div>
+
+
+<div class="setting-row">
+
+<div>
+
+<div class="setting-name">
+Achievement notifications
+</div>
+
+<div class="setting-description">
+Show a notification when an achievement is unlocked.
+</div>
+
+</div>
+
+<div
+class="toggle"
+id="achievementNotify"
+onclick="toggleSetting('achievementNotify')"
+></div>
+
+</div>
+
+
+<div class="setting-row">
+
+<div>
+
+<div class="setting-name">
+Daily target reminders
+</div>
+
+<div class="setting-description">
+Enable reminders for your daily preparation target.
+</div>
+
+</div>
+
+<div
+class="toggle"
+id="reminders"
+onclick="toggleSetting('reminders')"
+></div>
+
+</div>
+
+
+<div class="setting-row">
+
+<div>
+
+<div class="setting-name">
+Strict mode
+</div>
+
+<div class="setting-description">
+Treat missed targets as a real preparation failure rather than hiding them.
+</div>
+
+</div>
+
+<div
+class="toggle"
+id="strictMode"
+onclick="toggleSetting('strictMode')"
+></div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+THEME
+===================================================== -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+🎨 APPEARANCE
+</div>
+
+<div class="section-description">
+Choose the visual environment for your preparation dashboard.
+</div>
+
+</div>
+
+
+<div class="section-body">
+
+<div class="theme-grid">
+
+
+<div
+class="theme"
+id="theme-dark"
+onclick="setTheme('dark')"
+>
+
+<div class="theme-preview preview-dark"></div>
+
+<div class="theme-name">
+Dark
+</div>
+
+</div>
+
+
+<div
+class="theme"
+id="theme-midnight"
+onclick="setTheme('midnight')"
+>
+
+<div class="theme-preview preview-midnight"></div>
+
+<div class="theme-name">
+Midnight Blue
+</div>
+
+</div>
+
+
+<div
+class="theme"
+id="theme-light"
+onclick="setTheme('light')"
+>
+
+<div class="theme-preview preview-light"></div>
+
+<div class="theme-name">
+Light
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+DATA MANAGEMENT
+===================================================== -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+💾 DATA MANAGEMENT
+</div>
+
+<div class="section-description">
+Your data is stored locally in this browser.
+</div>
+
+</div>
+
+
+<div class="section-body">
+
+<div class="data-grid">
+
+
+<div class="data-card">
+
+<h3>
+Export JEE Data
+</h3>
+
+<p>
+Download your complete JEE preparation data as a JSON backup file.
+</p>
+
+<div class="actions">
+
+<button
+class="btn green"
+onclick="exportData()"
+>
+EXPORT BACKUP
+</button>
+
+</div>
+
+</div>
+
+
+<div class="data-card">
+
+<h3>
+Import JEE Data
+</h3>
+
+<p>
+Restore your preparation data from a previously exported JSON file.
+</p>
+
+<div class="actions">
+
+<input
+type="file"
+id="importFile"
+accept=".json"
+onchange="importData(event)"
+>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+DANGER ZONE
+===================================================== -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+⚠️ DANGER ZONE
+</div>
+
+<div class="section-description">
+These actions can permanently remove preparation data.
+</div>
+
+</div>
+
+
+<div class="section-body">
+
+<div class="danger-box">
+
+<h3>
+Reset JEE Journey Data
+</h3>
+
+<p>
+This will remove your locally stored JEE progress, PYQ statistics,
+mock statistics, achievements, journal data and other tracker data.
+This action cannot be undone unless you have a backup.
+</p>
+
+
+<div class="actions">
+
+<button
+class="btn danger"
+onclick="resetAllData()"
+>
+RESET EVERYTHING
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+VIJAY JEE • DISCIPLINE OVER MOTIVATION
+
+</footer>
+
+
+</div>
+
+</main>
+
+
+<div
+class="status"
+id="status"
+>
+Saved
+</div>
+
+
+<script>
+
+/* =====================================================
+   SETTINGS ENGINE
+===================================================== */
+
+const DATA_KEY =
+"VIJAY_JEE_MASTER_DATA";
+
+
+const SETTINGS_KEY =
+"VIJAY_JEE_SETTINGS";
+
+
+/* =====================================================
+   DEFAULT SETTINGS
+===================================================== */
+
+const DEFAULT_SETTINGS = {
+
+    autoSave:true,
+
+    achievementNotify:true,
+
+    reminders:false,
+
+    strictMode:true,
+
+    theme:"dark",
+
+    dailyPYQ:50,
+
+    weeklyMocks:2
+
+};
+
+
+/* =====================================================
+   LOAD MASTER DATA
+===================================================== */
+
+function getData(){
+
+    try{
+
+        const data =
+        JSON.parse(
+            localStorage.getItem(
+                DATA_KEY
+            )
+        );
+
+        return data || {};
+
+    }
+
+    catch{
+
+        return {};
+
+    }
+
+}
+
+
+/* =====================================================
+   SAVE MASTER DATA
+===================================================== */
+
+function saveData(data){
+
+    localStorage.setItem(
+
+        DATA_KEY,
+
+        JSON.stringify(data)
+
+    );
+
+}
+
+
+/* =====================================================
+   LOAD SETTINGS
+===================================================== */
+
+function getSettings(){
+
+    try{
+
+        const saved =
+        JSON.parse(
+            localStorage.getItem(
+                SETTINGS_KEY
+            )
+        );
+
+        return {
+
+            ...DEFAULT_SETTINGS,
+
+            ...(saved || {})
+
+        };
+
+    }
+
+    catch{
+
+        return {
+            ...DEFAULT_SETTINGS
+        };
+
+    }
+
+}
+
+
+/* =====================================================
+   SAVE SETTINGS
+===================================================== */
+
+function saveSettings(settings){
+
+    localStorage.setItem(
+
+        SETTINGS_KEY,
+
+        JSON.stringify(settings)
+
+    );
+
+}
+
+
+/* =====================================================
+   LOAD PAGE
+===================================================== */
+
+function loadPage(){
+
+    const data =
+    getData();
+
+    const settings =
+    getSettings();
+
+
+    /* PROFILE */
+
+    document.getElementById(
+        "name"
+    ).value =
+        data.profile?.name ||
+        "Vijay";
+
+
+    document.getElementById(
+        "attempt"
+    ).value =
+        data.profile?.attempt ||
+        "JEE 2027";
+
+
+    document.getElementById(
+        "target"
+    ).value =
+        data.rank?.targetAIR ||
+        99;
+
+
+    /* TARGETS */
+
+    document.getElementById(
+        "dailyHours"
+    ).value =
+        data.daily?.targetHours ||
+        10;
+
+
+    document.getElementById(
+        "dailyPYQ"
+    ).value =
+        settings.dailyPYQ;
+
+
+    document.getElementById(
+        "weeklyMocks"
+    ).value =
+        settings.weeklyMocks;
+
+
+    /* TOGGLES */
+
+    updateToggle(
+        "autoSave",
+        settings.autoSave
+    );
+
+    updateToggle(
+        "achievementNotify",
+        settings.achievementNotify
+    );
+
+    updateToggle(
+        "reminders",
+        settings.reminders
+    );
+
+    updateToggle(
+        "strictMode",
+        settings.strictMode
+    );
+
+
+    /* THEME */
+
+    applyTheme(
+        settings.theme
+    );
+
+}
+
+
+/* =====================================================
+   SAVE PROFILE
+===================================================== */
+
+function saveProfile(){
+
+    const data =
+    getData();
+
+
+    if(!data.profile){
+
+        data.profile = {};
+
+    }
+
+
+    if(!data.rank){
+
+        data.rank = {};
+
+    }
+
+
+    data.profile.name =
+        document.getElementById(
+            "name"
+        ).value.trim()
+        ||
+        "Vijay";
+
+
+    data.profile.attempt =
+        document.getElementById(
+            "attempt"
+        ).value;
+
+
+    data.profile.exam =
+        "IIT-JEE";
+
+
+    data.rank.targetAIR =
+        Number(
+            document.getElementById(
+                "target"
+            ).value
+        );
+
+
+    saveData(data);
+
+
+    showStatus(
+        "Profile saved"
+    );
+
+}
+
+
+/* =====================================================
+   SAVE TARGETS
+===================================================== */
+
+function saveTargets(){
+
+    const data =
+    getData();
+
+    const settings =
+    getSettings();
+
+
+    if(!data.daily){
+
+        data.daily = {};
+
+    }
+
+
+    data.daily.targetHours =
+        Number(
+            document.getElementById(
+                "dailyHours"
+            ).value
+        )
+        || 10;
+
+
+    settings.dailyPYQ =
+        Number(
+            document.getElementById(
+                "dailyPYQ"
+            ).value
+        )
+        || 0;
+
+
+    settings.weeklyMocks =
+        Number(
+            document.getElementById(
+                "weeklyMocks"
+            ).value
+        )
+        || 0;
+
+
+    saveData(data);
+
+    saveSettings(settings);
+
+
+    showStatus(
+        "Targets saved"
+    );
+
+}
+
+
+/* =====================================================
+   TOGGLE
+===================================================== */
+
+function toggleSetting(id){
+
+    const settings =
+    getSettings();
+
+
+    settings[id] =
+        !settings[id];
+
+
+    saveSettings(settings);
+
+
+    updateToggle(
+        id,
+        settings[id]
+    );
+
+
+    showStatus(
+        "Preference updated"
+    );
+
+}
+
+
+/* =====================================================
+   UPDATE TOGGLE
+===================================================== */
+
+function updateToggle(
+    id,
+    value
+){
+
+    const element =
+    document.getElementById(id);
+
+
+    if(value){
+
+        element.classList.add(
+            "on"
+        );
+
+    }
+
+    else{
+
+        element.classList.remove(
+            "on"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+function setTheme(theme){
+
+    const settings =
+    getSettings();
+
+
+    settings.theme =
+        theme;
+
+
+    saveSettings(settings);
+
+
+    applyTheme(theme);
+
+
+    showStatus(
+        "Theme updated"
+    );
+
+}
+
+
+/* =====================================================
+   APPLY THEME
+===================================================== */
+
+function applyTheme(theme){
+
+    document
+    .querySelectorAll(
+        ".theme"
+    )
+    .forEach(
+        element =>
+        element.classList.remove(
+            "selected"
+        )
+    );
+
+
+    const selected =
+        document.getElementById(
+            "theme-" + theme
+        );
+
+
+    if(selected){
+
+        selected.classList.add(
+            "selected"
+        );
+
+    }
+
+
+    /*
+       Dark is the default system theme.
+
+       Midnight changes the main background.
+
+       Light provides a simple light mode.
+    */
+
+
+    if(theme === "midnight"){
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--bg",
+            "#050b14"
+        );
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--panel",
+            "#0a1726"
+        );
+
+    }
+
+
+    else if(theme === "light"){
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--bg",
+            "#eef2f7"
+        );
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--panel",
+            "#ffffff"
+        );
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--panel2",
+            "#f5f7fa"
+        );
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--border",
+            "#d7dee8"
+        );
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--text",
+            "#172033"
+        );
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--muted",
+            "#667085"
+        );
+
+    }
+
+
+    else{
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--bg",
+            "#070b12"
+        );
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--panel",
+            "#0d141f"
+        );
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--panel2",
+            "#111a27"
+        );
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--border",
+            "#1d2a3c"
+        );
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--text",
+            "#f4f7fb"
+        );
+
+        document.documentElement
+        .style
+        .setProperty(
+            "--muted",
+            "#78879b"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   EXPORT
+===================================================== */
+
+function exportData(){
+
+    const data = {
+
+        master:
+            getData(),
+
+        settings:
+            getSettings(),
+
+        exportedAt:
+            new Date().toISOString()
+
+    };
+
+
+    const blob =
+        new Blob(
+
+            [
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                )
+            ],
+
+            {
+                type:
+                    "application/json"
+            }
+
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        url;
+
+
+    link.download =
+        "vijay-jee-complete-backup.json";
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+
+    showStatus(
+        "Backup exported"
+    );
+
+}
+
+
+/* =====================================================
+   IMPORT
+===================================================== */
+
+function importData(event){
+
+    const file =
+        event.target.files[0];
+
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(e){
+
+            try{
+
+                const imported =
+                    JSON.parse(
+                        e.target.result
+                    );
+
+
+                if(
+                    imported.master
+                ){
+
+                    saveData(
+                        imported.master
+                    );
+
+                }
+
+
+                if(
+                    imported.settings
+                ){
+
+                    saveSettings(
+                        {
+
+                            ...DEFAULT_SETTINGS,
+
+                            ...imported.settings
+
+                        }
+                    );
+
+                }
+
+
+                else{
+
+                    /*
+                       Also support importing
+                       a raw master-data file.
+                    */
+
+                    saveData(
+                        imported
+                    );
+
+                }
+
+
+                showStatus(
+                    "Backup restored"
+                );
+
+
+                setTimeout(
+                    () => location.reload(),
+                    700
+                );
+
+            }
+
+            catch(error){
+
+                alert(
+                    "Invalid JSON backup file."
+                );
+
+            }
+
+        };
+
+
+    reader.readAsText(
+        file
+    );
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetAllData(){
+
+    const first =
+        confirm(
+            "WARNING: This will delete your complete JEE Journey data. Continue?"
+        );
+
+
+    if(!first){
+
+        return;
+
+    }
+
+
+    const second =
+        confirm(
+            "Are you absolutely sure? Make sure you have exported a backup first."
+        );
+
+
+    if(!second){
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        DATA_KEY
+    );
+
+    localStorage.removeItem(
+        SETTINGS_KEY
+    );
+
+
+    alert(
+        "All JEE Journey data has been reset."
+    );
+
+
+    location.reload();
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+let statusTimer;
+
+
+function showStatus(message){
+
+    const element =
+        document.getElementById(
+            "status"
+        );
+
+
+    element.textContent =
+        message;
+
+
+    element.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        statusTimer
+    );
+
+
+    statusTimer =
+        setTimeout(
+            () => {
+
+                element.classList.remove(
+                    "show"
+                );
+
+            },
+
+            1800
+
+        );
+
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+function toggleMenu(){
+
+    document
+    .getElementById(
+        "sidebar"
+    )
+    .classList
+    .toggle(
+        "open"
+    );
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadPage();
+
+</script>
+
+</body>
+</html>
+```
