@@ -1,0 +1,1690 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b14">
+<title>Mock Tests | Vijay JEE Command Center</title>
+
+<style>
+/* =========================
+   GLOBAL
+========================= */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#070b14;
+    color:#f4f7fb;
+    min-height:100vh;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar{
+    width:245px;
+    position:fixed;
+    left:0;top:0;bottom:0;
+    background:#0a101a;
+    border-right:1px solid #1b2638;
+    padding:22px 14px;
+    overflow-y:auto;
+    z-index:100;
+}
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px 25px;
+    font-weight:900;
+}
+.logo-box{
+    width:38px;height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    background:linear-gradient(135deg,#3478ff,#7b4dff);
+}
+.logo-text{font-size:14px}
+.logo-text span{color:#69778c}
+.nav-title{
+    color:#536178;
+    font-size:9px;
+    letter-spacing:.15em;
+    margin:15px 10px 8px;
+}
+.nav-link{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 12px;
+    margin:3px 0;
+    border-radius:9px;
+    color:#77859a;
+    font-size:12px;
+}
+.nav-link:hover{
+    background:#111a29;
+    color:#fff;
+}
+.nav-link.active{
+    background:#15233b;
+    color:#79a7ff;
+}
+.icon{width:18px;text-align:center}
+.sidebar-bottom{
+    margin-top:30px;
+    padding-top:15px;
+    border-top:1px solid #182437;
+}
+
+/* =========================
+   MAIN
+========================= */
+.main{
+    margin-left:245px;
+    padding:28px;
+}
+.container{
+    width:min(1400px,100%);
+    margin:auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    margin-bottom:22px;
+}
+.title h1{
+    font-size:28px;
+    letter-spacing:-.04em;
+}
+.title p{
+    color:#65738a;
+    font-size:11px;
+    margin-top:5px;
+}
+.status{
+    color:#35d58a;
+    font-size:9px;
+    font-weight:900;
+    padding-top:7px;
+}
+
+/* =========================
+   STATS
+========================= */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+.stat{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:13px;
+    padding:15px;
+}
+.stat-label{
+    color:#65738a;
+    font-size:8px;
+    font-weight:900;
+    letter-spacing:.08em;
+}
+.stat-value{
+    margin-top:7px;
+    font-size:22px;
+    font-weight:900;
+}
+
+/* =========================
+   PANELS
+========================= */
+.panel{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+    padding:17px;
+    margin-bottom:15px;
+}
+.panel-title{
+    font-size:12px;
+    font-weight:900;
+    margin-bottom:13px;
+}
+.section-note{
+    color:#65738a;
+    font-size:9px;
+    margin-top:-7px;
+    margin-bottom:14px;
+}
+
+/* =========================
+   FORM
+========================= */
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+}
+.input,.select{
+    width:100%;
+    padding:11px;
+    border-radius:9px;
+    border:1px solid #1d2b40;
+    background:#090f19;
+    color:#dce3ed;
+    outline:none;
+    font-size:10px;
+}
+.input:focus,.select:focus{
+    border-color:#3a6097;
+}
+.btn{
+    padding:11px;
+    border-radius:9px;
+    border:1px solid #315d99;
+    background:#17315c;
+    color:#82b0ff;
+    font-size:9px;
+    font-weight:900;
+}
+.btn:hover{background:#20457e}
+
+.subject-entry{
+    margin-top:15px;
+    padding-top:15px;
+    border-top:1px solid #1b2638;
+}
+.subject-entry h3{
+    font-size:10px;
+    margin-bottom:9px;
+    color:#aeb9c9;
+}
+.subject-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+}
+
+/* =========================
+   ANALYTICS
+========================= */
+.analytics-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:15px;
+}
+.analytics-card{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+    padding:16px;
+}
+.analytics-title{
+    color:#7b899d;
+    font-size:9px;
+    font-weight:900;
+    margin-bottom:12px;
+}
+.data-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    padding:10px 0;
+    border-bottom:1px solid #172236;
+}
+.data-row:last-child{border-bottom:none}
+.data-name{font-size:10px;font-weight:700}
+.data-meta{
+    margin-top:3px;
+    color:#5f6e82;
+    font-size:8px;
+}
+.data-value{
+    color:#79a7ff;
+    font-size:11px;
+    font-weight:900;
+}
+
+/* =========================
+   FILTER
+========================= */
+.filter-grid{
+    display:grid;
+    grid-template-columns:1fr 170px 170px;
+    gap:8px;
+}
+
+/* =========================
+   TEST LIST
+========================= */
+.test-list{
+    display:grid;
+    gap:10px;
+}
+.test-card{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:14px;
+    padding:16px;
+}
+.test-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+}
+.test-name{
+    font-size:14px;
+    font-weight:900;
+}
+.test-meta{
+    color:#65748a;
+    font-size:8px;
+    margin-top:5px;
+}
+.badge{
+    display:inline-block;
+    padding:6px 8px;
+    border-radius:7px;
+    background:#15233b;
+    color:#82b0ff;
+    font-size:7px;
+    font-weight:900;
+}
+.score-box{
+    text-align:right;
+}
+.score-main{
+    font-size:21px;
+    font-weight:900;
+}
+.score-label{
+    color:#65748a;
+    font-size:8px;
+    margin-top:3px;
+}
+.test-metrics{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+    margin-top:15px;
+}
+.metric{
+    background:#090f19;
+    border:1px solid #172236;
+    border-radius:9px;
+    padding:10px;
+}
+.metric-label{
+    color:#65738a;
+    font-size:7px;
+    font-weight:900;
+}
+.metric-value{
+    margin-top:5px;
+    font-size:13px;
+    font-weight:900;
+}
+
+/* =========================
+   SUBJECT BREAKDOWN
+========================= */
+.subject-breakdown{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-top:12px;
+}
+.subject-box{
+    padding:11px;
+    border:1px solid #172236;
+    border-radius:10px;
+    background:#090f19;
+}
+.subject-name{
+    font-size:9px;
+    font-weight:900;
+}
+.subject-stats{
+    margin-top:8px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:5px;
+}
+.mini{
+    color:#66758a;
+    font-size:7px;
+}
+.mini b{
+    display:block;
+    color:#dce3ed;
+    margin-top:2px;
+    font-size:10px;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+.actions{
+    display:flex;
+    gap:7px;
+    margin-top:13px;
+}
+.delete-btn{
+    padding:8px 10px;
+    border-radius:7px;
+    border:1px solid #4a2230;
+    background:#1b1118;
+    color:#ff7787;
+    font-size:8px;
+    font-weight:900;
+}
+.action-btn{
+    padding:8px 10px;
+    border-radius:7px;
+    border:1px solid #25354d;
+    background:#111a29;
+    color:#8fa2bb;
+    font-size:8px;
+    font-weight:900;
+}
+
+/* =========================
+   EMPTY
+========================= */
+.empty{
+    display:none;
+    text-align:center;
+    padding:55px 20px;
+    color:#59677b;
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+.mobile-menu{
+    display:none;
+    position:fixed;
+    right:15px;
+    top:15px;
+    width:40px;height:40px;
+    border-radius:10px;
+    border:1px solid #27364c;
+    background:#0d1420;
+    color:white;
+    z-index:200;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:1200px){
+    .stats{grid-template-columns:repeat(3,1fr)}
+    .analytics-grid{grid-template-columns:1fr}
+}
+@media(max-width:900px){
+    .form-grid{grid-template-columns:repeat(2,1fr)}
+    .subject-grid{grid-template-columns:repeat(3,1fr)}
+    .test-metrics{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:750px){
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+    .sidebar.open{transform:translateX(0)}
+    .mobile-menu{display:block}
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+    .topbar{padding-right:50px}
+    .form-grid,
+    .filter-grid,
+    .subject-grid{
+        grid-template-columns:1fr;
+    }
+    .subject-breakdown{
+        grid-template-columns:1fr;
+    }
+}
+@media(max-width:500px){
+    .stats{grid-template-columns:1fr 1fr}
+    .test-top{flex-direction:column}
+    .score-box{text-align:left}
+    .test-metrics{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="sidebar" id="sidebar">
+
+<a href="index.html" class="logo">
+    <div class="logo-box">V</div>
+    <div class="logo-text">VIJAY<span>.JEE</span></div>
+</a>
+
+<div class="nav-title">COMMAND</div>
+
+<a href="dashboard.html" class="nav-link">
+    <span class="icon">⌂</span> Dashboard
+</a>
+
+<a href="daily-target.html" class="nav-link">
+    <span class="icon">✓</span> Daily Mission
+</a>
+
+<div class="nav-title">PREPARATION</div>
+
+<a href="syllabus.html" class="nav-link">
+    <span class="icon">▣</span> Syllabus
+</a>
+
+<a href="backlog.html" class="nav-link">
+    <span class="icon">◫</span> Backlog
+</a>
+
+<a href="revision.html" class="nav-link">
+    <span class="icon">↻</span> Revision
+</a>
+
+<a href="questions.html" class="nav-link">
+    <span class="icon">?</span> Questions
+</a>
+
+<a href="pyq-tracker.html" class="nav-link">
+    <span class="icon">◷</span> PYQ Tracker
+</a>
+
+<a href="mistakes.html" class="nav-link">
+    <span class="icon">!</span> Mistake Book
+</a>
+
+<div class="nav-title">TESTING</div>
+
+<a href="mock-tests.html" class="nav-link active">
+    <span class="icon">▤</span> Mock Tests
+</a>
+
+<a href="analytics.html" class="nav-link">
+    <span class="icon">⌁</span> Analytics
+</a>
+
+<div class="nav-title">PERSONAL</div>
+
+<a href="journal.html" class="nav-link">
+    <span class="icon">✎</span> Journal
+</a>
+
+<a href="achievements.html" class="nav-link">
+    <span class="icon">★</span> Achievements
+</a>
+
+<div class="sidebar-bottom">
+    <a href="settings.html" class="nav-link">
+        <span class="icon">⚙</span> Settings
+    </a>
+    <a href="index.html" class="nav-link">
+        <span class="icon">←</span> Home
+    </a>
+</div>
+
+</aside>
+
+<button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+
+
+<!-- ================= MAIN ================= -->
+<main class="main">
+<div class="container">
+
+<div class="topbar">
+    <div class="title">
+        <h1>Mock Test Intelligence</h1>
+        <p>Measure performance. Find weaknesses. Upgrade strategy.</p>
+    </div>
+    <div class="status">● PERFORMANCE TRACKING ACTIVE</div>
+</div>
+
+
+<!-- ================= STATS ================= -->
+<section class="stats">
+
+<div class="stat">
+    <div class="stat-label">TESTS TAKEN</div>
+    <div class="stat-value" id="totalTests">0</div>
+</div>
+
+<div class="stat">
+    <div class="stat-label">AVERAGE SCORE</div>
+    <div class="stat-value" id="averageScore">0%</div>
+</div>
+
+<div class="stat">
+    <div class="stat-label">BEST SCORE</div>
+    <div class="stat-value" id="bestScore">0%</div>
+</div>
+
+<div class="stat">
+    <div class="stat-label">LATEST SCORE</div>
+    <div class="stat-value" id="latestScore">0%</div>
+</div>
+
+<div class="stat">
+    <div class="stat-label">AVERAGE ACCURACY</div>
+    <div class="stat-value" id="averageAccuracy">0%</div>
+</div>
+
+<div class="stat">
+    <div class="stat-label">IMPROVEMENT</div>
+    <div class="stat-value" id="improvement">0%</div>
+</div>
+
+</section>
+
+
+<!-- ================= ADD TEST ================= -->
+<section class="panel">
+
+<div class="panel-title">ADD MOCK TEST</div>
+<div class="section-note">
+Enter exact data after every serious test. The quality of your analysis depends on the quality of your data.
+</div>
+
+<div class="form-grid">
+
+<input id="testName" class="input" placeholder="Test name">
+
+<select id="testType" class="select">
+    <option value="JEE Main">JEE Main</option>
+    <option value="JEE Advanced">JEE Advanced</option>
+    <option value="Full Test">Full Test</option>
+    <option value="Part Test">Part Test</option>
+    <option value="Subject Test">Subject Test</option>
+</select>
+
+<input id="testDate" type="date" class="input">
+
+<input id="totalMarks" type="number" min="1" class="input" placeholder="Total marks">
+
+<input id="obtainedMarks" type="number" class="input" placeholder="Obtained marks">
+
+<input id="totalQuestions" type="number" min="1" class="input" placeholder="Total questions">
+
+<input id="attemptedQuestions" type="number" min="0" class="input" placeholder="Attempted questions">
+
+<input id="correctQuestions" type="number" min="0" class="input" placeholder="Correct questions">
+
+<input id="wrongQuestions" type="number" min="0" class="input" placeholder="Wrong questions">
+
+<input id="timeSpent" type="number" min="0" class="input" placeholder="Time spent (minutes)">
+
+</div>
+
+
+<!-- PHYSICS -->
+<div class="subject-entry">
+
+<h3>PHYSICS PERFORMANCE</h3>
+
+<div class="subject-grid">
+
+<input id="pMarks" type="number" class="input" placeholder="Marks">
+
+<input id="pAttempted" type="number" min="0" class="input" placeholder="Attempted">
+
+<input id="pCorrect" type="number" min="0" class="input" placeholder="Correct">
+
+<input id="pWrong" type="number" min="0" class="input" placeholder="Wrong">
+
+<input id="pTotal" type="number" min="0" class="input" placeholder="Total Questions">
+
+</div>
+
+</div>
+
+
+<!-- CHEMISTRY -->
+<div class="subject-entry">
+
+<h3>CHEMISTRY PERFORMANCE</h3>
+
+<div class="subject-grid">
+
+<input id="cMarks" type="number" class="input" placeholder="Marks">
+
+<input id="cAttempted" type="number" min="0" class="input" placeholder="Attempted">
+
+<input id="cCorrect" type="number" min="0" class="input" placeholder="Correct">
+
+<input id="cWrong" type="number" min="0" class="input" placeholder="Wrong">
+
+<input id="cTotal" type="number" min="0" class="input" placeholder="Total Questions">
+
+</div>
+
+</div>
+
+
+<!-- MATHS -->
+<div class="subject-entry">
+
+<h3>MATHEMATICS PERFORMANCE</h3>
+
+<div class="subject-grid">
+
+<input id="mMarks" type="number" class="input" placeholder="Marks">
+
+<input id="mAttempted" type="number" min="0" class="input" placeholder="Attempted">
+
+<input id="mCorrect" type="number" min="0" class="input" placeholder="Correct">
+
+<input id="mWrong" type="number" min="0" class="input" placeholder="Wrong">
+
+<input id="mTotal" type="number" min="0" class="input" placeholder="Total Questions">
+
+</div>
+
+</div>
+
+<div style="margin-top:15px;">
+<button class="btn" onclick="addTest()">SAVE TEST PERFORMANCE</button>
+</div>
+
+</section>
+
+
+<!-- ================= INTELLIGENCE ================= -->
+<section class="analytics-grid">
+
+<div class="analytics-card">
+    <div class="analytics-title">SUBJECT PERFORMANCE</div>
+    <div id="subjectAnalytics"></div>
+</div>
+
+<div class="analytics-card">
+    <div class="analytics-title">STRONGEST / WEAKEST</div>
+    <div id="strengthAnalytics"></div>
+</div>
+
+<div class="analytics-card">
+    <div class="analytics-title">NEXT TEST TARGET</div>
+    <div id="targetAnalytics"></div>
+</div>
+
+</section>
+
+
+<!-- ================= HISTORY ================= -->
+<section class="panel">
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px;">
+
+<div class="panel-title" style="margin:0;">TEST HISTORY</div>
+
+<button class="delete-btn" onclick="clearAllTests()">CLEAR ALL</button>
+
+</div>
+
+<div class="filter-grid">
+
+<input id="search" class="input" placeholder="Search test name..." oninput="render()">
+
+<select id="filterType" class="select" onchange="render()">
+    <option value="all">All Test Types</option>
+    <option value="JEE Main">JEE Main</option>
+    <option value="JEE Advanced">JEE Advanced</option>
+    <option value="Full Test">Full Test</option>
+    <option value="Part Test">Part Test</option>
+    <option value="Subject Test">Subject Test</option>
+</select>
+
+<select id="sortTests" class="select" onchange="render()">
+    <option value="newest">Newest First</option>
+    <option value="oldest">Oldest First</option>
+    <option value="highest">Highest Score</option>
+    <option value="lowest">Lowest Score</option>
+</select>
+
+</div>
+
+</section>
+
+
+<section class="test-list" id="testList"></section>
+
+<div class="empty" id="empty">
+No mock tests recorded yet. Your performance intelligence system starts with your first test.
+</div>
+
+<div style="text-align:center;color:#48566a;font-size:9px;padding:22px 0;">
+Vijay's IIT JEE 2027 Command Center • Mock Test Intelligence
+</div>
+
+</div>
+</main>
+
+
+<script>
+
+/* =========================
+   STORAGE
+========================= */
+
+const STORAGE_KEY = "vijayJEEMockTests";
+
+function loadTests(){
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if(saved){
+        try{
+            return JSON.parse(saved);
+        }catch(error){
+            return [];
+        }
+    }
+
+    return [];
+}
+
+function saveTests(data){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function value(id){
+    return document.getElementById(id).value.trim();
+}
+
+function numberValue(id){
+    const val = document.getElementById(id).value;
+    return val === "" ? 0 : Number(val);
+}
+
+function percentage(value,total){
+    if(!total || total <= 0) return 0;
+    return Math.round((value / total) * 100);
+}
+
+function accuracy(correct,attempted){
+    if(!attempted || attempted <= 0) return 0;
+    return Math.round((correct / attempted) * 100);
+}
+
+
+/* =========================
+   SUBJECT OBJECT
+========================= */
+
+function subjectData(prefix){
+
+    return {
+        marks:numberValue(prefix + "Marks"),
+        attempted:numberValue(prefix + "Attempted"),
+        correct:numberValue(prefix + "Correct"),
+        wrong:numberValue(prefix + "Wrong"),
+        total:numberValue(prefix + "Total")
+    };
+
+}
+
+
+/* =========================
+   ADD TEST
+========================= */
+
+function addTest(){
+
+    const testName = value("testName");
+    const totalMarks = numberValue("totalMarks");
+    const obtainedMarks = numberValue("obtainedMarks");
+    const totalQuestions = numberValue("totalQuestions");
+    const attempted = numberValue("attemptedQuestions");
+    const correct = numberValue("correctQuestions");
+    const wrong = numberValue("wrongQuestions");
+
+    if(!testName){
+        alert("Please enter the test name.");
+        return;
+    }
+
+    if(totalMarks <= 0){
+        alert("Total marks must be greater than zero.");
+        return;
+    }
+
+    if(totalQuestions <= 0){
+        alert("Total questions must be greater than zero.");
+        return;
+    }
+
+    if(attempted > totalQuestions){
+        alert("Attempted questions cannot exceed total questions.");
+        return;
+    }
+
+    if(correct + wrong > attempted){
+        alert("Correct + Wrong cannot exceed Attempted questions.");
+        return;
+    }
+
+    const test = {
+        id:Date.now(),
+        name:testName,
+        type:value("testType"),
+        date:value("testDate") || new Date().toISOString().split("T")[0],
+
+        totalMarks,
+        obtainedMarks,
+
+        totalQuestions,
+        attempted,
+        correct,
+        wrong,
+
+        timeSpent:numberValue("timeSpent"),
+
+        physics:subjectData("p"),
+        chemistry:subjectData("c"),
+        mathematics:subjectData("m")
+    };
+
+    const data = loadTests();
+
+    data.unshift(test);
+
+    saveTests(data);
+
+    clearForm();
+
+    render();
+}
+
+
+/* =========================
+   CLEAR FORM
+========================= */
+
+function clearForm(){
+
+    const ids = [
+        "testName",
+        "totalMarks",
+        "obtainedMarks",
+        "totalQuestions",
+        "attemptedQuestions",
+        "correctQuestions",
+        "wrongQuestions",
+        "timeSpent",
+
+        "pMarks",
+        "pAttempted",
+        "pCorrect",
+        "pWrong",
+        "pTotal",
+
+        "cMarks",
+        "cAttempted",
+        "cCorrect",
+        "cWrong",
+        "cTotal",
+
+        "mMarks",
+        "mAttempted",
+        "mCorrect",
+        "mWrong",
+        "mTotal"
+    ];
+
+    ids.forEach(id=>{
+        document.getElementById(id).value = "";
+    });
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteTest(id){
+
+    const data = loadTests()
+        .filter(test => test.id !== id);
+
+    saveTests(data);
+
+    render();
+}
+
+
+/* =========================
+   CLEAR ALL
+========================= */
+
+function clearAllTests(){
+
+    if(!confirm("Delete all mock test data?")){
+        return;
+    }
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    render();
+}
+
+
+/* =========================
+   FILTER / SORT
+========================= */
+
+function filteredTests(){
+
+    let data = [...loadTests()];
+
+    const search = value("search").toLowerCase();
+    const type = value("filterType");
+    const sort = value("sortTests");
+
+    if(search){
+        data = data.filter(test =>
+            test.name.toLowerCase().includes(search)
+        );
+    }
+
+    if(type !== "all"){
+        data = data.filter(test =>
+            test.type === type
+        );
+    }
+
+    data.sort((a,b)=>{
+
+        const aScore = percentage(a.obtainedMarks,a.totalMarks);
+        const bScore = percentage(b.obtainedMarks,b.totalMarks);
+
+        if(sort === "oldest"){
+            return new Date(a.date) - new Date(b.date);
+        }
+
+        if(sort === "highest"){
+            return bScore - aScore;
+        }
+
+        if(sort === "lowest"){
+            return aScore - bScore;
+        }
+
+        return new Date(b.date) - new Date(a.date);
+    });
+
+    return data;
+}
+
+
+/* =========================
+   MAIN STATS
+========================= */
+
+function updateStats(data){
+
+    const total = data.length;
+
+    const scores = data.map(test =>
+        percentage(test.obtainedMarks,test.totalMarks)
+    );
+
+    const averageScore = total
+        ? Math.round(scores.reduce((a,b)=>a+b,0) / total)
+        : 0;
+
+    const bestScore = total
+        ? Math.max(...scores)
+        : 0;
+
+    const latestScore = total
+        ? percentage(data[0].obtainedMarks,data[0].totalMarks)
+        : 0;
+
+    const accuracies = data.map(test =>
+        accuracy(test.correct,test.attempted)
+    );
+
+    const averageAccuracy = total
+        ? Math.round(
+            accuracies.reduce((a,b)=>a+b,0) / total
+        )
+        : 0;
+
+    let improvement = 0;
+
+    if(total >= 2){
+
+        const newest =
+        percentage(
+            data[0].obtainedMarks,
+            data[0].totalMarks
+        );
+
+        const oldest =
+        percentage(
+            data[total-1].obtainedMarks,
+            data[total-1].totalMarks
+        );
+
+        improvement =
+        newest - oldest;
+    }
+
+    document.getElementById("totalTests").textContent =
+        total;
+
+    document.getElementById("averageScore").textContent =
+        averageScore + "%";
+
+    document.getElementById("bestScore").textContent =
+        bestScore + "%";
+
+    document.getElementById("latestScore").textContent =
+        latestScore + "%";
+
+    document.getElementById("averageAccuracy").textContent =
+        averageAccuracy + "%";
+
+    document.getElementById("improvement").textContent =
+        (improvement > 0 ? "+" : "") +
+        improvement + "%";
+
+    syncDashboard({
+        totalTests:total,
+        averageTestScore:averageScore,
+        bestTestScore:bestScore,
+        latestTestScore:latestScore,
+        averageTestAccuracy:averageAccuracy
+    });
+}
+
+
+/* =========================
+   SUBJECT ANALYTICS
+========================= */
+
+function getSubjectAverages(data){
+
+    const subjects = {
+        Physics:[],
+        Chemistry:[],
+        Mathematics:[]
+    };
+
+    data.forEach(test=>{
+
+        subjects.Physics.push(
+            accuracy(
+                test.physics.correct,
+                test.physics.attempted
+            )
+        );
+
+        subjects.Chemistry.push(
+            accuracy(
+                test.chemistry.correct,
+                test.chemistry.attempted
+            )
+        );
+
+        subjects.Mathematics.push(
+            accuracy(
+                test.mathematics.correct,
+                test.mathematics.attempted
+            )
+        );
+    });
+
+    const result = {};
+
+    Object.keys(subjects).forEach(subject=>{
+
+        const values = subjects[subject];
+
+        result[subject] =
+        values.length
+        ? Math.round(
+            values.reduce((a,b)=>a+b,0) /
+            values.length
+        )
+        : 0;
+    });
+
+    return result;
+}
+
+function renderSubjectAnalytics(data){
+
+    const averages =
+    getSubjectAverages(data);
+
+    let html = "";
+
+    Object.entries(averages)
+    .forEach(([subject,score])=>{
+
+        html += `
+        <div class="data-row">
+            <div>
+                <div class="data-name">${subject}</div>
+                <div class="data-meta">Average accuracy</div>
+            </div>
+            <div class="data-value">${score}%</div>
+        </div>
+        `;
+    });
+
+    document.getElementById(
+        "subjectAnalytics"
+    ).innerHTML = html;
+}
+
+
+/* =========================
+   STRENGTH ANALYTICS
+========================= */
+
+function renderStrengthAnalytics(data){
+
+    const averages =
+    getSubjectAverages(data);
+
+    const entries =
+    Object.entries(averages);
+
+    const strongest =
+    entries.reduce((a,b)=>
+        a[1] > b[1] ? a : b
+    );
+
+    const weakest =
+    entries.reduce((a,b)=>
+        a[1] < b[1] ? a : b
+    );
+
+    let html = `
+    <div class="data-row">
+        <div>
+            <div class="data-name">STRONGEST</div>
+            <div class="data-meta">${strongest[0]}</div>
+        </div>
+        <div class="data-value">${strongest[1]}%</div>
+    </div>
+
+    <div class="data-row">
+        <div>
+            <div class="data-name">WEAKEST</div>
+            <div class="data-meta">${weakest[0]}</div>
+        </div>
+        <div class="data-value">${weakest[1]}%</div>
+    </div>
+
+    <div class="data-row">
+        <div>
+            <div class="data-name">ACTION</div>
+            <div class="data-meta">
+                Increase ${weakest[0]} revision + targeted questions
+            </div>
+        </div>
+    </div>
+    `;
+
+    document.getElementById(
+        "strengthAnalytics"
+    ).innerHTML = html;
+}
+
+
+/* =========================
+   NEXT TARGET
+========================= */
+
+function renderTargetAnalytics(data){
+
+    if(data.length === 0){
+
+        document.getElementById(
+            "targetAnalytics"
+        ).innerHTML = `
+        <div class="data-row">
+            <div class="data-name">
+                Take your first serious mock test.
+            </div>
+        </div>
+        `;
+
+        return;
+    }
+
+    const latest = data[0];
+
+    const score =
+    percentage(
+        latest.obtainedMarks,
+        latest.totalMarks
+    );
+
+    const nextTarget =
+    Math.min(
+        100,
+        score + 5
+    );
+
+    const latestAccuracy =
+    accuracy(
+        latest.correct,
+        latest.attempted
+    );
+
+    const accuracyTarget =
+    Math.min(
+        100,
+        latestAccuracy + 3
+    );
+
+    const html = `
+    <div class="data-row">
+        <div>
+            <div class="data-name">NEXT SCORE TARGET</div>
+            <div class="data-meta">
+                Current: ${score}%
+            </div>
+        </div>
+        <div class="data-value">${nextTarget}%</div>
+    </div>
+
+    <div class="data-row">
+        <div>
+            <div class="data-name">ACCURACY TARGET</div>
+            <div class="data-meta">
+                Current: ${latestAccuracy}%
+            </div>
+        </div>
+        <div class="data-value">${accuracyTarget}%</div>
+    </div>
+
+    <div class="data-row">
+        <div>
+            <div class="data-name">PRIMARY FOCUS</div>
+            <div class="data-meta">
+                Fix wrong questions before increasing attempts.
+            </div>
+        </div>
+    </div>
+    `;
+
+    document.getElementById(
+        "targetAnalytics"
+    ).innerHTML = html;
+}
+
+
+/* =========================
+   SUBJECT CARD
+========================= */
+
+function subjectCard(name,data){
+
+    const subjectAccuracy =
+    accuracy(
+        data.correct,
+        data.attempted
+    );
+
+    return `
+    <div class="subject-box">
+
+        <div class="subject-name">
+            ${name}
+        </div>
+
+        <div class="subject-stats">
+
+            <div class="mini">
+                Marks
+                <b>${data.marks}</b>
+            </div>
+
+            <div class="mini">
+                Accuracy
+                <b>${subjectAccuracy}%</b>
+            </div>
+
+            <div class="mini">
+                Correct
+                <b>${data.correct}</b>
+            </div>
+
+            <div class="mini">
+                Wrong
+                <b>${data.wrong}</b>
+            </div>
+
+        </div>
+
+    </div>
+    `;
+}
+
+
+/* =========================
+   RENDER TESTS
+========================= */
+
+function renderTests(){
+
+    const data =
+    filteredTests();
+
+    const list =
+    document.getElementById(
+        "testList"
+    );
+
+    list.innerHTML = "";
+
+    document.getElementById(
+        "empty"
+    ).style.display =
+    data.length
+    ? "none"
+    : "block";
+
+
+    data.forEach(test=>{
+
+        const score =
+        percentage(
+            test.obtainedMarks,
+            test.totalMarks
+        );
+
+        const testAccuracy =
+        accuracy(
+            test.correct,
+            test.attempted
+        );
+
+        const attemptRate =
+        percentage(
+            test.attempted,
+            test.totalQuestions
+        );
+
+        const unattempted =
+        Math.max(
+            0,
+            test.totalQuestions -
+            test.attempted
+        );
+
+        const negativeDamage =
+        test.wrong;
+
+
+        const element =
+        document.createElement(
+            "article"
+        );
+
+        element.className =
+        "test-card";
+
+
+        element.innerHTML = `
+
+        <div class="test-top">
+
+            <div>
+
+                <div class="test-name">
+                    ${escapeHTML(test.name)}
+                </div>
+
+                <div class="test-meta">
+                    ${test.date}
+                    • ${test.timeSpent} min
+                </div>
+
+            </div>
+
+
+            <div class="score-box">
+
+                <span class="badge">
+                    ${test.type}
+                </span>
+
+                <div class="score-main">
+                    ${test.obtainedMarks}/${test.totalMarks}
+                </div>
+
+                <div class="score-label">
+                    SCORE: ${score}%
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="test-metrics">
+
+            <div class="metric">
+                <div class="metric-label">ACCURACY</div>
+                <div class="metric-value">
+                    ${testAccuracy}%
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">ATTEMPT RATE</div>
+                <div class="metric-value">
+                    ${attemptRate}%
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">CORRECT</div>
+                <div class="metric-value">
+                    ${test.correct}
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">WRONG</div>
+                <div class="metric-value">
+                    ${test.wrong}
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">UNATTEMPTED</div>
+                <div class="metric-value">
+                    ${unattempted}
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="subject-breakdown">
+
+            ${subjectCard(
+                "Physics",
+                test.physics
+            )}
+
+            ${subjectCard(
+                "Chemistry",
+                test.chemistry
+            )}
+
+            ${subjectCard(
+                "Mathematics",
+                test.mathematics
+            )}
+
+        </div>
+
+
+        <div class="actions">
+
+            <button class="action-btn">
+                NEGATIVE DAMAGE:
+                ${negativeDamage} WRONG
+            </button>
+
+            <button
+            class="delete-btn"
+            onclick="deleteTest(${test.id})">
+
+                DELETE
+
+            </button>
+
+        </div>
+
+        `;
+
+
+        list.appendChild(
+            element
+        );
+
+    });
+
+}
+
+
+/* =========================
+   DASHBOARD SYNC
+========================= */
+
+function syncDashboard(values){
+
+    const KEY =
+    "vijayJEEDashboard";
+
+    let dashboard = {};
+
+    const saved =
+    localStorage.getItem(KEY);
+
+    if(saved){
+        try{
+            dashboard =
+            JSON.parse(saved);
+        }catch(error){}
+    }
+
+    Object.assign(
+        dashboard,
+        values
+    );
+
+    localStorage.setItem(
+        KEY,
+        JSON.stringify(dashboard)
+    );
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+function toggleSidebar(){
+
+    document
+    .getElementById("sidebar")
+    .classList
+    .toggle("open");
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHTML(value){
+
+    return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+/* =========================
+   MAIN RENDER
+========================= */
+
+function render(){
+
+    const data =
+    loadTests();
+
+    updateStats(data);
+
+    renderSubjectAnalytics(data);
+
+    renderStrengthAnalytics(data);
+
+    renderTargetAnalytics(data);
+
+    renderTests();
+}
+
+
+/* =========================
+   START
+========================= */
+
+document
+.getElementById("testDate")
+.value =
+new Date()
+.toISOString()
+.split("T")[0];
+
+render();
+
+</script>
+
+</body>
+</html>
+```
