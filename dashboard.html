@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b14">
+
+<title>JEE Command Center | Dashboard</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#070b14;
+    color:#f5f7fb;
+    min-height:100vh;
+}
+
+button,input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.app{
+    display:flex;
+    min-height:100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    width:245px;
+    background:#0a101a;
+    border-right:1px solid #1b2638;
+    padding:22px 14px;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    overflow-y:auto;
+    z-index:50;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px 25px;
+    font-weight:800;
+}
+
+.logo-box{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#3478ff,#7b4dff);
+}
+
+.logo-text{
+    font-size:14px;
+}
+
+.logo-text span{
+    color:#69778c;
+}
+
+.nav-title{
+    font-size:9px;
+    color:#56657a;
+    letter-spacing:.15em;
+    margin:15px 10px 8px;
+}
+
+.nav-link{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 12px;
+    margin:3px 0;
+    border-radius:9px;
+    color:#77859a;
+    font-size:12px;
+    transition:.2s;
+}
+
+.nav-link:hover{
+    background:#111a29;
+    color:#fff;
+}
+
+.nav-link.active{
+    background:#15233b;
+    color:#79a7ff;
+}
+
+.nav-link .icon{
+    width:18px;
+    text-align:center;
+}
+
+.sidebar-bottom{
+    margin-top:30px;
+    border-top:1px solid #182437;
+    padding-top:15px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:245px;
+    width:calc(100% - 245px);
+    padding:25px;
+}
+
+.container{
+    width:min(1250px,100%);
+    margin:auto;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.page-title h1{
+    font-size:25px;
+    letter-spacing:-.03em;
+}
+
+.page-title p{
+    color:#65738a;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color:#35d58a;
+    font-size:10px;
+    font-weight:700;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+    background:#35d58a;
+    border-radius:50%;
+}
+
+/* =========================
+   COUNTDOWN
+========================= */
+
+.countdown-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.count-card{
+    background:linear-gradient(145deg,#101a2a,#0b111c);
+    border:1px solid #202d42;
+    border-radius:16px;
+    padding:20px;
+}
+
+.count-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.count-label{
+    color:#718097;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.13em;
+}
+
+.count-target{
+    color:#6f9fff;
+    font-size:10px;
+}
+
+.count-number{
+    font-size:32px;
+    font-weight:800;
+    margin-top:12px;
+    letter-spacing:-.04em;
+}
+
+.count-sub{
+    color:#59677b;
+    font-size:9px;
+    margin-top:3px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:13px;
+    padding:17px;
+}
+
+.stat-name{
+    color:#647289;
+    font-size:9px;
+    font-weight:700;
+}
+
+.stat-value{
+    font-size:23px;
+    font-weight:800;
+    margin-top:8px;
+}
+
+.stat-note{
+    color:#58667b;
+    font-size:9px;
+    margin-top:3px;
+}
+
+/* =========================
+   MAIN GRID
+========================= */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:1.35fr .65fr;
+    gap:15px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:15px;
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.card-title{
+    font-size:13px;
+    font-weight:800;
+}
+
+.card-link{
+    color:#6d9eff;
+    font-size:9px;
+}
+
+.card-description{
+    color:#647289;
+    font-size:10px;
+}
+
+/* =========================
+   SUBJECTS
+========================= */
+
+.subject{
+    margin-bottom:18px;
+}
+
+.subject:last-child{
+    margin-bottom:0;
+}
+
+.subject-top{
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+    margin-bottom:7px;
+}
+
+.subject-name{
+    color:#b6c1d1;
+    font-weight:700;
+}
+
+.subject-percent{
+    color:#718097;
+}
+
+.bar{
+    width:100%;
+    height:7px;
+    background:#182438;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.fill{
+    height:100%;
+    width:0%;
+    border-radius:20px;
+    transition:width .4s;
+}
+
+.physics{
+    background:#5d9bff;
+}
+
+.chemistry{
+    background:#a16cff;
+}
+
+.maths{
+    background:#38c995;
+}
+
+/* =========================
+   DAILY MISSION
+========================= */
+
+.mission-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.mission-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px;
+    background:#0a111c;
+    border:1px solid #182437;
+    border-radius:10px;
+}
+
+.mission-check{
+    width:21px;
+    height:21px;
+    border-radius:6px;
+    border:1px solid #34445d;
+    background:#0c1421;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:transparent;
+    font-size:11px;
+    flex-shrink:0;
+    cursor:pointer;
+}
+
+.mission-item.done .mission-check{
+    background:#287d59;
+    border-color:#287d59;
+    color:white;
+}
+
+.mission-item.done .mission-text{
+    text-decoration:line-through;
+    color:#4f5c70;
+}
+
+.mission-text{
+    font-size:11px;
+    color:#9aa7b9;
+}
+
+.mission-time{
+    margin-left:auto;
+    color:#56657a;
+    font-size:9px;
+}
+
+/* =========================
+   GOAL
+========================= */
+
+.goal{
+    text-align:center;
+}
+
+.goal-ring{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    margin:10px auto 18px;
+    background:conic-gradient(#3478ff 0deg,#3478ff 0deg,#182438 0deg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+}
+
+.goal-ring::before{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    background:#0d1420;
+    border-radius:50%;
+}
+
+.goal-number{
+    position:relative;
+    z-index:2;
+    font-size:27px;
+    font-weight:800;
+}
+
+.goal-label{
+    color:#65738a;
+    font-size:9px;
+}
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.quick{
+    padding:13px 10px;
+    border-radius:10px;
+    border:1px solid #1b293d;
+    background:#0a111c;
+    color:#8190a5;
+    font-size:10px;
+    text-align:center;
+    transition:.2s;
+}
+
+.quick:hover{
+    border-color:#36527b;
+    color:#fff;
+    transform:translateY(-2px);
+}
+
+/* =========================
+   ALERT
+========================= */
+
+.alert{
+    border:1px solid #3a3030;
+    background:#151014;
+    border-radius:12px;
+    padding:13px;
+}
+
+.alert-title{
+    color:#e7a4a4;
+    font-size:10px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.alert-text{
+    color:#776c76;
+    font-size:9px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    color:#48566a;
+    font-size:9px;
+    text-align:center;
+    padding:20px 0;
+}
+
+/* =========================
+   MOBILE BUTTON
+========================= */
+
+.mobile-menu{
+    display:none;
+    position:fixed;
+    right:15px;
+    top:15px;
+    z-index:100;
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    border:1px solid #27364c;
+    background:#0d1420;
+    color:white;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+        width:100%;
+        padding:18px;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .countdown-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .topbar{
+        padding-right:50px;
+    }
+}
+
+@media(max-width:450px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .count-number{
+        font-size:27px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-box">V</div>
+
+        <div class="logo-text">
+            VIJAY<span>.JEE</span>
+        </div>
+
+    </a>
+
+
+    <div class="nav-title">
+        COMMAND
+    </div>
+
+    <a href="dashboard.html" class="nav-link active">
+        <span class="icon">⌂</span>
+        Dashboard
+    </a>
+
+    <a href="daily-target.html" class="nav-link">
+        <span class="icon">✓</span>
+        Daily Mission
+    </a>
+
+
+    <div class="nav-title">
+        PREPARATION
+    </div>
+
+    <a href="syllabus.html" class="nav-link">
+        <span class="icon">▣</span>
+        Syllabus
+    </a>
+
+    <a href="backlog.html" class="nav-link">
+        <span class="icon">◫</span>
+        Backlog
+    </a>
+
+    <a href="revision.html" class="nav-link">
+        <span class="icon">↻</span>
+        Revision
+    </a>
+
+    <a href="questions.html" class="nav-link">
+        <span class="icon">?</span>
+        Questions
+    </a>
+
+    <a href="pyq-tracker.html" class="nav-link">
+        <span class="icon">◷</span>
+        PYQ Tracker
+    </a>
+
+    <a href="mistakes.html" class="nav-link">
+        <span class="icon">!</span>
+        Mistake Book
+    </a>
+
+
+    <div class="nav-title">
+        TESTING
+    </div>
+
+    <a href="mock-tests.html" class="nav-link">
+        <span class="icon">▤</span>
+        Mock Tests
+    </a>
+
+    <a href="analytics.html" class="nav-link">
+        <span class="icon">⌁</span>
+        Analytics
+    </a>
+
+
+    <div class="nav-title">
+        PERSONAL
+    </div>
+
+    <a href="journal.html" class="nav-link">
+        <span class="icon">✎</span>
+        Journal
+    </a>
+
+    <a href="achievements.html" class="nav-link">
+        <span class="icon">★</span>
+        Achievements
+    </a>
+
+
+    <div class="sidebar-bottom">
+
+        <a href="settings.html" class="nav-link">
+            <span class="icon">⚙</span>
+            Settings
+        </a>
+
+        <a href="index.html" class="nav-link">
+            <span class="icon">←</span>
+            Home
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- MOBILE MENU -->
+
+<button
+    class="mobile-menu"
+    onclick="toggleSidebar()"
+>
+    ☰
+</button>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+<div class="container">
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div class="page-title">
+
+            <h1>
+                Command Center
+            </h1>
+
+            <p id="todayDate">
+                Loading date...
+            </p>
+
+        </div>
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            SYSTEM ACTIVE
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         COUNTDOWNS
+    ====================================================== -->
+
+    <section class="countdown-grid">
+
+        <div class="count-card">
+
+            <div class="count-top">
+
+                <span class="count-label">
+                    JEE MAIN
+                </span>
+
+                <span class="count-target">
+                    2027
+                </span>
+
+            </div>
+
+            <div
+                class="count-number"
+                id="mainCountdown"
+            >
+                Calculating...
+            </div>
+
+            <div class="count-sub">
+                Estimated countdown — update exam date in Settings
+            </div>
+
+        </div>
+
+
+        <div class="count-card">
+
+            <div class="count-top">
+
+                <span class="count-label">
+                    JEE ADVANCED
+                </span>
+
+                <span class="count-target">
+                    2027
+                </span>
+
+            </div>
+
+            <div
+                class="count-number"
+                id="advancedCountdown"
+            >
+                Calculating...
+            </div>
+
+            <div class="count-sub">
+                Estimated countdown — update exam date in Settings
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STATS
+    ====================================================== -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-name">
+                OVERALL PROGRESS
+            </div>
+
+            <div
+                class="stat-value"
+                id="overallProgress"
+            >
+                0%
+            </div>
+
+            <div class="stat-note">
+                Syllabus mastery
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-name">
+                STUDY HOURS
+            </div>
+
+            <div
+                class="stat-value"
+                id="studyHours"
+            >
+                0h
+            </div>
+
+            <div class="stat-note">
+                Today's recorded time
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-name">
+                QUESTIONS
+            </div>
+
+            <div
+                class="stat-value"
+                id="questionCount"
+            >
+                0
+            </div>
+
+            <div class="stat-note">
+                Today's attempts
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-name">
+                ACCURACY
+            </div>
+
+            <div
+                class="stat-value"
+                id="accuracy"
+            >
+                0%
+            </div>
+
+            <div class="stat-note">
+                Today's accuracy
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-name">
+                STREAK
+            </div>
+
+            <div
+                class="stat-value"
+                id="streak"
+            >
+                0
+            </div>
+
+            <div class="stat-note">
+                Consecutive productive days
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DASHBOARD GRID
+    ====================================================== -->
+
+    <section class="dashboard-grid">
+
+        <!-- LEFT COLUMN -->
+
+        <div>
+
+            <!-- SUBJECT PROGRESS -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <div class="card-title">
+                            Subject Progress
+                        </div>
+
+                        <div class="card-description">
+                            Your current JEE preparation level
+                        </div>
+                    </div>
+
+                    <a
+                        href="syllabus.html"
+                        class="card-link"
+                    >
+                        OPEN SYLLABUS →
+                    </a>
+
+                </div>
+
+
+                <!-- PHYSICS -->
+
+                <div class="subject">
+
+                    <div class="subject-top">
+
+                        <span class="subject-name">
+                            Physics
+                        </span>
+
+                        <span
+                            class="subject-percent"
+                            id="physicsPercent"
+                        >
+                            0%
+                        </span>
+
+                    </div>
+
+                    <div class="bar">
+
+                        <div
+                            class="fill physics"
+                            id="physicsBar"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CHEMISTRY -->
+
+                <div class="subject">
+
+                    <div class="subject-top">
+
+                        <span class="subject-name">
+                            Chemistry
+                        </span>
+
+                        <span
+                            class="subject-percent"
+                            id="chemistryPercent"
+                        >
+                            0%
+                        </span>
+
+                    </div>
+
+                    <div class="bar">
+
+                        <div
+                            class="fill chemistry"
+                            id="chemistryBar"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MATHEMATICS -->
+
+                <div class="subject">
+
+                    <div class="subject-top">
+
+                        <span class="subject-name">
+                            Mathematics
+                        </span>
+
+                        <span
+                            class="subject-percent"
+                            id="mathsPercent"
+                        >
+                            0%
+                        </span>
+
+                    </div>
+
+                    <div class="bar">
+
+                        <div
+                            class="fill maths"
+                            id="mathsBar"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DAILY MISSION -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <div class="card-title">
+                            Today's Mission
+                        </div>
+
+                        <div class="card-description">
+                            Complete every important task.
+                        </div>
+
+                    </div>
+
+                    <a
+                        href="daily-target.html"
+                        class="card-link"
+                    >
+                        FULL MISSION →
+                    </a>
+
+                </div>
+
+
+                <div
+                    class="mission-list"
+                    id="missionList"
+                >
+
+                    <div class="mission-item">
+
+                        <div
+                            class="mission-check"
+                            onclick="completeMission(this)"
+                        >
+                            ✓
+                        </div>
+
+                        <div class="mission-text">
+                            Complete today's planned lectures
+                        </div>
+
+                        <div class="mission-time">
+                            STUDY
+                        </div>
+
+                    </div>
+
+
+                    <div class="mission-item">
+
+                        <div
+                            class="mission-check"
+                            onclick="completeMission(this)"
+                        >
+                            ✓
+                        </div>
+
+                        <div class="mission-text">
+                            Solve daily question target
+                        </div>
+
+                        <div class="mission-time">
+                            PRACTICE
+                        </div>
+
+                    </div>
+
+
+                    <div class="mission-item">
+
+                        <div
+                            class="mission-check"
+                            onclick="completeMission(this)"
+                        >
+                            ✓
+                        </div>
+
+                        <div class="mission-text">
+                            Revise today's concepts
+                        </div>
+
+                        <div class="mission-time">
+                            REVISION
+                        </div>
+
+                    </div>
+
+
+                    <div class="mission-item">
+
+                        <div
+                            class="mission-check"
+                            onclick="completeMission(this)"
+                        >
+                            ✓
+                        </div>
+
+                        <div class="mission-text">
+                            Review mistakes before sleeping
+                        </div>
+
+                        <div class="mission-time">
+                            REVIEW
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- WARNING -->
+
+            <div class="alert">
+
+                <div class="alert-title">
+                    ⚠ ACCOUNTABILITY CHECK
+                </div>
+
+                <div class="alert-text">
+
+                    A 2-digit AIR target requires consistency over
+                    months, not isolated high-output days.
+                    Use this dashboard to identify missed work
+                    instead of hiding it.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT COLUMN -->
+
+        <div>
+
+            <!-- DAILY GOAL -->
+
+            <div class="card goal">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+                        Today's Completion
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="goal-ring"
+                    id="goalRing"
+                >
+
+                    <div
+                        class="goal-number"
+                        id="goalPercent"
+                    >
+                        0%
+                    </div>
+
+                </div>
+
+
+                <div class="goal-label">
+                    DAILY MISSION COMPLETION
+                </div>
+
+            </div>
+
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+                        Quick Actions
+                    </div>
+
+                </div>
+
+
+                <div class="quick-grid">
+
+                    <a
+                        href="questions.html"
+                        class="quick"
+                    >
+                        + Questions
+                    </a>
+
+                    <a
+                        href="mock-tests.html"
+                        class="quick"
+                    >
+                        + Mock Test
+                    </a>
+
+                    <a
+                        href="mistakes.html"
+                        class="quick"
+                    >
+                        + Mistake
+                    </a>
+
+                    <a
+                        href="revision.html"
+                        class="quick"
+                    >
+                        + Revision
+                    </a>
+
+                    <a
+                        href="journal.html"
+                        class="quick"
+                    >
+                        + Journal
+                    </a>
+
+                    <a
+                        href="daily-target.html"
+                        class="quick"
+                    >
+                        + Mission
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- TARGET -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+                        Primary Target
+                    </div>
+
+                </div>
+
+                <div
+                    style="
+                    text-align:center;
+                    padding:15px 0 5px;
+                    "
+                >
+
+                    <div
+                        style="
+                        font-size:36px;
+                        font-weight:800;
+                        background:linear-gradient(135deg,#fff,#79a7ff);
+                        -webkit-background-clip:text;
+                        color:transparent;
+                        "
+                    >
+                        2-DIGIT
+                    </div>
+
+                    <div
+                        style="
+                        color:#65738a;
+                        font-size:9px;
+                        letter-spacing:.14em;
+                        margin-top:4px;
+                        "
+                    >
+                        AIR • IIT JEE
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SYSTEM -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+                        System Health
+                    </div>
+
+                </div>
+
+                <div
+                    style="
+                    display:flex;
+                    justify-content:space-between;
+                    padding:8px 0;
+                    border-bottom:1px solid #182437;
+                    "
+                >
+
+                    <span
+                        style="font-size:10px;color:#718097;"
+                    >
+                        Data Storage
+                    </span>
+
+                    <span
+                        style="font-size:10px;color:#35d58a;"
+                    >
+                        LOCAL
+                    </span>
+
+                </div>
+
+
+                <div
+                    style="
+                    display:flex;
+                    justify-content:space-between;
+                    padding:8px 0;
+                    border-bottom:1px solid #182437;
+                    "
+                >
+
+                    <span
+                        style="font-size:10px;color:#718097;"
+                    >
+                        Tracking
+                    </span>
+
+                    <span
+                        style="font-size:10px;color:#35d58a;"
+                    >
+                        ACTIVE
+                    </span>
+
+                </div>
+
+
+                <div
+                    style="
+                    display:flex;
+                    justify-content:space-between;
+                    padding:8px 0;
+                    "
+                >
+
+                    <span
+                        style="font-size:10px;color:#718097;"
+                    >
+                        Backup
+                    </span>
+
+                    <span
+                        style="font-size:10px;color:#e5b85e;"
+                    >
+                        SETTINGS
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+
+        Vijay's IIT JEE 2027 Command Center
+        •
+        Build evidence every day.
+
+    </div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   BASIC STORAGE ENGINE
+========================================================= */
+
+const STORAGE_KEY = "vijayJEEData";
+
+function getData(){
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if(saved){
+
+        try{
+            return JSON.parse(saved);
+        }catch(error){
+            console.log("Storage reset.");
+        }
+
+    }
+
+    return {
+
+        physics:0,
+
+        chemistry:0,
+
+        maths:0,
+
+        studyHours:0,
+
+        questions:0,
+
+        correct:0,
+
+        streak:0,
+
+        missions:[]
+
+    };
+
+}
+
+
+function saveData(data){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function showDate(){
+
+    const now = new Date();
+
+    const options = {
+        weekday:"long",
+        year:"numeric",
+        month:"long",
+        day:"numeric"
+    };
+
+    document.getElementById("todayDate")
+        .textContent =
+        now.toLocaleDateString(
+            "en-IN",
+            options
+        );
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+/*
+   These are placeholder planning dates.
+
+   IMPORTANT:
+   JEE 2027 official dates should be entered in Settings
+   once officially announced.
+*/
+
+const JEE_MAIN_DATE =
+    new Date("2027-01-20T09:00:00");
+
+const JEE_ADVANCED_DATE =
+    new Date("2027-05-23T09:00:00");
+
+
+function countdown(target){
+
+    const now = new Date();
+
+    const difference =
+        target.getTime() - now.getTime();
+
+    if(difference <= 0){
+
+        return "EXAM PERIOD";
+
+    }
+
+    const days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+    const hours =
+        Math.floor(
+            (difference /
+            (1000 * 60 * 60)) % 24
+        );
+
+    const minutes =
+        Math.floor(
+            (difference /
+            (1000 * 60)) % 60
+        );
+
+    return (
+        days + "d " +
+        hours + "h " +
+        minutes + "m"
+    );
+
+}
+
+
+function updateCountdown(){
+
+    document.getElementById("mainCountdown")
+        .textContent =
+        countdown(JEE_MAIN_DATE);
+
+    document.getElementById("advancedCountdown")
+        .textContent =
+        countdown(JEE_ADVANCED_DATE);
+
+}
+
+
+/* =========================================================
+   DASHBOARD DATA
+========================================================= */
+
+function updateDashboard(){
+
+    const data = getData();
+
+
+    /* SUBJECT */
+
+    const physics =
+        Number(data.physics) || 0;
+
+    const chemistry =
+        Number(data.chemistry) || 0;
+
+    const maths =
+        Number(data.maths) || 0;
+
+
+    document.getElementById("physicsPercent")
+        .textContent =
+        physics + "%";
+
+    document.getElementById("chemistryPercent")
+        .textContent =
+        chemistry + "%";
+
+    document.getElementById("mathsPercent")
+        .textContent =
+        maths + "%";
+
+
+    document.getElementById("physicsBar")
+        .style.width =
+        physics + "%";
+
+    document.getElementById("chemistryBar")
+        .style.width =
+        chemistry + "%";
+
+    document.getElementById("mathsBar")
+        .style.width =
+        maths + "%";
+
+
+    /* OVERALL */
+
+    const overall =
+        Math.round(
+            (physics +
+            chemistry +
+            maths) / 3
+        );
+
+
+    document.getElementById("overallProgress")
+        .textContent =
+        overall + "%";
+
+
+    /* STUDY */
+
+    document.getElementById("studyHours")
+        .textContent =
+        (Number(data.studyHours) || 0) + "h";
+
+
+    /* QUESTIONS */
+
+    document.getElementById("questionCount")
+        .textContent =
+        Number(data.questions) || 0;
+
+
+    /* ACCURACY */
+
+    let accuracy = 0;
+
+    if(Number(data.questions) > 0){
+
+        accuracy =
+            Math.round(
+                (
+                    Number(data.correct || 0) /
+                    Number(data.questions)
+                ) * 100
+            );
+
+    }
+
+    document.getElementById("accuracy")
+        .textContent =
+        accuracy + "%";
+
+
+    /* STREAK */
+
+    document.getElementById("streak")
+        .textContent =
+        Number(data.streak) || 0;
+
+
+    updateGoal();
+
+}
+
+
+/* =========================================================
+   DAILY MISSION
+========================================================= */
+
+function completeMission(element){
+
+    const item =
+        element.parentElement;
+
+    item.classList.toggle("done");
+
+    updateGoal();
+
+}
+
+
+function updateGoal(){
+
+    const missions =
+        document.querySelectorAll(
+            ".mission-item"
+        );
+
+    const completed =
+        document.querySelectorAll(
+            ".mission-item.done"
+        );
+
+    let percent = 0;
+
+    if(missions.length > 0){
+
+        percent =
+            Math.round(
+                (
+                    completed.length /
+                    missions.length
+                ) * 100
+            );
+
+    }
+
+
+    document.getElementById("goalPercent")
+        .textContent =
+        percent + "%";
+
+
+    const degrees =
+        percent * 3.6;
+
+    document.getElementById("goalRing")
+        .style.background =
+        "conic-gradient(" +
+        "#3478ff " +
+        degrees +
+        "deg, #182438 " +
+        degrees +
+        "deg)";
+
+}
+
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+showDate();
+
+updateCountdown();
+
+updateDashboard();
+
+updateGoal();
+
+
+/* Update countdown every minute */
+
+setInterval(
+    updateCountdown,
+    60000
+);
+
+</script>
+
+</body>
+</html>
