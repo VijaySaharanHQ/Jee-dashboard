@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#070b14">
+
+<title>Backlog | Vijay JEE Command Center</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#070b14;
+    color:#f4f7fb;
+    min-height:100vh;
+}
+
+button,input,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:245px;
+    padding:22px 14px;
+    background:#0a101a;
+    border-right:1px solid #1b2638;
+    overflow-y:auto;
+    z-index:100;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px 25px;
+}
+
+.logo-box{
+    width:38px;
+    height:38px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:10px;
+    background:linear-gradient(135deg,#3478ff,#7b4dff);
+    font-weight:900;
+}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+}
+
+.logo-text span{
+    color:#69778c;
+}
+
+.nav-title{
+    color:#536178;
+    font-size:9px;
+    letter-spacing:.15em;
+    margin:15px 10px 8px;
+}
+
+.nav-link{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 12px;
+    margin:3px 0;
+    border-radius:9px;
+    color:#77859a;
+    font-size:12px;
+}
+
+.nav-link:hover{
+    background:#111a29;
+    color:#fff;
+}
+
+.nav-link.active{
+    background:#15233b;
+    color:#79a7ff;
+}
+
+.nav-link .icon{
+    width:18px;
+    text-align:center;
+}
+
+.sidebar-bottom{
+    margin-top:30px;
+    border-top:1px solid #182437;
+    padding-top:15px;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:245px;
+    padding:28px;
+}
+
+.container{
+    width:min(1250px,100%);
+    margin:auto;
+}
+
+/* ================= HEADER ================= */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    margin-bottom:22px;
+}
+
+.title h1{
+    font-size:28px;
+    letter-spacing:-.04em;
+}
+
+.title p{
+    color:#65738a;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.status{
+    color:#35d58a;
+    font-size:9px;
+    font-weight:800;
+    padding-top:7px;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:13px;
+    padding:15px;
+}
+
+.stat-label{
+    color:#65738a;
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:.08em;
+}
+
+.stat-value{
+    font-size:21px;
+    font-weight:900;
+    margin-top:7px;
+}
+
+/* ================= CONTROL ================= */
+
+.control{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:15px;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:1fr 150px 150px 150px 150px;
+    gap:8px;
+}
+
+.input,
+.select{
+    width:100%;
+    padding:11px;
+    background:#090f19;
+    border:1px solid #1d2b40;
+    color:#dce3ed;
+    border-radius:9px;
+    outline:none;
+    font-size:10px;
+}
+
+.input:focus,
+.select:focus{
+    border-color:#3a6097;
+}
+
+/* ================= ACTIONS ================= */
+
+.actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:10px;
+}
+
+.action-left,
+.action-right{
+    display:flex;
+    gap:7px;
+}
+
+.btn{
+    border:1px solid #25354d;
+    background:#111a28;
+    color:#9aabc0;
+    border-radius:8px;
+    padding:9px 12px;
+    font-size:9px;
+    font-weight:800;
+}
+
+.btn:hover{
+    color:#fff;
+    border-color:#3b5372;
+}
+
+.btn.primary{
+    background:#17315c;
+    border-color:#2e5d9f;
+    color:#82b0ff;
+}
+
+/* ================= SUBJECT TABS ================= */
+
+.tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:15px;
+}
+
+.tab{
+    padding:10px 16px;
+    border:1px solid #1c2b41;
+    background:#0d1420;
+    color:#6f7e93;
+    border-radius:9px;
+    font-size:9px;
+    font-weight:900;
+}
+
+.tab.active{
+    background:#162641;
+    color:#79a7ff;
+    border-color:#2d4d7c;
+}
+
+/* ================= BACKLOG GRID ================= */
+
+.backlog-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.item{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+    padding:17px;
+}
+
+.item:hover{
+    border-color:#2b405e;
+}
+
+.item-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+}
+
+.subject{
+    color:#627189;
+    font-size:8px;
+    font-weight:900;
+    letter-spacing:.1em;
+    margin-bottom:5px;
+}
+
+.name{
+    font-size:14px;
+    font-weight:900;
+}
+
+.meta{
+    color:#59677b;
+    font-size:8px;
+    margin-top:5px;
+}
+
+.priority{
+    padding:5px 7px;
+    border-radius:6px;
+    font-size:7px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+.critical{
+    color:#ff7777;
+    background:#381919;
+}
+
+.high{
+    color:#ffb866;
+    background:#362816;
+}
+
+.medium{
+    color:#e2cb67;
+    background:#302c17;
+}
+
+.low{
+    color:#61dba1;
+    background:#153327;
+}
+
+/* ================= PROGRESS ================= */
+
+.progress-info{
+    display:flex;
+    justify-content:space-between;
+    margin-top:14px;
+    color:#647289;
+    font-size:8px;
+}
+
+.progress{
+    height:6px;
+    background:#182438;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:6px;
+}
+
+.progress-fill{
+    height:100%;
+    background:#3478ff;
+    width:0%;
+    border-radius:20px;
+}
+
+/* ================= CHECKBOX ================= */
+
+.lecture-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:5px;
+    margin-top:13px;
+}
+
+.lecture{
+    padding:8px 3px;
+    border-radius:6px;
+    background:#0a111c;
+    border:1px solid #1c2b3e;
+    color:#65748a;
+    text-align:center;
+    font-size:7px;
+    font-weight:900;
+}
+
+.lecture.done{
+    background:#17382c;
+    border-color:#286b50;
+    color:#5ee1a7;
+}
+
+/* ================= FOOTER ================= */
+
+.item-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-top:1px solid #182437;
+    margin-top:13px;
+    padding-top:11px;
+}
+
+.hours{
+    color:#68768a;
+    font-size:8px;
+}
+
+.deadline{
+    color:#748197;
+    font-size:8px;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+    display:none;
+    text-align:center;
+    padding:55px 20px;
+    color:#59677b;
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+}
+
+/* ================= MOBILE ================= */
+
+.mobile-menu{
+    display:none;
+    position:fixed;
+    right:15px;
+    top:15px;
+    width:40px;
+    height:40px;
+    background:#0d1420;
+    color:white;
+    border:1px solid #27364c;
+    border-radius:10px;
+    z-index:200;
+}
+
+@media(max-width:1100px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .filters{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:850px){
+
+    .backlog-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+
+    .topbar{
+        padding-right:50px;
+    }
+
+    .filters{
+        grid-template-columns:1fr;
+    }
+
+    .actions{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .action-left,
+    .action-right{
+        width:100%;
+    }
+
+    .btn{
+        flex:1;
+    }
+}
+
+@media(max-width:480px){
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .lecture-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+SIDEBAR
+========================================================= -->
+
+<aside class="sidebar" id="sidebar">
+
+<a href="index.html" class="logo">
+
+    <div class="logo-box">V</div>
+
+    <div class="logo-text">
+        VIJAY<span>.JEE</span>
+    </div>
+
+</a>
+
+<div class="nav-title">COMMAND</div>
+
+<a href="dashboard.html" class="nav-link">
+    <span class="icon">⌂</span>
+    Dashboard
+</a>
+
+<a href="daily-target.html" class="nav-link">
+    <span class="icon">✓</span>
+    Daily Mission
+</a>
+
+<div class="nav-title">PREPARATION</div>
+
+<a href="syllabus.html" class="nav-link">
+    <span class="icon">▣</span>
+    Syllabus
+</a>
+
+<a href="backlog.html" class="nav-link active">
+    <span class="icon">◫</span>
+    Backlog
+</a>
+
+<a href="revision.html" class="nav-link">
+    <span class="icon">↻</span>
+    Revision
+</a>
+
+<a href="questions.html" class="nav-link">
+    <span class="icon">?</span>
+    Questions
+</a>
+
+<a href="pyq-tracker.html" class="nav-link">
+    <span class="icon">◷</span>
+    PYQ Tracker
+</a>
+
+<a href="mistakes.html" class="nav-link">
+    <span class="icon">!</span>
+    Mistake Book
+</a>
+
+<div class="nav-title">TESTING</div>
+
+<a href="mock-tests.html" class="nav-link">
+    <span class="icon">▤</span>
+    Mock Tests
+</a>
+
+<a href="analytics.html" class="nav-link">
+    <span class="icon">⌁</span>
+    Analytics
+</a>
+
+<div class="nav-title">PERSONAL</div>
+
+<a href="journal.html" class="nav-link">
+    <span class="icon">✎</span>
+    Journal
+</a>
+
+<a href="achievements.html" class="nav-link">
+    <span class="icon">★</span>
+    Achievements
+</a>
+
+<div class="sidebar-bottom">
+
+<a href="settings.html" class="nav-link">
+    <span class="icon">⚙</span>
+    Settings
+</a>
+
+<a href="index.html" class="nav-link">
+    <span class="icon">←</span>
+    Home
+</a>
+
+</div>
+
+</aside>
+
+
+<button
+class="mobile-menu"
+onclick="toggleSidebar()">
+☰
+</button>
+
+
+<!-- =========================================================
+MAIN
+========================================================= -->
+
+<main class="main">
+
+<div class="container">
+
+<div class="topbar">
+
+<div class="title">
+
+<h1>Backlog Recovery</h1>
+
+<p>
+Eliminate pending lectures before they become a permanent weakness.
+</p>
+
+</div>
+
+<div class="status">
+● RECOVERY ENGINE ACTIVE
+</div>
+
+</div>
+
+
+<!-- =========================================================
+STATS
+========================================================= -->
+
+<section class="stats">
+
+<div class="stat">
+<div class="stat-label">TOTAL LECTURES</div>
+<div class="stat-value" id="total">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">COMPLETED</div>
+<div class="stat-value" id="completed">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">REMAINING</div>
+<div class="stat-value" id="remaining">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">CRITICAL</div>
+<div class="stat-value" id="critical">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">EST. HOURS</div>
+<div class="stat-value" id="hours">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">RECOVERY %</div>
+<div class="stat-value" id="overall">0%</div>
+</div>
+
+</section>
+
+
+<!-- =========================================================
+FILTERS
+========================================================= -->
+
+<section class="control">
+
+<div class="filters">
+
+<input
+class="input"
+id="search"
+placeholder="Search chapter..."
+oninput="render()"
+>
+
+<select
+class="select"
+id="subjectFilter"
+onchange="render()">
+
+<option value="all">
+All Subjects
+</option>
+
+<option value="Physics">
+Physics
+</option>
+
+<option value="Chemistry">
+Chemistry
+</option>
+
+<option value="Mathematics">
+Mathematics
+</option>
+
+</select>
+
+
+<select
+class="select"
+id="classFilter"
+onchange="render()">
+
+<option value="all">
+All Classes
+</option>
+
+<option value="11">
+Class 11
+</option>
+
+<option value="12">
+Class 12
+</option>
+
+</select>
+
+
+<select
+class="select"
+id="priorityFilter"
+onchange="render()">
+
+<option value="all">
+All Priority
+</option>
+
+<option value="critical">
+Critical
+</option>
+
+<option value="high">
+High
+</option>
+
+<option value="medium">
+Medium
+</option>
+
+<option value="low">
+Low
+</option>
+
+</select>
+
+
+<select
+class="select"
+id="sortFilter"
+onchange="render()">
+
+<option value="default">
+Default
+</option>
+
+<option value="priority">
+Priority First
+</option>
+
+<option value="remaining">
+Most Remaining
+</option>
+
+<option value="hours">
+Highest Hours
+</option>
+
+</select>
+
+</div>
+
+
+<div class="actions">
+
+<div class="action-left">
+
+<button
+class="btn primary"
+onclick="addDemoBacklog()">
+
++ ADD SAMPLE
+
+</button>
+
+<button
+class="btn"
+onclick="completeVisible()">
+
+COMPLETE VISIBLE
+
+</button>
+
+</div>
+
+
+<div class="action-right">
+
+<button
+class="btn"
+onclick="resetAll()">
+
+RESET ALL
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+SUBJECT TABS
+========================================================= -->
+
+<div class="tabs">
+
+<button
+class="tab active"
+id="tab-all"
+onclick="setSubject('all')">
+
+ALL
+
+</button>
+
+<button
+class="tab"
+id="tab-physics"
+onclick="setSubject('Physics')">
+
+PHYSICS
+
+</button>
+
+<button
+class="tab"
+id="tab-chemistry"
+onclick="setSubject('Chemistry')">
+
+CHEMISTRY
+
+</button>
+
+<button
+class="tab"
+id="tab-mathematics"
+onclick="setSubject('Mathematics')">
+
+MATHEMATICS
+
+</button>
+
+</div>
+
+
+<!-- =========================================================
+BACKLOG
+========================================================= -->
+
+<section
+class="backlog-grid"
+id="backlogGrid">
+</section>
+
+
+<div
+class="empty"
+id="empty">
+
+No backlog items match your filters.
+
+</div>
+
+
+<div style="
+text-align:center;
+color:#48566a;
+font-size:9px;
+padding:20px 0;
+">
+
+Vijay's IIT JEE 2027 Command Center • Backlog Recovery Engine
+
+</div>
+
+</div>
+
+</main>
+
+
+<script>
+
+/* =========================================================
+STORAGE
+========================================================= */
+
+const STORAGE_KEY =
+"vijayJEEBacklog";
+
+
+/* =========================================================
+BACKLOG DATABASE
+
+You can later replace these
+sample items with your real
+lecture backlog.
+========================================================= */
+
+const defaultBacklog = [
+
+{
+id:"b1",
+subject:"Physics",
+class:"11",
+chapter:"Laws of Motion",
+priority:"critical",
+lectures:12,
+hours:24,
+deadline:"Priority Recovery"
+},
+
+{
+id:"b2",
+subject:"Physics",
+class:"11",
+chapter:"Work, Energy and Power",
+priority:"high",
+lectures:10,
+hours:20,
+deadline:"Recovery Phase 1"
+},
+
+{
+id:"b3",
+subject:"Physics",
+class:"12",
+chapter:"Current Electricity",
+priority:"critical",
+lectures:14,
+hours:28,
+deadline:"Priority Recovery"
+},
+
+{
+id:"b4",
+subject:"Physics",
+class:"12",
+chapter:"Electromagnetic Induction",
+priority:"medium",
+lectures:9,
+hours:18,
+deadline:"Recovery Phase 2"
+},
+
+{
+id:"b5",
+subject:"Chemistry",
+class:"11",
+chapter:"Chemical Bonding",
+priority:"critical",
+lectures:15,
+hours:30,
+deadline:"Priority Recovery"
+},
+
+{
+id:"b6",
+subject:"Chemistry",
+class:"11",
+chapter:"Equilibrium",
+priority:"high",
+lectures:12,
+hours:24,
+deadline:"Recovery Phase 1"
+},
+
+{
+id:"b7",
+subject:"Chemistry",
+class:"12",
+chapter:"Chemical Kinetics",
+priority:"medium",
+lectures:8,
+hours:16,
+deadline:"Recovery Phase 2"
+},
+
+{
+id:"b8",
+subject:"Chemistry",
+class:"12",
+chapter:"Aldehydes, Ketones and Carboxylic Acids",
+priority:"high",
+lectures:13,
+hours:26,
+deadline:"Recovery Phase 1"
+},
+
+{
+id:"b9",
+subject:"Mathematics",
+class:"11",
+chapter:"Trigonometric Functions",
+priority:"critical",
+lectures:16,
+hours:32,
+deadline:"Priority Recovery"
+},
+
+{
+id:"b10",
+subject:"Mathematics",
+class:"11",
+chapter:"Permutations and Combinations",
+priority:"high",
+lectures:11,
+hours:22,
+deadline:"Recovery Phase 1"
+},
+
+{
+id:"b11",
+subject:"Mathematics",
+class:"12",
+chapter:"Integrals",
+priority:"critical",
+lectures:18,
+hours:36,
+deadline:"Priority Recovery"
+},
+
+{
+id:"b12",
+subject:"Mathematics",
+class:"12",
+chapter:"Probability",
+priority:"medium",
+lectures:10,
+hours:20,
+deadline:"Recovery Phase 2"
+}
+
+];
+
+
+/* =========================================================
+STATE
+========================================================= */
+
+let selectedSubject="all";
+
+
+/* =========================================================
+LOAD DATA
+========================================================= */
+
+function load(){
+
+const saved =
+localStorage.getItem(
+STORAGE_KEY
+);
+
+if(saved){
+
+try{
+
+return JSON.parse(saved);
+
+}catch(e){
+
+return defaultBacklog;
+
+}
+
+}
+
+return defaultBacklog;
+
+}
+
+
+/* =========================================================
+SAVE
+========================================================= */
+
+function save(data){
+
+localStorage.setItem(
+STORAGE_KEY,
+JSON.stringify(data)
+);
+
+}
+
+
+/* =========================================================
+GET COMPLETED LECTURES
+========================================================= */
+
+function getCompleted(item){
+
+const data=load();
+
+return data
+.find(x=>x.id===item.id)
+.completed || 0;
+
+}
+
+
+/* =========================================================
+SET COMPLETED
+========================================================= */
+
+function setCompleted(id,value){
+
+const data=load();
+
+const item=
+data.find(x=>x.id===id);
+
+if(!item)return;
+
+item.completed=
+Math.max(
+0,
+Math.min(
+item.lectures,
+value
+)
+);
+
+save(data);
+
+render();
+
+}
+
+
+/* =========================================================
+TOGGLE LECTURE
+========================================================= */
+
+function toggleLecture(id,index){
+
+const data=load();
+
+const item=
+data.find(x=>x.id===id);
+
+if(!item)return;
+
+let completed=
+item.completed || 0;
+
+
+/*
+   We use sequential completion.
+
+   Clicking lecture 5 means
+   lectures 1-5 are completed.
+*/
+
+if(index < completed){
+
+completed=index;
+
+}else{
+
+completed=index+1;
+
+}
+
+item.completed=completed;
+
+save(data);
+
+render();
+
+}
+
+
+/* =========================================================
+FILTER
+========================================================= */
+
+function filteredData(){
+
+let data=[...load()];
+
+
+const search=
+document.getElementById(
+"search"
+).value
+.toLowerCase()
+.trim();
+
+
+const subject=
+document.getElementById(
+"subjectFilter"
+).value;
+
+
+const classFilter=
+document.getElementById(
+"classFilter"
+).value;
+
+
+const priority=
+document.getElementById(
+"priorityFilter"
+).value;
+
+
+const sort=
+document.getElementById(
+"sortFilter"
+).value;
+
+
+if(selectedSubject!=="all"){
+
+data=
+data.filter(
+x=>x.subject===selectedSubject
+);
+
+}
+
+
+if(search){
+
+data=
+data.filter(
+x=>x.chapter
+.toLowerCase()
+.includes(search)
+);
+
+}
+
+
+if(subject!=="all"){
+
+data=
+data.filter(
+x=>x.subject===subject
+);
+
+}
+
+
+if(classFilter!=="all"){
+
+data=
+data.filter(
+x=>x.class===classFilter
+);
+
+}
+
+
+if(priority!=="all"){
+
+data=
+data.filter(
+x=>x.priority===priority
+);
+
+}
+
+
+const priorityRank={
+critical:1,
+high:2,
+medium:3,
+low:4
+};
+
+
+if(sort==="priority"){
+
+data.sort(
+(a,b)=>
+priorityRank[a.priority]-
+priorityRank[b.priority]
+);
+
+}
+
+
+if(sort==="remaining"){
+
+data.sort(
+(a,b)=>
+(b.lectures-b.completed)-
+(a.lectures-a.completed)
+);
+
+}
+
+
+if(sort==="hours"){
+
+data.sort(
+(a,b)=>b.hours-a.hours
+);
+
+}
+
+
+return data;
+
+}
+
+
+/* =========================================================
+RENDER
+========================================================= */
+
+function render(){
+
+const grid=
+document.getElementById(
+"backlogGrid"
+);
+
+grid.innerHTML="";
+
+
+const data=
+filteredData();
+
+
+document.getElementById(
+"empty"
+).style.display=
+data.length
+?"none"
+:"block";
+
+
+data.forEach(item=>{
+
+const completed=
+item.completed || 0;
+
+
+const remaining=
+item.lectures-
+completed;
+
+
+const percentage=
+Math.round(
+(completed/item.lectures)*100
+);
+
+
+const card=
+document.createElement(
+"article"
+);
+
+card.className="item";
+
+
+let lecturesHTML="";
+
+
+for(
+let i=1;
+i<=item.lectures;
+i++
+){
+
+lecturesHTML+=`
+
+<button
+class="lecture ${
+i<=completed
+?"done"
+:""
+}"
+onclick="
+toggleLecture(
+'${item.id}',
+${i}
+)
+">
+
+L${i}
+
+</button>
+
+`;
+
+}
+
+
+card.innerHTML=`
+
+<div class="item-top">
+
+<div>
+
+<div class="subject">
+
+${item.subject.toUpperCase()}
+• CLASS ${item.class}
+
+</div>
+
+<div class="name">
+
+${escapeHTML(item.chapter)}
+
+</div>
+
+<div class="meta">
+
+${remaining} lectures remaining
+•
+${item.hours} estimated hours
+
+</div>
+
+</div>
+
+<div class="priority ${item.priority}">
+
+${item.priority.toUpperCase()}
+
+</div>
+
+</div>
+
+
+<div class="progress-info">
+
+<span>
+
+RECOVERY PROGRESS
+
+</span>
+
+<span>
+
+${completed}/${item.lectures}
+•
+${percentage}%
+
+</span>
+
+</div>
+
+
+<div class="progress">
+
+<div
+class="progress-fill"
+style="width:${percentage}%">
+</div>
+
+</div>
+
+
+<div class="lecture-grid">
+
+${lecturesHTML}
+
+</div>
+
+
+<div class="item-footer">
+
+<div class="hours">
+
+${item.hours} HOURS EST.
+
+</div>
+
+<div class="deadline">
+
+${escapeHTML(item.deadline)}
+
+</div>
+
+</div>
+
+`;
+
+
+grid.appendChild(card);
+
+});
+
+
+updateStats();
+
+}
+
+
+/* =========================================================
+STATS
+========================================================= */
+
+function updateStats(){
+
+const data=load();
+
+let total=0;
+
+let completed=0;
+
+let remaining=0;
+
+let critical=0;
+
+let hours=0;
+
+
+data.forEach(item=>{
+
+total+=item.lectures;
+
+completed+=item.completed || 0;
+
+remaining+=
+item.lectures-
+(item.completed || 0);
+
+hours+=
+item.hours*
+(
+(item.lectures-
+(item.completed || 0))
+/
+item.lectures
+);
+
+
+if(
+item.priority==="critical" &&
+(item.completed || 0)<item.lectures
+){
+
+critical++;
+
+}
+
+});
+
+
+const overall=
+total
+?Math.round(
+(completed/total)*100
+)
+:0;
+
+
+document.getElementById(
+"total"
+).textContent=total;
+
+
+document.getElementById(
+"completed"
+).textContent=completed;
+
+
+document.getElementById(
+"remaining"
+).textContent=remaining;
+
+
+document.getElementById(
+"critical"
+).textContent=critical;
+
+
+document.getElementById(
+"hours"
+).textContent=
+Math.ceil(hours);
+
+
+document.getElementById(
+"overall"
+).textContent=
+overall+"%";
+
+
+syncDashboard(
+remaining,
+hours,
+overall
+);
+
+}
+
+
+/* =========================================================
+DASHBOARD SYNC
+========================================================= */
+
+function syncDashboard(
+remaining,
+hours,
+overall
+){
+
+const key=
+"vijayJEEDashboard";
+
+
+let dashboard={};
+
+
+const saved=
+localStorage.getItem(key);
+
+
+if(saved){
+
+try{
+
+dashboard=
+JSON.parse(saved);
+
+}catch(e){}
+
+}
+
+
+dashboard.backlogLectures=
+remaining;
+
+dashboard.backlogHours=
+Math.ceil(hours);
+
+dashboard.backlogProgress=
+overall;
+
+
+localStorage.setItem(
+key,
+JSON.stringify(dashboard)
+);
+
+}
+
+
+/* =========================================================
+ADD SAMPLE
+========================================================= */
+
+function addDemoBacklog(){
+
+const data=load();
+
+const id=
+"custom_"+Date.now();
+
+
+data.push({
+
+id:id,
+
+subject:"Physics",
+
+class:"11",
+
+chapter:"New Backlog Chapter",
+
+priority:"high",
+
+lectures:10,
+
+hours:20,
+
+deadline:"Custom Recovery",
+
+completed:0
+
+});
+
+
+save(data);
+
+render();
+
+}
+
+
+/* =========================================================
+COMPLETE VISIBLE
+========================================================= */
+
+function completeVisible(){
+
+const visible=
+filteredData();
+
+const data=
+load();
+
+
+visible.forEach(
+item=>{
+
+const original=
+data.find(
+x=>x.id===item.id
+);
+
+if(original){
+
+original.completed=
+original.lectures;
+
+}
+
+});
+
+
+save(data);
+
+render();
+
+}
+
+
+/* =========================================================
+RESET
+========================================================= */
+
+function resetAll(){
+
+const confirmReset=
+confirm(
+"Reset ALL backlog progress?"
+);
+
+
+if(!confirmReset)return;
+
+
+const data=load();
+
+
+data.forEach(
+item=>{
+item.completed=0;
+}
+);
+
+
+save(data);
+
+render();
+
+}
+
+
+/* =========================================================
+SUBJECT TABS
+========================================================= */
+
+function setSubject(subject){
+
+selectedSubject=
+subject;
+
+
+document
+.querySelectorAll(".tab")
+.forEach(
+x=>x.classList.remove(
+"active"
+)
+);
+
+
+document
+.getElementById(
+"tab-"+
+(
+subject==="all"
+?"all"
+:subject.toLowerCase()
+)
+)
+.classList.add("active");
+
+
+render();
+
+}
+
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+function toggleSidebar(){
+
+document
+.getElementById("sidebar")
+.classList.toggle("open");
+
+}
+
+
+/* =========================================================
+ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+return String(value)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+INITIALIZE
+========================================================= */
+
+(function(){
+
+const existing=
+localStorage.getItem(
+STORAGE_KEY
+);
+
+
+if(!existing){
+
+save(
+defaultBacklog.map(
+item=>({
+...item,
+completed:0
+})
+)
+);
+
+}
+
+render();
+
+})();
+
+</script>
+
+</body>
+</html>
