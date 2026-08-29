@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Vijay's IIT JEE 2027 Command Center - A personal preparation system for JEE Main and Advanced.">
+
+    <meta name="theme-color" content="#070b14">
+
+    <title>Vijay's IIT JEE 2027 Command Center</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        /* =========================================================
+           GLOBAL
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", Arial, sans-serif;
+            background: #070b14;
+            color: #f5f7fb;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* =========================================================
+           BACKGROUND EFFECTS
+        ========================================================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+
+            top: -250px;
+            left: -150px;
+
+            background: rgba(52, 120, 255, 0.12);
+
+            filter: blur(120px);
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+        body::after {
+            content: "";
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            right: -200px;
+            bottom: -250px;
+
+            background: rgba(140, 70, 255, 0.10);
+
+            filter: blur(130px);
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+            width: 100%;
+
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+
+            background: rgba(7,11,20,0.78);
+
+            backdrop-filter: blur(15px);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+        }
+
+        .nav-container {
+            width: min(1200px, calc(100% - 40px));
+
+            margin: auto;
+
+            height: 75px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+        /* BRAND */
+
+        .brand {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.04em;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: linear-gradient(
+                135deg,
+                #3478ff,
+                #8c4dff
+            );
+
+            box-shadow:
+                0 8px 30px rgba(52,120,255,0.3);
+
+            font-size: 20px;
+        }
+
+        .brand-text span {
+            color: #68758b;
+        }
+
+        /* NAV BUTTON */
+
+        .nav-button {
+            padding: 10px 15px;
+
+            border-radius: 10px;
+
+            border: 1px solid #202b3e;
+
+            background: rgba(255,255,255,0.03);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition: 0.25s;
+        }
+
+        .nav-button:hover {
+            background: rgba(255,255,255,0.08);
+
+            border-color: #35445d;
+
+            transform: translateY(-2px);
+        }
+
+        .nav-button i {
+            margin-right: 6px;
+
+            color: #6fa0ff;
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            width: min(1200px, calc(100% - 40px));
+
+            margin: auto;
+
+            min-height: calc(100vh - 75px);
+
+            display: grid;
+
+            grid-template-columns: 1.1fr 0.9fr;
+
+            align-items: center;
+
+            gap: 70px;
+
+            padding: 70px 0;
+        }
+
+        /* HERO LEFT */
+
+        .hero-label {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.14em;
+
+            color: #8c99ae;
+
+            margin-bottom: 20px;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #35d58a;
+
+            box-shadow:
+                0 0 0 5px rgba(53,213,138,0.08);
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 76px);
+
+            line-height: 1.02;
+
+            letter-spacing: -0.055em;
+
+            margin-bottom: 25px;
+        }
+
+        .gradient-text {
+            background:
+                linear-gradient(
+                    100deg,
+                    #70a5ff,
+                    #a875ff
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 650px;
+
+            color: #8996aa;
+
+            font-size: 16px;
+
+            margin-bottom: 30px;
+        }
+
+        /* =========================================================
+           HERO BUTTONS
+        ========================================================= */
+
+        .hero-buttons {
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            padding: 13px 18px;
+
+            border-radius: 11px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            transition: 0.25s;
+
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    #3478ff,
+                    #7154ff
+                );
+
+            box-shadow:
+                0 12px 35px rgba(52,120,255,0.22);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 16px 40px rgba(52,120,255,0.35);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.025);
+
+            border-color: #202b3e;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.07);
+
+            border-color: #35445d;
+        }
+
+        /* =========================================================
+           HERO META
+        ========================================================= */
+
+        .hero-meta {
+            display: flex;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+
+            color: #65738a;
+
+            font-size: 11px;
+        }
+
+        .hero-meta i {
+            color: #6598ff;
+
+            margin-right: 5px;
+        }
+
+        /* =========================================================
+           MISSION PANEL
+        ========================================================= */
+
+        .mission-panel {
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(16,24,38,0.95),
+                    rgba(9,14,24,0.96)
+                );
+
+            border: 1px solid #202b3e;
+
+            border-radius: 22px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,0.30);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .mission-panel::before {
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            right: -100px;
+            top: -120px;
+
+            background: rgba(75,135,255,0.15);
+
+            filter: blur(70px);
+
+            border-radius: 50%;
+        }
+
+        .panel-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.13em;
+
+            color: #7d8ba0;
+        }
+
+        .active-status {
+            color: #35d58a;
+        }
+
+        .mission-target {
+            text-align: center;
+
+            padding: 55px 10px 40px;
+        }
+
+        .mission-target small {
+            display: block;
+
+            color: #68758b;
+
+            font-size: 9px;
+
+            letter-spacing: 0.16em;
+        }
+
+        .mission-target strong {
+            display: block;
+
+            font-size: 72px;
+
+            line-height: 1;
+
+            margin: 10px 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #74a7ff
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .mission-target span {
+            font-size: 11px;
+
+            color: #7c899c;
+
+            letter-spacing: 0.18em;
+        }
+
+        /* =========================================================
+           SUBJECT PROGRESS
+        ========================================================= */
+
+        .subject-progress {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 10px;
+        }
+
+        .subject {
+            background: #0a101a;
+
+            border: 1px solid #182437;
+
+            border-radius: 12px;
+
+            padding: 13px;
+        }
+
+        .subject-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #77859a;
+
+            font-size: 9px;
+
+            font-weight: 800;
+        }
+
+        .subject-value {
+            color: #dce5f2;
+
+            font-size: 13px;
+
+            margin: 6px 0 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+
+            height: 5px;
+
+            background: #172235;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #3478ff,
+                    #8c4dff
+                );
+
+            border-radius: inherit;
+        }
+
+        .panel-footer {
+            margin-top: 15px;
+
+            padding-top: 14px;
+
+            border-top: 1px solid #182437;
+
+            color: #68768b;
+
+            font-size: 10px;
+        }
+
+        .panel-footer i {
+            color: #35d58a;
+
+            margin-right: 6px;
+        }
+
+        /* =========================================================
+           SYSTEM SECTION
+        ========================================================= */
+
+        .systems {
+            width: min(1200px, calc(100% - 40px));
+
+            margin: auto;
+
+            padding: 90px 0;
+        }
+
+        .section-label {
+            font-size: 10px;
+
+            letter-spacing: 0.16em;
+
+            color: #647289;
+
+            font-weight: 800;
+        }
+
+        .systems-heading {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-end;
+
+            gap: 30px;
+
+            margin-bottom: 30px;
+        }
+
+        .systems-heading h2 {
+            font-size: 34px;
+
+            letter-spacing: -0.035em;
+
+            margin-top: 8px;
+        }
+
+        .systems-heading p {
+            max-width: 420px;
+
+            color: #758399;
+
+            font-size: 13px;
+        }
+
+        /* =========================================================
+           FEATURE GRID
+        ========================================================= */
+
+        .feature-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .feature-card {
+            padding: 23px;
+
+            background:
+                rgba(13,19,31,0.75);
+
+            border: 1px solid #1c2739;
+
+            border-radius: 16px;
+
+            transition: 0.25s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+
+            border-color: #30415d;
+
+            background:
+                rgba(17,25,40,0.9);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: rgba(52,120,255,0.08);
+
+            color: #6d9eff;
+
+            margin-bottom: 18px;
+        }
+
+        .feature-card h3 {
+            font-size: 15px;
+
+            margin-bottom: 7px;
+        }
+
+        .feature-card p {
+            color: #758399;
+
+            font-size: 11px;
+        }
+
+        /* =========================================================
+           MISSION STATEMENT
+        ========================================================= */
+
+        .mission-section {
+            width: min(900px, calc(100% - 40px));
+
+            margin: auto;
+
+            padding: 80px 0;
+
+            text-align: center;
+        }
+
+        .mission-section h2 {
+            font-size: clamp(28px, 4vw, 45px);
+
+            line-height: 1.15;
+
+            letter-spacing: -0.04em;
+
+            margin: 15px 0;
+        }
+
+        .mission-section p {
+            color: #758399;
+
+            font-size: 13px;
+
+            max-width: 650px;
+
+            margin: auto;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            border-top: 1px solid #172235;
+
+            padding: 25px 20px;
+
+            text-align: center;
+
+            color: #56647a;
+
+            font-size: 10px;
+        }
+
+        footer strong {
+            color: #8a98ad;
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 850px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+
+                gap: 40px;
+
+                padding: 60px 0;
+            }
+
+            .mission-panel {
+                max-width: 650px;
+            }
+
+            .feature-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .systems-heading {
+                display: block;
+            }
+
+            .systems-heading p {
+                margin-top: 12px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .nav-container {
+                width: calc(100% - 28px);
+
+                height: 68px;
+            }
+
+            .brand-text {
+                font-size: 12px;
+            }
+
+            .nav-button {
+                font-size: 10px;
+
+                padding: 8px 10px;
+            }
+
+            .hero,
+            .systems {
+                width: calc(100% - 28px);
+            }
+
+            .hero h1 {
+                font-size: 43px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .hero-meta {
+                display: grid;
+
+                gap: 8px;
+            }
+
+            .mission-target strong {
+                font-size: 58px;
+            }
+
+            .subject-progress {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .systems-heading h2 {
+                font-size: 27px;
+            }
+
+            .systems {
+                padding: 60px 0;
+            }
+
+            .mission-section {
+                width: calc(100% - 28px);
+
+                padding: 60px 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <a href="index.html" class="brand">
+
+            <div class="brand-logo">
+                V
+            </div>
+
+            <div class="brand-text">
+                VIJAY<span>.JEE</span>
+            </div>
+
+        </a>
+
+        <a href="dashboard.html" class="nav-button">
+
+            <i class="fa-solid fa-gauge-high"></i>
+
+            Command Center
+
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+
+<main>
+
+<section class="hero">
+
+    <!-- LEFT -->
+
+    <div>
+
+        <div class="hero-label">
+
+            <span class="online-dot"></span>
+
+            MISSION 2027 • SYSTEM ONLINE
+
+        </div>
+
+
+        <h1>
+
+            Turn preparation into a
+
+            <span class="gradient-text">
+                measurable system.
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            Vijay's IIT JEE 2027 Command Center is a personal
+            preparation operating system for JEE Main + Advanced.
+            Track your learning, practice, revision, mistakes,
+            tests and progress — all in one place.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="dashboard.html"
+                class="btn btn-primary"
+            >
+
+                <i class="fa-solid fa-rocket"></i>
+
+                Enter Command Center
+
+            </a>
+
+
+            <a
+                href="#systems"
+                class="btn btn-secondary"
+            >
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                Explore System
+
+            </a>
+
+        </div>
+
+
+        <div class="hero-meta">
+
+            <span>
+                <i class="fa-solid fa-bullseye"></i>
+                Goal: 2-Digit AIR
+            </span>
+
+            <span>
+                <i class="fa-solid fa-calendar-days"></i>
+                IIT JEE 2027
+            </span>
+
+            <span>
+                <i class="fa-solid fa-code"></i>
+                GitHub Pages
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT -->
+
+    <div class="mission-panel">
+
+        <div class="panel-header">
+
+            <span>
+                MISSION STATUS
+            </span>
+
+            <span class="active-status">
+
+                ● ACTIVE
+
+            </span>
+
+        </div>
+
+
+        <div class="mission-target">
+
+            <small>
+                PRIMARY TARGET
+            </small>
+
+            <strong>
+                2-DIGIT
+            </strong>
+
+            <span>
+                AIR IN IIT JEE
+            </span>
+
+        </div>
+
+
+        <div class="subject-progress">
+
+            <div class="subject">
+
+                <div class="subject-header">
+
+                    <span>PHYSICS</span>
+
+                    <span>0%</span>
+
+                </div>
+
+                <div class="subject-value">
+                    0%
+                </div>
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        style="width:0%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="subject">
+
+                <div class="subject-header">
+
+                    <span>CHEMISTRY</span>
+
+                    <span>0%</span>
+
+                </div>
+
+                <div class="subject-value">
+                    0%
+                </div>
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        style="width:0%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="subject">
+
+                <div class="subject-header">
+
+                    <span>MATHEMATICS</span>
+
+                    <span>0%</span>
+
+                </div>
+
+                <div class="subject-value">
+                    0%
+                </div>
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        style="width:0%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel-footer">
+
+            <i class="fa-solid fa-terminal"></i>
+
+            No Zero Days. No Excuses. Only Progress.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     SYSTEMS
+============================================================ -->
+
+<section
+    class="systems"
+    id="systems"
+>
+
+    <div class="systems-heading">
+
+        <div>
+
+            <div class="section-label">
+                THE SYSTEM
+            </div>
+
+            <h2>
+                Everything that matters.
+            </h2>
+
+        </div>
+
+        <p>
+
+            Your rank is built from thousands of small actions.
+            This system is designed to make those actions visible,
+            measurable and accountable.
+
+        </p>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+
+        <!-- DAILY MISSION -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-list-check"></i>
+
+            </div>
+
+            <h3>
+                Daily Mission
+            </h3>
+
+            <p>
+                Convert every day into specific study,
+                practice and revision targets.
+            </p>
+
+        </article>
+
+
+        <!-- SYLLABUS -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-book-open"></i>
+
+            </div>
+
+            <h3>
+                Syllabus Control
+            </h3>
+
+            <p>
+                Track every JEE chapter from lectures to
+                questions, PYQs, revision and mastery.
+            </p>
+
+        </article>
+
+
+        <!-- REVISION -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-rotate"></i>
+
+            </div>
+
+            <h3>
+                Revision Engine
+            </h3>
+
+            <p>
+                Schedule repeated revision cycles and
+                identify overdue concepts.
+            </p>
+
+        </article>
+
+
+        <!-- QUESTIONS -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-circle-question"></i>
+
+            </div>
+
+            <h3>
+                Question Tracker
+            </h3>
+
+            <p>
+                Track attempts, correct answers, wrong answers,
+                accuracy and difficulty.
+            </p>
+
+        </article>
+
+
+        <!-- MISTAKES -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+            </div>
+
+            <h3>
+                Mistake Database
+            </h3>
+
+            <p>
+                Record mistakes, identify patterns and
+                force yourself to reattempt them.
+            </p>
+
+        </article>
+
+
+        <!-- MOCK TEST -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+            </div>
+
+            <h3>
+                Mock Analytics
+            </h3>
+
+            <p>
+                Analyze marks, accuracy, time management,
+                subject performance and test trends.
+            </p>
+
+        </article>
+
+
+        <!-- PYQ -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+
+            </div>
+
+            <h3>
+                PYQ Tracker
+            </h3>
+
+            <p>
+                Track JEE Main and Advanced previous-year
+                questions chapter by chapter.
+            </p>
+
+        </article>
+
+
+        <!-- BACKLOG -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-battery-quarter"></i>
+
+            </div>
+
+            <h3>
+                Backlog Recovery
+            </h3>
+
+            <p>
+                Quantify pending work and create a controlled
+                recovery plan instead of guessing.
+            </p>
+
+        </article>
+
+
+        <!-- HARD MODE -->
+
+        <article class="feature-card">
+
+            <div class="feature-icon">
+
+                <i class="fa-solid fa-bolt"></i>
+
+            </div>
+
+            <h3>
+                2-Digit AIR Hard Mode
+            </h3>
+
+            <p>
+                A strict accountability layer for daily,
+                weekly and monthly preparation discipline.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     MISSION
+============================================================ -->
+
+<section class="mission-section">
+
+    <div class="section-label">
+        THE RULE
+    </div>
+
+    <h2>
+        Don't chase motivation.
+        <span class="gradient-text">
+            Build evidence.
+        </span>
+    </h2>
+
+    <p>
+
+        Every lecture completed, question solved, mistake corrected,
+        revision completed and mock analyzed becomes evidence that
+        your preparation is moving forward.
+
+    </p>
+
+</section>
+
+</main>
+
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+
+<footer>
+
+    Vijay's IIT JEE 2027 Command Center
+
+    •
+
+    Built for the mission:
+
+    <strong>
+        2-Digit AIR
+    </strong>
+
+</footer>
+
+
+</body>
+</html>
