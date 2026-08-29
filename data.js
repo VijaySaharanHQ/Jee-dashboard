@@ -1,1893 +1,2057 @@
 ```javascript
 /* =========================================================
-   VIJAY JEE JOURNEY — CENTRAL DATA ENGINE
-   Version 1.0
+   VIJAY JEE JOURNEY
+   UNIVERSAL DATA ENGINE
+   data.js
 
-   This file is the single source of truth for your
-   complete IIT-JEE preparation website.
+   Add this file to EVERY HTML page:
 
-   All pages can read/write data through JEE_DATA.
+   <script src="data.js"></script>
+
+   All pages use the same localStorage database.
 ========================================================= */
 
-const JEE_DATA_KEY = "VIJAY_JEE_MASTER_DATA";
+(function () {
+
+    "use strict";
 
 
-/* =========================================================
-   DEFAULT DATA
-========================================================= */
+    /* =====================================================
+       DATABASE KEY
+    ===================================================== */
 
-const DEFAULT_JEE_DATA = {
-
-    profile: {
-        name: "Vijay",
-        exam: "IIT-JEE",
-        target: "2-Digit AIR",
-        attempt: "JEE 2027"
-    },
+    const DB_KEY = "VIJAY_JEE_JOURNEY_DATABASE";
 
 
-    /* -----------------------------------------------------
-       SYLLABUS
-    ----------------------------------------------------- */
+    /* =====================================================
+       DEFAULT DATABASE
+    ===================================================== */
 
-    syllabus: {
+    const DEFAULT_DATA = {
 
-        physics: {
-            total: 0,
-            completed: 0,
-            percentage: 0
+        profile: {
+            name: "Vijay",
+            exam: "JEE Main + Advanced",
+            attempt: "JEE 2027",
+            targetAIR: 99
         },
 
-        chemistry: {
-            total: 0,
-            completed: 0,
-            percentage: 0
+
+        preparation: {
+
+            physics: {
+                total: 0,
+                completed: 0
+            },
+
+            chemistry: {
+                total: 0,
+                completed: 0
+            },
+
+            maths: {
+                total: 0,
+                completed: 0
+            }
+
         },
 
-        maths: {
-            total: 0,
-            completed: 0,
-            percentage: 0
+
+        daily: {
+
+            targetHours: 10,
+            completedHours: 0,
+
+            targetPYQs: 50,
+            completedPYQs: 0,
+
+            targetTasks: 0,
+            completedTasks: 0
+
         },
 
-        overall: {
-            total: 0,
-            completed: 0,
-            percentage: 0
-        }
 
-    },
+        pyq: {
 
+            main: {
 
-    /* -----------------------------------------------------
-       PYQ
-    ----------------------------------------------------- */
+                solved: 0,
+                correct: 0,
+                incorrect: 0,
+                skipped: 0,
 
-    pyq: {
-
-        main: {
-            total: 0,
-            solved: 0,
-            correct: 0,
-            incorrect: 0,
-            accuracy: 0
-        },
-
-        advanced: {
-            total: 0,
-            solved: 0,
-            correct: 0,
-            incorrect: 0,
-            accuracy: 0
-        },
-
-        totalSolved: 0,
-        totalCorrect: 0,
-        totalIncorrect: 0,
-        accuracy: 0
-
-    },
-
-
-    /* -----------------------------------------------------
-       MOCK TESTS
-    ----------------------------------------------------- */
-
-    mocks: {
-
-        total: 0,
-
-        attempted: 0,
-
-        averageScore: 0,
-
-        bestScore: 0,
-
-        averageAccuracy: 0,
-
-        bestPercentile: 0,
-
-        bestRank: null,
-
-        main: {
-            attempted: 0,
-            bestScore: 0,
-            averageScore: 0
-        },
-
-        advanced: {
-            attempted: 0,
-            bestScore: 0,
-            averageScore: 0
-        }
-
-    },
-
-
-    /* -----------------------------------------------------
-       STUDY
-    ----------------------------------------------------- */
-
-    study: {
-
-        totalHours: 0,
-
-        todayHours: 0,
-
-        weeklyHours: 0,
-
-        monthlyHours: 0,
-
-        currentStreak: 0,
-
-        longestStreak: 0,
-
-        studyDays: 0
-
-    },
-
-
-    /* -----------------------------------------------------
-       REVISION
-    ----------------------------------------------------- */
-
-    revision: {
-
-        totalTopics: 0,
-
-        revisedTopics: 0,
-
-        revisionCycles: 0,
-
-        pending: 0
-
-    },
-
-
-    /* -----------------------------------------------------
-       MISTAKES
-    ----------------------------------------------------- */
-
-    mistakes: {
-
-        total: 0,
-
-        physics: 0,
-
-        chemistry: 0,
-
-        maths: 0,
-
-        solved: 0,
-
-        pending: 0
-
-    },
-
-
-    /* -----------------------------------------------------
-       JOURNAL
-    ----------------------------------------------------- */
-
-    journal: {
-
-        entries: 0,
-
-        lastEntry: null,
-
-        disciplineScore: 0,
-
-        moodScore: 0
-
-    },
-
-
-    /* -----------------------------------------------------
-       DAILY TARGET
-    ----------------------------------------------------- */
-
-    daily: {
-
-        targetHours: 10,
-
-        completedHours: 0,
-
-        tasksTotal: 0,
-
-        tasksCompleted: 0,
-
-        completion: 0
-
-    },
-
-
-    /* -----------------------------------------------------
-       ACHIEVEMENTS
-    ----------------------------------------------------- */
-
-    achievements: {
-
-        unlocked: [],
-
-        custom: []
-
-    },
-
-
-    /* -----------------------------------------------------
-       RANK STRATEGY
-    ----------------------------------------------------- */
-
-    rank: {
-
-        targetAIR: 99,
-
-        currentEstimatedAIR: null,
-
-        lastMockAIR: null,
-
-        trend: "STARTING",
-
-        confidence: 0
-
-    },
-
-
-    /* -----------------------------------------------------
-       ACTIVITY LOG
-    ----------------------------------------------------- */
-
-    activity: []
-
-};
-
-
-/* =========================================================
-   LOAD DATA
-========================================================= */
-
-function loadJEEData() {
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                JEE_DATA_KEY
-            );
-
-
-        if (!saved) {
-
-            const fresh =
-                JSON.parse(
-                    JSON.stringify(
-                        DEFAULT_JEE_DATA
-                    )
-                );
-
-            saveJEEData(fresh);
-
-            return fresh;
-
-        }
-
-
-        const parsed =
-            JSON.parse(saved);
-
-
-        return mergeObjects(
-            DEFAULT_JEE_DATA,
-            parsed
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "JEE DATA LOAD ERROR:",
-            error
-        );
-
-        return JSON.parse(
-            JSON.stringify(
-                DEFAULT_JEE_DATA
-            )
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   SAVE DATA
-========================================================= */
-
-function saveJEEData(data) {
-
-    try {
-
-        localStorage.setItem(
-
-            JEE_DATA_KEY,
-
-            JSON.stringify(data)
-
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "JEE DATA SAVE ERROR:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   MERGE OBJECTS
-========================================================= */
-
-function mergeObjects(defaultObj, savedObj) {
-
-    const result =
-        Array.isArray(defaultObj)
-        ? [...defaultObj]
-        : {...defaultObj};
-
-
-    Object.keys(savedObj || {})
-    .forEach(key => {
-
-        if (
-
-            savedObj[key] !== null &&
-
-            typeof savedObj[key] === "object" &&
-
-            !Array.isArray(savedObj[key]) &&
-
-            typeof result[key] === "object"
-
-        ) {
-
-            result[key] =
-                mergeObjects(
-                    result[key],
-                    savedObj[key]
-                );
-
-        }
-
-        else {
-
-            result[key] =
-                savedObj[key];
-
-        }
-
-    });
-
-
-    return result;
-
-}
-
-
-/* =========================================================
-   GET VALUE
-========================================================= */
-
-function getJEEValue(path) {
-
-    const data =
-        loadJEEData();
-
-
-    return path
-        .split(".")
-        .reduce(
-
-            (object, key) => {
-
-                if (
-                    object === undefined ||
-                    object === null
-                ) {
-
-                    return undefined;
-
-                }
-
-                return object[key];
+                accuracy: 0
 
             },
 
-            data
+            advanced: {
 
+                solved: 0,
+                correct: 0,
+                incorrect: 0,
+                skipped: 0,
+
+                accuracy: 0
+
+            },
+
+            totalSolved: 0,
+            totalCorrect: 0,
+            totalIncorrect: 0,
+            totalSkipped: 0,
+            overallAccuracy: 0
+
+        },
+
+
+        mocks: {
+
+            total: 0,
+            attempted: 0,
+
+            bestScore: 0,
+            averageScore: 0,
+
+            bestPercentile: 0,
+
+            main: {
+
+                attempted: 0,
+                bestScore: 0,
+                averageScore: 0
+
+            },
+
+            advanced: {
+
+                attempted: 0,
+                bestScore: 0,
+                averageScore: 0
+
+            },
+
+            history: []
+
+        },
+
+
+        mistakes: {
+
+            total: 0,
+
+            physics: 0,
+            chemistry: 0,
+            maths: 0,
+
+            solved: 0,
+            pending: 0,
+
+            history: []
+
+        },
+
+
+        revision: {
+
+            totalTopics: 0,
+            completedTopics: 0,
+
+            cycle1: 0,
+            cycle2: 0,
+            cycle3: 0,
+
+            pending: 0
+
+        },
+
+
+        study: {
+
+            totalHours: 0,
+            todayHours: 0,
+            weeklyHours: 0,
+            monthlyHours: 0,
+
+            currentStreak: 0,
+            longestStreak: 0,
+
+            studyDays: 0,
+
+            history: []
+
+        },
+
+
+        journal: {
+
+            entries: 0,
+
+            history: []
+
+        },
+
+
+        achievements: {
+
+            unlocked: [],
+
+            points: 0
+
+        },
+
+
+        rank: {
+
+            targetAIR: 99,
+
+            estimatedAIR: null,
+
+            lastMockAIR: null,
+
+            trend: "STARTING"
+
+        },
+
+
+        settings: {
+
+            theme: "dark",
+
+            strictMode: true,
+
+            notifications: true,
+
+            autoSave: true
+
+        },
+
+
+        activity: []
+
+    };
+
+
+    /* =====================================================
+       DEEP COPY
+    ===================================================== */
+
+    function clone(object) {
+
+        return JSON.parse(
+            JSON.stringify(object)
         );
-
-}
-
-
-/* =========================================================
-   SET VALUE
-========================================================= */
-
-function setJEEValue(path, value) {
-
-    const data =
-        loadJEEData();
-
-
-    const keys =
-        path.split(".");
-
-
-    let current =
-        data;
-
-
-    for (
-        let i = 0;
-        i < keys.length - 1;
-        i++
-    ) {
-
-        if (
-            typeof current[keys[i]]
-            !== "object"
-        ) {
-
-            current[keys[i]] = {};
-
-        }
-
-
-        current =
-            current[keys[i]];
 
     }
 
 
-    current[
-        keys[keys.length - 1]
-    ] = value;
+    /* =====================================================
+       DEEP MERGE
+    ===================================================== */
+
+    function merge(defaultObject, savedObject) {
+
+        const result = clone(defaultObject);
 
 
-    saveJEEData(data);
+        function recursive(target, source) {
+
+            if (!source) {
+                return target;
+            }
 
 
-    updateDerivedData();
+            Object.keys(source).forEach(function (key) {
+
+                if (
+
+                    source[key] !== null &&
+
+                    typeof source[key] === "object" &&
+
+                    !Array.isArray(source[key]) &&
+
+                    typeof target[key] === "object"
+
+                ) {
+
+                    recursive(
+                        target[key],
+                        source[key]
+                    );
+
+                }
+
+                else {
+
+                    target[key] = source[key];
+
+                }
+
+            });
 
 
-    return data;
+            return target;
 
-}
+        }
 
 
-/* =========================================================
-   INCREASE VALUE
-========================================================= */
-
-function increaseJEEValue(path, amount = 1) {
-
-    const current =
-        Number(
-            getJEEValue(path) || 0
+        return recursive(
+            result,
+            savedObject
         );
 
+    }
 
-    return setJEEValue(
 
+    /* =====================================================
+       LOAD DATABASE
+    ===================================================== */
+
+    function load() {
+
+        try {
+
+            const saved =
+                localStorage.getItem(DB_KEY);
+
+
+            if (!saved) {
+
+                const fresh =
+                    clone(DEFAULT_DATA);
+
+                save(fresh);
+
+                return fresh;
+
+            }
+
+
+            const parsed =
+                JSON.parse(saved);
+
+
+            return merge(
+                DEFAULT_DATA,
+                parsed
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "JEE DATABASE LOAD ERROR:",
+                error
+            );
+
+
+            return clone(
+                DEFAULT_DATA
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SAVE DATABASE
+    ===================================================== */
+
+    function save(data) {
+
+        try {
+
+            localStorage.setItem(
+
+                DB_KEY,
+
+                JSON.stringify(data)
+
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "JEE DATABASE SAVE ERROR:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       GET COMPLETE DATA
+    ===================================================== */
+
+    function getData() {
+
+        return load();
+
+    }
+
+
+    /* =====================================================
+       GET VALUE USING PATH
+    ===================================================== */
+
+    function get(path) {
+
+        const data =
+            load();
+
+
+        return path
+            .split(".")
+            .reduce(
+
+                function (object, key) {
+
+                    if (
+                        object === null ||
+                        object === undefined
+                    ) {
+
+                        return undefined;
+
+                    }
+
+                    return object[key];
+
+                },
+
+                data
+
+            );
+
+    }
+
+
+    /* =====================================================
+       SET VALUE USING PATH
+    ===================================================== */
+
+    function set(path, value) {
+
+        const data =
+            load();
+
+
+        const keys =
+            path.split(".");
+
+
+        let current =
+            data;
+
+
+        for (
+            let i = 0;
+            i < keys.length - 1;
+            i++
+        ) {
+
+            if (
+                !current[keys[i]] ||
+                typeof current[keys[i]] !== "object"
+            ) {
+
+                current[keys[i]] = {};
+
+            }
+
+
+            current =
+                current[keys[i]];
+
+        }
+
+
+        current[
+            keys[keys.length - 1]
+        ] = value;
+
+
+        calculate();
+
+
+        save(data);
+
+
+        return data;
+
+    }
+
+
+    /* =====================================================
+       INCREASE VALUE
+    ===================================================== */
+
+    function increase(
         path,
-
-        current + Number(amount)
-
-    );
-
-}
-
-
-/* =========================================================
-   PYQ UPDATE
-========================================================= */
-
-function addPYQResult(
-
-    exam,
-    correct = 0,
-    incorrect = 0
-
-) {
-
-    exam =
-        exam.toLowerCase();
-
-
-    if (
-        exam !== "main" &&
-        exam !== "advanced"
+        amount = 1
     ) {
 
-        console.error(
-            "Exam must be 'main' or 'advanced'."
-        );
+        const current =
+            Number(
+                get(path) || 0
+            );
 
-        return;
+
+        return set(
+            path,
+            current + Number(amount)
+        );
 
     }
 
 
-    const data =
-        loadJEEData();
+    /* =====================================================
+       CALCULATE ALL DERIVED STATISTICS
+    ===================================================== */
+
+    function calculate() {
+
+        const data =
+            load();
 
 
-    const section =
-        data.pyq[exam];
+        /* -----------------------------------------------
+           PYQ — MAIN
+        ------------------------------------------------ */
 
+        if (
+            data.pyq.main.solved > 0
+        ) {
 
-    const c =
-        Number(correct);
+            data.pyq.main.accuracy =
+                Math.round(
 
-
-    const i =
-        Number(incorrect);
-
-
-    section.solved +=
-        c + i;
-
-
-    section.correct +=
-        c;
-
-
-    section.incorrect +=
-        i;
-
-
-    section.accuracy =
-        section.solved > 0
-        ? Math.round(
-            section.correct /
-            section.solved *
-            100
-        )
-        : 0;
-
-
-    updateDerivedData(data);
-
-
-    addActivity(
-
-        "PYQ",
-
-        `${exam.toUpperCase()} PYQ: +${c} correct, +${i} incorrect`
-
-    );
-
-}
-
-
-/* =========================================================
-   MOCK TEST UPDATE
-========================================================= */
-
-function addMockResult({
-
-    exam = "main",
-
-    score = 0,
-
-    accuracy = 0,
-
-    percentile = 0,
-
-    rank = null
-
-} = {}) {
-
-
-    exam =
-        exam.toLowerCase();
-
-
-    const data =
-        loadJEEData();
-
-
-    const scoreNumber =
-        Number(score);
-
-
-    const accuracyNumber =
-        Number(accuracy);
-
-
-    data.mocks.attempted++;
-
-
-    data.mocks.total++;
-
-
-    data.mocks.bestScore =
-        Math.max(
-            data.mocks.bestScore,
-            scoreNumber
-        );
-
-
-    if (
-        data.mocks.attempted === 1
-    ) {
-
-        data.mocks.averageScore =
-            scoreNumber;
-
-    }
-
-    else {
-
-        data.mocks.averageScore =
-            Math.round(
-
-                (
-
-                    data.mocks.averageScore *
                     (
-                        data.mocks.attempted - 1
-                    )
+                        data.pyq.main.correct /
+                        data.pyq.main.solved
+                    ) * 100
 
-                    +
-
-                    scoreNumber
-
-                )
-
-                /
-
-                data.mocks.attempted
-
-            );
-
-    }
-
-
-    data.mocks.bestPercentile =
-        Math.max(
-
-            data.mocks.bestPercentile,
-
-            Number(percentile)
-
-        );
-
-
-    if (
-        rank !== null &&
-        rank > 0
-    ) {
-
-        if (
-            data.mocks.bestRank === null
-            ||
-            rank <
-            data.mocks.bestRank
-        ) {
-
-            data.mocks.bestRank =
-                Number(rank);
-
-        }
-
-    }
-
-
-    const section =
-        data.mocks[exam];
-
-
-    if (section) {
-
-        section.attempted++;
-
-
-        section.bestScore =
-            Math.max(
-                section.bestScore,
-                scoreNumber
-            );
-
-
-        if (
-            section.attempted === 1
-        ) {
-
-            section.averageScore =
-                scoreNumber;
+                );
 
         }
 
         else {
 
-            section.averageScore =
+            data.pyq.main.accuracy = 0;
+
+        }
+
+
+        /* -----------------------------------------------
+           PYQ — ADVANCED
+        ------------------------------------------------ */
+
+        if (
+            data.pyq.advanced.solved > 0
+        ) {
+
+            data.pyq.advanced.accuracy =
                 Math.round(
 
                     (
-
-                        section.averageScore *
-                        (
-                            section.attempted - 1
-                        )
-
-                        +
-
-                        scoreNumber
-
-                    )
-
-                    /
-
-                    section.attempted
+                        data.pyq.advanced.correct /
+                        data.pyq.advanced.solved
+                    ) * 100
 
                 );
 
         }
 
-    }
+        else {
 
+            data.pyq.advanced.accuracy = 0;
 
-    if (
-        exam === "main"
-        &&
-        Number(rank) > 0
-    ) {
+        }
 
-        data.rank.lastMockAIR =
-            Number(rank);
 
-    }
+        /* -----------------------------------------------
+           PYQ — TOTAL
+        ------------------------------------------------ */
 
+        data.pyq.totalSolved =
 
-    updateDerivedData(data);
+            data.pyq.main.solved +
 
+            data.pyq.advanced.solved;
 
-    addActivity(
 
-        "MOCK",
+        data.pyq.totalCorrect =
 
-        `${exam.toUpperCase()} mock completed — Score ${scoreNumber}`
+            data.pyq.main.correct +
 
-    );
+            data.pyq.advanced.correct;
 
 
-}
+        data.pyq.totalIncorrect =
 
+            data.pyq.main.incorrect +
 
-/* =========================================================
-   STUDY HOURS
-========================================================= */
+            data.pyq.advanced.incorrect;
 
-function addStudyHours(hours) {
 
-    hours =
-        Number(hours);
+        data.pyq.totalSkipped =
 
+            data.pyq.main.skipped +
 
-    if (
-        !Number.isFinite(hours)
-        ||
-        hours <= 0
-    ) {
+            data.pyq.advanced.skipped;
 
-        return;
 
-    }
+        if (
+            data.pyq.totalSolved > 0
+        ) {
 
+            data.pyq.overallAccuracy =
+                Math.round(
 
-    const data =
-        loadJEEData();
+                    (
+                        data.pyq.totalCorrect /
+                        data.pyq.totalSolved
+                    ) * 100
 
+                );
 
-    data.study.totalHours +=
-        hours;
+        }
 
+        else {
 
-    data.study.todayHours +=
-        hours;
+            data.pyq.overallAccuracy = 0;
 
+        }
 
-    data.study.weeklyHours +=
-        hours;
 
+        /* -----------------------------------------------
+           REVISION
+        ------------------------------------------------ */
 
-    data.study.monthlyHours +=
-        hours;
+        data.revision.pending =
 
+            Math.max(
 
-    data.daily.completedHours +=
-        hours;
+                0,
 
+                data.revision.totalTopics -
+                data.revision.completedTopics
 
-    updateDerivedData(data);
+            );
 
 
-    addActivity(
+        /* -----------------------------------------------
+           MISTAKES
+        ------------------------------------------------ */
 
-        "STUDY",
+        data.mistakes.pending =
 
-        `Studied ${hours} hour(s)`
+            Math.max(
 
-    );
+                0,
 
-}
+                data.mistakes.total -
+                data.mistakes.solved
 
+            );
 
-/* =========================================================
-   DAILY TASK
-========================================================= */
 
-function completeDailyTask() {
+        /* -----------------------------------------------
+           DAILY TASK %
+        ------------------------------------------------ */
 
-    const data =
-        loadJEEData();
+        data.daily.taskCompletion =
 
+            data.daily.targetTasks > 0
 
-    data.daily.tasksCompleted =
-        Math.min(
-
-            data.daily.tasksCompleted + 1,
-
-            data.daily.tasksTotal
-
-        );
-
-
-    updateDerivedData(data);
-
-
-    addActivity(
-
-        "DAILY",
-
-        "Daily task completed"
-
-    );
-
-}
-
-
-/* =========================================================
-   SET DAILY TARGET
-========================================================= */
-
-function setDailyTarget(hours) {
-
-    const data =
-        loadJEEData();
-
-
-    data.daily.targetHours =
-        Number(hours);
-
-
-    updateDerivedData(data);
-
-}
-
-
-/* =========================================================
-   SYLLABUS UPDATE
-========================================================= */
-
-function updateSyllabus(
-
-    subject,
-
-    total,
-
-    completed
-
-) {
-
-    subject =
-        subject.toLowerCase();
-
-
-    if (
-        ![
-            "physics",
-            "chemistry",
-            "maths"
-        ].includes(subject)
-    ) {
-
-        return;
-
-    }
-
-
-    const data =
-        loadJEEData();
-
-
-    data.syllabus[subject].total =
-        Number(total);
-
-
-    data.syllabus[subject].completed =
-        Number(completed);
-
-
-    updateDerivedData(data);
-
-
-    addActivity(
-
-        "SYLLABUS",
-
-        `${subject.toUpperCase()} syllabus updated`
-
-    );
-
-}
-
-
-/* =========================================================
-   REVISION UPDATE
-========================================================= */
-
-function addRevision(
-
-    totalTopics = 0,
-
-    revisedTopics = 0
-
-) {
-
-    const data =
-        loadJEEData();
-
-
-    data.revision.totalTopics +=
-        Number(totalTopics);
-
-
-    data.revision.revisedTopics +=
-        Number(revisedTopics);
-
-
-    data.revision.revisionCycles++;
-
-
-    updateDerivedData(data);
-
-
-    addActivity(
-
-        "REVISION",
-
-        "Revision cycle completed"
-
-    );
-
-}
-
-
-/* =========================================================
-   MISTAKE UPDATE
-========================================================= */
-
-function addMistake(
-
-    subject = "general",
-
-    solved = false
-
-) {
-
-    const data =
-        loadJEEData();
-
-
-    data.mistakes.total++;
-
-
-    subject =
-        subject.toLowerCase();
-
-
-    if (
-        ["physics","chemistry","maths"]
-        .includes(subject)
-    ) {
-
-        data.mistakes[subject]++;
-
-    }
-
-
-    if (solved) {
-
-        data.mistakes.solved++;
-
-    }
-
-
-    updateDerivedData(data);
-
-
-    addActivity(
-
-        "MISTAKE",
-
-        `New ${subject} mistake recorded`
-
-    );
-
-}
-
-
-/* =========================================================
-   JOURNAL
-========================================================= */
-
-function addJournalEntry({
-
-    discipline = 0,
-
-    mood = 0
-
-} = {}) {
-
-
-    const data =
-        loadJEEData();
-
-
-    data.journal.entries++;
-
-
-    data.journal.lastEntry =
-        new Date().toISOString();
-
-
-    data.journal.disciplineScore =
-        Number(discipline);
-
-
-    data.journal.moodScore =
-        Number(mood);
-
-
-    updateDerivedData(data);
-
-
-    addActivity(
-
-        "JOURNAL",
-
-        "Daily reflection recorded"
-
-    );
-
-}
-
-
-/* =========================================================
-   STREAK
-========================================================= */
-
-function updateStreak(streak) {
-
-    const data =
-        loadJEEData();
-
-
-    streak =
-        Number(streak);
-
-
-    data.study.currentStreak =
-        streak;
-
-
-    data.study.longestStreak =
-        Math.max(
-
-            data.study.longestStreak,
-
-            streak
-
-        );
-
-
-    data.study.studyDays =
-        Math.max(
-
-            data.study.studyDays,
-
-            streak
-
-        );
-
-
-    updateDerivedData(data);
-
-}
-
-
-/* =========================================================
-   DERIVED DATA
-========================================================= */
-
-function updateDerivedData(
-    data = loadJEEData()
-) {
-
-
-    /* ---------------------------------------------
-       SYLLABUS
-    --------------------------------------------- */
-
-    let syllabusTotal = 0;
-
-    let syllabusCompleted = 0;
-
-
-    [
-
-        "physics",
-        "chemistry",
-        "maths"
-
-    ].forEach(subject => {
-
-        const section =
-            data.syllabus[subject];
-
-
-        section.percentage =
-            section.total > 0
-            ? Math.round(
-
-                section.completed /
-                section.total *
-                100
-
-            )
-            : 0;
-
-
-        syllabusTotal +=
-            section.total;
-
-
-        syllabusCompleted +=
-            section.completed;
-
-    });
-
-
-    data.syllabus.overall.total =
-        syllabusTotal;
-
-
-    data.syllabus.overall.completed =
-        syllabusCompleted;
-
-
-    data.syllabus.overall.percentage =
-        syllabusTotal > 0
-        ? Math.round(
-
-            syllabusCompleted /
-            syllabusTotal *
-            100
-
-        )
-        : 0;
-
-
-    /* ---------------------------------------------
-       PYQ
-    --------------------------------------------- */
-
-    data.pyq.totalSolved =
-
-        data.pyq.main.solved
-        +
-        data.pyq.advanced.solved;
-
-
-    data.pyq.totalCorrect =
-
-        data.pyq.main.correct
-        +
-        data.pyq.advanced.correct;
-
-
-    data.pyq.totalIncorrect =
-
-        data.pyq.main.incorrect
-        +
-        data.pyq.advanced.incorrect;
-
-
-    data.pyq.accuracy =
-
-        data.pyq.totalSolved > 0
-
-        ?
-
-        Math.round(
-
-            data.pyq.totalCorrect /
-            data.pyq.totalSolved *
-            100
-
-        )
-
-        :
-
-        0;
-
-
-    /* ---------------------------------------------
-       DAILY
-    --------------------------------------------- */
-
-    data.daily.completion =
-
-        data.daily.targetHours > 0
-
-        ?
-
-        Math.min(
-
-            100,
+            ?
 
             Math.round(
 
-                data.daily.completedHours /
-                data.daily.targetHours *
-                100
+                (
+                    data.daily.completedTasks /
+                    data.daily.targetTasks
+                ) * 100
 
             )
 
-        )
+            :
 
-        :
-
-        0;
+            0;
 
 
-    /* ---------------------------------------------
-       REVISION
-    --------------------------------------------- */
+        /* -----------------------------------------------
+           DAILY STUDY %
+        ------------------------------------------------ */
 
-    data.revision.pending =
+        data.daily.studyCompletion =
 
-        Math.max(
+            data.daily.targetHours > 0
 
-            0,
+            ?
 
-            data.revision.totalTopics
-            -
-            data.revision.revisedTopics
+            Math.min(
 
-        );
+                100,
 
+                Math.round(
 
-    /* ---------------------------------------------
-       MISTAKES
-    --------------------------------------------- */
+                    (
+                        data.daily.completedHours /
+                        data.daily.targetHours
+                    ) * 100
 
-    data.mistakes.pending =
-
-        Math.max(
-
-            0,
-
-            data.mistakes.total
-            -
-            data.mistakes.solved
-
-        );
-
-
-    /* ---------------------------------------------
-       SAVE
-    --------------------------------------------- */
-
-    saveJEEData(data);
-
-
-    return data;
-
-}
-
-
-/* =========================================================
-   ACTIVITY LOG
-========================================================= */
-
-function addActivity(
-    type,
-    message
-) {
-
-    const data =
-        loadJEEData();
-
-
-    data.activity.unshift({
-
-        id:
-            Date.now(),
-
-        type,
-
-        message,
-
-        time:
-            new Date().toISOString()
-
-    });
-
-
-    /* Keep latest 100 events */
-
-    data.activity =
-        data.activity.slice(
-            0,
-            100
-        );
-
-
-    saveJEEData(data);
-
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
-function resetJEEData() {
-
-    const confirmation =
-        confirm(
-
-            "This will permanently delete ALL JEE Journey data from this browser. Continue?"
-
-        );
-
-
-    if (!confirmation) {
-
-        return false;
-
-    }
-
-
-    localStorage.removeItem(
-        JEE_DATA_KEY
-    );
-
-
-    location.reload();
-
-
-    return true;
-
-}
-
-
-/* =========================================================
-   EXPORT DATA
-========================================================= */
-
-function exportJEEData() {
-
-    const data =
-        loadJEEData();
-
-
-    const blob =
-        new Blob(
-
-            [
-                JSON.stringify(
-                    data,
-                    null,
-                    2
                 )
-            ],
 
-            {
-                type:
-                    "application/json"
-            }
+            )
 
-        );
+            :
+
+            0;
 
 
-    const url =
-        URL.createObjectURL(blob);
+        /* -----------------------------------------------
+           SYLLABUS
+        ------------------------------------------------ */
+
+        let totalSyllabus = 0;
+
+        let completedSyllabus = 0;
 
 
-    const link =
-        document.createElement("a");
+        [
+            "physics",
+            "chemistry",
+            "maths"
+
+        ].forEach(function (subject) {
+
+            const item =
+                data.preparation[subject];
 
 
-    link.href =
-        url;
+            item.percentage =
+
+                item.total > 0
+
+                ?
+
+                Math.round(
+
+                    (
+                        item.completed /
+                        item.total
+                    ) * 100
+
+                )
+
+                :
+
+                0;
 
 
-    link.download =
-        "vijay-jee-backup.json";
+            totalSyllabus +=
+                Number(item.total);
 
 
-    document.body.appendChild(link);
+            completedSyllabus +=
+                Number(item.completed);
+
+        });
 
 
-    link.click();
+        data.preparation.total =
+
+            totalSyllabus;
 
 
-    link.remove();
+        data.preparation.completed =
+
+            completedSyllabus;
 
 
-    URL.revokeObjectURL(url);
+        data.preparation.percentage =
 
-}
+            totalSyllabus > 0
+
+            ?
+
+            Math.round(
+
+                (
+                    completedSyllabus /
+                    totalSyllabus
+                ) * 100
+
+            )
+
+            :
+
+            0;
 
 
-/* =========================================================
-   IMPORT DATA
-========================================================= */
+        /* -----------------------------------------------
+           MOCK AVERAGE
+        ------------------------------------------------ */
 
-function importJEEData(file) {
+        if (
+            data.mocks.history.length > 0
+        ) {
 
-    if (!file) {
+            let totalScore = 0;
 
-        return;
+
+            data.mocks.history.forEach(
+                function (test) {
+
+                    totalScore +=
+                        Number(
+                            test.score || 0
+                        );
+
+                }
+            );
+
+
+            data.mocks.averageScore =
+                Math.round(
+
+                    totalScore /
+                    data.mocks.history.length
+
+                );
+
+        }
+
+        else {
+
+            data.mocks.averageScore = 0;
+
+        }
+
+
+        /* -----------------------------------------------
+           SAVE
+        ------------------------------------------------ */
+
+        save(data);
+
+
+        return data;
 
     }
 
 
-    const reader =
-        new FileReader();
+    /* =====================================================
+       ADD PYQ RESULT
+    ===================================================== */
+
+    function addPYQ(
+
+        exam = "main",
+
+        correct = 0,
+
+        incorrect = 0,
+
+        skipped = 0
+
+    ) {
+
+        exam =
+            exam.toLowerCase();
 
 
-    reader.onload =
-        function(event) {
+        if (
+            exam !== "main" &&
+            exam !== "advanced"
+        ) {
 
-            try {
+            console.error(
+                "Exam must be main or advanced."
+            );
 
-                const imported =
-                    JSON.parse(
-                        event.target.result
-                    );
+            return;
 
-
-                const merged =
-                    mergeObjects(
-
-                        DEFAULT_JEE_DATA,
-
-                        imported
-
-                    );
+        }
 
 
-                saveJEEData(merged);
+        const data =
+            load();
 
 
-                alert(
-                    "JEE data imported successfully."
-                );
+        const section =
+            data.pyq[exam];
 
 
-                location.reload();
+        correct =
+            Number(correct);
 
-            }
 
-            catch(error) {
+        incorrect =
+            Number(incorrect);
 
-                alert(
-                    "Invalid JEE backup file."
-                );
 
-            }
+        skipped =
+            Number(skipped);
+
+
+        section.correct +=
+            correct;
+
+
+        section.incorrect +=
+            incorrect;
+
+
+        section.skipped +=
+            skipped;
+
+
+        section.solved +=
+
+            correct +
+            incorrect +
+            skipped;
+
+
+        addActivityToData(
+
+            data,
+
+            "PYQ",
+
+            `${exam.toUpperCase()} PYQ updated`
+
+        );
+
+
+        calculate();
+
+
+        checkAchievements();
+
+
+        return load();
+
+    }
+
+
+    /* =====================================================
+       ADD MOCK
+    ===================================================== */
+
+    function addMock({
+
+        exam = "main",
+
+        score = 0,
+
+        percentile = 0,
+
+        accuracy = 0,
+
+        rank = null
+
+    } = {}) {
+
+
+        exam =
+            exam.toLowerCase();
+
+
+        const data =
+            load();
+
+
+        score =
+            Number(score);
+
+
+        percentile =
+            Number(percentile);
+
+
+        accuracy =
+            Number(accuracy);
+
+
+        const test = {
+
+            id:
+                Date.now(),
+
+            exam,
+
+            score,
+
+            percentile,
+
+            accuracy,
+
+            rank,
+
+            date:
+                new Date().toISOString()
 
         };
 
 
-    reader.readAsText(file);
-
-}
-
-
-/* =========================================================
-   ACHIEVEMENT HELPER
-========================================================= */
-
-function unlockAchievement(id) {
-
-    const data =
-        loadJEEData();
-
-
-    if (
-        !data.achievements.unlocked
-        .includes(id)
-    ) {
-
-        data.achievements.unlocked.push(
-            id
+        data.mocks.history.unshift(
+            test
         );
 
 
-        saveJEEData(data);
+        data.mocks.attempted++;
 
 
-        addActivity(
+        data.mocks.total++;
 
-            "ACHIEVEMENT",
 
-            `Achievement unlocked: ${id}`
+        data.mocks.bestScore =
+            Math.max(
+
+                data.mocks.bestScore,
+
+                score
+
+            );
+
+
+        data.mocks.bestPercentile =
+            Math.max(
+
+                data.mocks.bestPercentile,
+
+                percentile
+
+            );
+
+
+        if (
+            data.mocks[exam]
+        ) {
+
+            data.mocks[exam].attempted++;
+
+
+            data.mocks[exam].bestScore =
+                Math.max(
+
+                    data.mocks[exam].bestScore,
+
+                    score
+
+                );
+
+        }
+
+
+        if (
+            rank !== null &&
+            rank > 0
+        ) {
+
+            data.rank.lastMockAIR =
+                Number(rank);
+
+        }
+
+
+        addActivityToData(
+
+            data,
+
+            "MOCK",
+
+            `${exam.toUpperCase()} mock completed`
 
         );
 
-    }
 
-}
-
-
-/* =========================================================
-   CHECK ACHIEVEMENTS
-========================================================= */
-
-function checkAchievements() {
-
-    const data =
-        loadJEEData();
+        calculate();
 
 
-    /* PYQ */
-
-    if (
-        data.pyq.totalSolved >= 100
-    ) {
-
-        unlockAchievement(
-            "pyq100"
-        );
-
-    }
+        checkAchievements();
 
 
-    if (
-        data.pyq.totalSolved >= 500
-    ) {
-
-        unlockAchievement(
-            "pyq500"
-        );
-
-    }
-
-
-    if (
-        data.pyq.totalSolved >= 1000
-    ) {
-
-        unlockAchievement(
-            "pyq1000"
-        );
+        return load();
 
     }
 
 
-    if (
-        data.pyq.totalSolved >= 5000
+    /* =====================================================
+       ADD STUDY HOURS
+    ===================================================== */
+
+    function addStudyHours(
+        hours
     ) {
 
-        unlockAchievement(
-            "pyq5000"
+        hours =
+            Number(hours);
+
+
+        if (
+            !Number.isFinite(hours) ||
+            hours <= 0
+        ) {
+
+            return;
+
+        }
+
+
+        const data =
+            load();
+
+
+        data.study.totalHours +=
+            hours;
+
+
+        data.study.todayHours +=
+            hours;
+
+
+        data.study.weeklyHours +=
+            hours;
+
+
+        data.study.monthlyHours +=
+            hours;
+
+
+        data.daily.completedHours +=
+            hours;
+
+
+        data.study.history.unshift({
+
+            hours,
+
+            date:
+                new Date().toISOString()
+
+        });
+
+
+        addActivityToData(
+
+            data,
+
+            "STUDY",
+
+            `Studied ${hours} hour(s)`
+
+        );
+
+
+        calculate();
+
+
+        checkAchievements();
+
+
+        return load();
+
+    }
+
+
+    /* =====================================================
+       ADD MISTAKE
+    ===================================================== */
+
+    function addMistake(
+
+        subject = "general",
+
+        topic = "",
+
+        type = "Conceptual",
+
+        solved = false
+
+    ) {
+
+
+        const data =
+            load();
+
+
+        subject =
+            subject.toLowerCase();
+
+
+        data.mistakes.total++;
+
+
+        if (
+            data.mistakes[subject] !== undefined
+        ) {
+
+            data.mistakes[subject]++;
+
+        }
+
+
+        if (solved) {
+
+            data.mistakes.solved++;
+
+        }
+
+
+        data.mistakes.history.unshift({
+
+            id:
+                Date.now(),
+
+            subject,
+
+            topic,
+
+            type,
+
+            solved,
+
+            date:
+                new Date().toISOString()
+
+        });
+
+
+        addActivityToData(
+
+            data,
+
+            "MISTAKE",
+
+            `Mistake added: ${subject}`
+
+        );
+
+
+        calculate();
+
+
+        return load();
+
+    }
+
+
+    /* =====================================================
+       ADD REVISION
+    ===================================================== */
+
+    function addRevision(
+
+        total = 0,
+
+        completed = 0,
+
+        cycle = 1
+
+    ) {
+
+        const data =
+            load();
+
+
+        data.revision.totalTopics +=
+            Number(total);
+
+
+        data.revision.completedTopics +=
+            Number(completed);
+
+
+        if (
+            cycle === 1
+        ) {
+
+            data.revision.cycle1++;
+
+        }
+
+        else if (
+            cycle === 2
+        ) {
+
+            data.revision.cycle2++;
+
+        }
+
+        else if (
+            cycle === 3
+        ) {
+
+            data.revision.cycle3++;
+
+        }
+
+
+        calculate();
+
+
+        addActivityToData(
+
+            data,
+
+            "REVISION",
+
+            `Revision cycle ${cycle} updated`
+
+        );
+
+
+        return load();
+
+    }
+
+
+    /* =====================================================
+       JOURNAL ENTRY
+    ===================================================== */
+
+    function addJournal(
+
+        text = "",
+
+        mood = "",
+
+        discipline = 0
+
+    ) {
+
+
+        const data =
+            load();
+
+
+        data.journal.entries++;
+
+
+        data.journal.history.unshift({
+
+            id:
+                Date.now(),
+
+            text,
+
+            mood,
+
+            discipline,
+
+            date:
+                new Date().toISOString()
+
+        });
+
+
+        addActivityToData(
+
+            data,
+
+            "JOURNAL",
+
+            "Journal entry added"
+
+        );
+
+
+        return load();
+
+    }
+
+
+    /* =====================================================
+       UPDATE SYLLABUS
+    ===================================================== */
+
+    function updateSyllabus(
+
+        subject,
+
+        total,
+
+        completed
+
+    ) {
+
+
+        subject =
+            subject.toLowerCase();
+
+
+        if (
+            !dataSubjectExists(subject)
+        ) {
+
+            console.error(
+                "Invalid subject."
+            );
+
+            return;
+
+        }
+
+
+        const data =
+            load();
+
+
+        data.preparation[subject].total =
+            Number(total);
+
+
+        data.preparation[subject].completed =
+            Number(completed);
+
+
+        calculate();
+
+
+        addActivityToData(
+
+            data,
+
+            "SYLLABUS",
+
+            `${subject.toUpperCase()} syllabus updated`
+
+        );
+
+
+        return load();
+
+    }
+
+
+    function dataSubjectExists(subject) {
+
+        return [
+
+            "physics",
+            "chemistry",
+            "maths"
+
+        ].includes(subject);
+
+    }
+
+
+    /* =====================================================
+       DAILY TASK
+    ===================================================== */
+
+    function completeDailyTask() {
+
+        const data =
+            load();
+
+
+        data.daily.completedTasks++;
+
+
+        addActivityToData(
+
+            data,
+
+            "DAILY",
+
+            "Daily task completed"
+
+        );
+
+
+        calculate();
+
+
+        checkAchievements();
+
+
+        return load();
+
+    }
+
+
+    /* =====================================================
+       SET STREAK
+    ===================================================== */
+
+    function setStreak(
+        streak
+    ) {
+
+        const data =
+            load();
+
+
+        streak =
+            Number(streak);
+
+
+        data.study.currentStreak =
+            streak;
+
+
+        data.study.longestStreak =
+            Math.max(
+
+                data.study.longestStreak,
+
+                streak
+
+            );
+
+
+        data.study.studyDays =
+            Math.max(
+
+                data.study.studyDays,
+
+                streak
+
+            );
+
+
+        calculate();
+
+
+        checkAchievements();
+
+
+        return load();
+
+    }
+
+
+    /* =====================================================
+       ACTIVITY
+    ===================================================== */
+
+    function addActivityToData(
+
+        data,
+
+        type,
+
+        message
+
+    ) {
+
+
+        data.activity.unshift({
+
+            id:
+                Date.now(),
+
+            type,
+
+            message,
+
+            time:
+                new Date().toISOString()
+
+        });
+
+
+        data.activity =
+            data.activity.slice(
+                0,
+                100
+            );
+
+
+        save(data);
+
+    }
+
+
+    /* =====================================================
+       ACHIEVEMENTS
+    ===================================================== */
+
+    const ACHIEVEMENTS = [
+
+        {
+            id: "PYQ_100",
+            name: "First 100 PYQs",
+            requirement: data =>
+                data.pyq.totalSolved >= 100,
+            points: 10
+        },
+
+        {
+            id: "PYQ_500",
+            name: "PYQ Warrior",
+            requirement: data =>
+                data.pyq.totalSolved >= 500,
+            points: 25
+        },
+
+        {
+            id: "PYQ_1000",
+            name: "PYQ Machine",
+            requirement: data =>
+                data.pyq.totalSolved >= 1000,
+            points: 50
+        },
+
+        {
+            id: "PYQ_5000",
+            name: "PYQ Beast",
+            requirement: data =>
+                data.pyq.totalSolved >= 5000,
+            points: 100
+        },
+
+        {
+            id: "STUDY_100",
+            name: "100 Hour Grind",
+            requirement: data =>
+                data.study.totalHours >= 100,
+            points: 25
+        },
+
+        {
+            id: "STUDY_500",
+            name: "500 Hour Grind",
+            requirement: data =>
+                data.study.totalHours >= 500,
+            points: 50
+        },
+
+        {
+            id: "STUDY_1000",
+            name: "1000 Hour Grind",
+            requirement: data =>
+                data.study.totalHours >= 1000,
+            points: 100
+        },
+
+        {
+            id: "MOCK_10",
+            name: "10 Mock Tests",
+            requirement: data =>
+                data.mocks.attempted >= 10,
+            points: 25
+        },
+
+        {
+            id: "MOCK_50",
+            name: "50 Mock Tests",
+            requirement: data =>
+                data.mocks.attempted >= 50,
+            points: 75
+        },
+
+        {
+            id: "STREAK_7",
+            name: "7 Day Streak",
+            requirement: data =>
+                data.study.currentStreak >= 7,
+            points: 10
+        },
+
+        {
+            id: "STREAK_30",
+            name: "30 Day Streak",
+            requirement: data =>
+                data.study.currentStreak >= 30,
+            points: 30
+        },
+
+        {
+            id: "STREAK_100",
+            name: "100 Day Streak",
+            requirement: data =>
+                data.study.currentStreak >= 100,
+            points: 100
+        }
+
+    ];
+
+
+    function checkAchievements() {
+
+        const data =
+            load();
+
+
+        ACHIEVEMENTS.forEach(
+            function (achievement) {
+
+                if (
+
+                    achievement.requirement(
+                        data
+                    )
+
+                    &&
+
+                    !data.achievements.unlocked
+                        .includes(
+                            achievement.id
+                        )
+
+                ) {
+
+                    data.achievements.unlocked.push(
+                        achievement.id
+                    );
+
+
+                    data.achievements.points +=
+                        achievement.points;
+
+
+                    addActivityToData(
+
+                        data,
+
+                        "ACHIEVEMENT",
+
+                        `Unlocked: ${achievement.name}`
+
+                    );
+
+                }
+
+            }
+        );
+
+
+        save(data);
+
+
+        return data;
+
+    }
+
+
+    /* =====================================================
+       EXPORT
+    ===================================================== */
+
+    function exportData() {
+
+        const data =
+            load();
+
+
+        const backup = {
+
+            application:
+                "Vijay JEE Journey",
+
+            version:
+                "1.0",
+
+            exportedAt:
+                new Date().toISOString(),
+
+            data
+
+        };
+
+
+        const blob =
+            new Blob(
+
+                [
+                    JSON.stringify(
+                        backup,
+                        null,
+                        2
+                    )
+                ],
+
+                {
+                    type:
+                        "application/json"
+                }
+
+            );
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        link.href =
+            url;
+
+
+        link.download =
+            "vijay-jee-backup.json";
+
+
+        document.body.appendChild(
+            link
+        );
+
+
+        link.click();
+
+
+        link.remove();
+
+
+        URL.revokeObjectURL(
+            url
         );
 
     }
 
 
-    /* STUDY HOURS */
+    /* =====================================================
+       IMPORT
+    ===================================================== */
 
-    if (
-        data.study.totalHours >= 100
-    ) {
+    function importData(file) {
 
-        unlockAchievement(
-            "hours100"
-        );
-
-    }
+        if (!file) {
+            return;
+        }
 
 
-    if (
-        data.study.totalHours >= 500
-    ) {
-
-        unlockAchievement(
-            "hours500"
-        );
-
-    }
+        const reader =
+            new FileReader();
 
 
-    if (
-        data.study.totalHours >= 1000
-    ) {
+        reader.onload =
+            function (event) {
 
-        unlockAchievement(
-            "hours1000"
-        );
+                try {
 
-    }
-
-
-    /* MOCKS */
-
-    if (
-        data.mocks.attempted >= 1
-    ) {
-
-        unlockAchievement(
-            "mock1"
-        );
-
-    }
+                    const backup =
+                        JSON.parse(
+                            event.target.result
+                        );
 
 
-    if (
-        data.mocks.attempted >= 10
-    ) {
-
-        unlockAchievement(
-            "mock10"
-        );
-
-    }
+                    const imported =
+                        backup.data ||
+                        backup;
 
 
-    if (
-        data.mocks.attempted >= 50
-    ) {
+                    const merged =
+                        merge(
+                            DEFAULT_DATA,
+                            imported
+                        );
 
-        unlockAchievement(
-            "mock50"
-        );
+
+                    save(merged);
+
+
+                    alert(
+                        "JEE backup restored successfully."
+                    );
+
+
+                    location.reload();
+
+                }
+
+                catch (error) {
+
+                    alert(
+                        "Invalid JEE backup file."
+                    );
+
+                }
+
+            };
+
+
+        reader.readAsText(file);
 
     }
 
 
-    /* STREAK */
+    /* =====================================================
+       RESET
+    ===================================================== */
 
-    if (
-        data.study.currentStreak >= 7
-    ) {
+    function resetData() {
 
-        unlockAchievement(
-            "streak7"
+        const confirmation =
+            confirm(
+
+                "This will permanently delete your complete JEE Journey data. Continue?"
+
+            );
+
+
+        if (!confirmation) {
+
+            return false;
+
+        }
+
+
+        localStorage.removeItem(
+            DB_KEY
         );
+
+
+        location.reload();
+
+
+        return true;
 
     }
 
 
-    if (
-        data.study.currentStreak >= 30
-    ) {
+    /* =====================================================
+       GET ACHIEVEMENT LIST
+    ===================================================== */
 
-        unlockAchievement(
-            "streak30"
-        );
+    function getAchievements() {
 
-    }
-
-
-    if (
-        data.study.currentStreak >= 100
-    ) {
-
-        unlockAchievement(
-            "streak100"
-        );
+        return ACHIEVEMENTS;
 
     }
 
 
-    /* SYLLABUS */
+    /* =====================================================
+       GLOBAL API
+    ===================================================== */
 
-    if (
-        data.syllabus.overall.percentage >= 50
-    ) {
+    window.JEE = {
 
-        unlockAchievement(
-            "syllabus50"
-        );
+        /* Database */
 
-    }
+        getData:
+            getData,
 
+        load:
+            load,
 
-    if (
-        data.syllabus.overall.percentage >= 100
-    ) {
+        save:
+            save,
 
-        unlockAchievement(
-            "syllabus100"
-        );
+        get:
+            get,
 
-    }
+        set:
+            set,
 
+        increase:
+            increase,
 
-    return loadJEEData();
+        calculate:
+            calculate,
 
-}
 
+        /* Preparation */
 
-/* =========================================================
-   PUBLIC API
-========================================================= */
+        updateSyllabus:
+            updateSyllabus,
 
-window.JEE = {
 
-    /* Data */
+        /* Daily */
 
-    getData:
-        loadJEEData,
+        addStudyHours:
+            addStudyHours,
 
-    saveData:
-        saveJEEData,
+        completeDailyTask:
+            completeDailyTask,
 
+        setStreak:
+            setStreak,
 
-    /* Values */
 
-    get:
-        getJEEValue,
+        /* PYQ */
 
-    set:
-        setJEEValue,
+        addPYQ:
+            addPYQ,
 
-    increase:
-        increaseJEEValue,
 
+        /* Mock */
 
-    /* PYQ */
+        addMock:
+            addMock,
 
-    addPYQ:
-        addPYQResult,
 
+        /* Mistakes */
 
-    /* Mock */
+        addMistake:
+            addMistake,
 
-    addMock:
-        addMockResult,
 
+        /* Revision */
 
-    /* Study */
+        addRevision:
+            addRevision,
 
-    addStudyHours:
-        addStudyHours,
 
+        /* Journal */
 
-    /* Daily */
+        addJournal:
+            addJournal,
 
-    completeTask:
-        completeDailyTask,
 
-    setDailyTarget:
-        setDailyTarget,
+        /* Achievements */
 
+        achievements:
+            getAchievements,
 
-    /* Syllabus */
+        checkAchievements:
+            checkAchievements,
 
-    updateSyllabus:
-        updateSyllabus,
 
+        /* Backup */
 
-    /* Revision */
+        export:
+            exportData,
 
-    addRevision:
-        addRevision,
+        import:
+            importData,
 
 
-    /* Mistakes */
+        /* Reset */
 
-    addMistake:
-        addMistake,
+        reset:
+            resetData
 
+    };
 
-    /* Journal */
 
-    addJournal:
-        addJournalEntry,
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
 
+    calculate();
 
-    /* Streak */
+    checkAchievements();
 
-    updateStreak:
-        updateStreak,
 
+    console.log(
+        "🧠 Vijay JEE Data Engine Loaded"
+    );
 
-    /* Achievements */
+    console.log(
+        "Use JEE.getData() to inspect your database."
+    );
 
-    unlock:
-        unlockAchievement,
 
-    checkAchievements:
-        checkAchievements,
-
-
-    /* Backup */
-
-    export:
-        exportJEEData,
-
-    import:
-        importJEEData,
-
-
-    /* Reset */
-
-    reset:
-        resetJEEData
-
-};
-
-
-/* =========================================================
-   START ENGINE
-========================================================= */
-
-updateDerivedData();
-
-checkAchievements();
-
-
-console.log(
-    "🧠 Vijay JEE Central Data Engine loaded."
-);
-
-console.log(
-    "Use JEE.getData() to inspect your complete data."
-);
+})();
 ```
