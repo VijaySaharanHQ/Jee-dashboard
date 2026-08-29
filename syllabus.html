@@ -1,0 +1,2406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b14">
+
+<title>JEE Syllabus | Vijay JEE Command Center</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#070b14;
+    color:#f5f7fb;
+    min-height:100vh;
+}
+
+button,input,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    width:245px;
+    background:#0a101a;
+    border-right:1px solid #1b2638;
+    padding:22px 14px;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    overflow-y:auto;
+    z-index:100;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px 25px;
+    font-weight:800;
+}
+
+.logo-box{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#3478ff,#7b4dff);
+}
+
+.logo-text{
+    font-size:14px;
+}
+
+.logo-text span{
+    color:#69778c;
+}
+
+.nav-title{
+    font-size:9px;
+    color:#56657a;
+    letter-spacing:.15em;
+    margin:15px 10px 8px;
+}
+
+.nav-link{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 12px;
+    margin:3px 0;
+    border-radius:9px;
+    color:#77859a;
+    font-size:12px;
+    transition:.2s;
+}
+
+.nav-link:hover{
+    background:#111a29;
+    color:#fff;
+}
+
+.nav-link.active{
+    background:#15233b;
+    color:#79a7ff;
+}
+
+.nav-link .icon{
+    width:18px;
+    text-align:center;
+}
+
+.sidebar-bottom{
+    margin-top:30px;
+    border-top:1px solid #182437;
+    padding-top:15px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:245px;
+    padding:28px;
+}
+
+.container{
+    width:min(1250px,100%);
+    margin:auto;
+}
+
+/* =========================
+   TOP
+========================= */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    margin-bottom:22px;
+}
+
+.title h1{
+    font-size:28px;
+    letter-spacing:-.04em;
+}
+
+.title p{
+    color:#65738a;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.status{
+    color:#35d58a;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.08em;
+    padding-top:7px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:13px;
+    padding:15px;
+}
+
+.stat-label{
+    color:#65738a;
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:.08em;
+}
+
+.stat-value{
+    font-size:23px;
+    font-weight:800;
+    margin-top:7px;
+}
+
+/* =========================
+   FILTER BAR
+========================= */
+
+.filter-card{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:15px;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:1fr 170px 170px 170px;
+    gap:8px;
+}
+
+.input,
+.select{
+    width:100%;
+    padding:11px;
+    background:#090f19;
+    border:1px solid #1d2b40;
+    color:#dce3ed;
+    border-radius:9px;
+    outline:none;
+    font-size:10px;
+}
+
+.input:focus,
+.select:focus{
+    border-color:#3a6097;
+}
+
+/* =========================
+   SUBJECT TABS
+========================= */
+
+.subject-tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:15px;
+}
+
+.subject-tab{
+    border:1px solid #1c2b41;
+    background:#0d1420;
+    color:#6f7e93;
+    padding:10px 17px;
+    border-radius:9px;
+    font-size:10px;
+    font-weight:800;
+}
+
+.subject-tab.active{
+    background:#162641;
+    color:#79a7ff;
+    border-color:#2d4d7c;
+}
+
+/* =========================
+   CHAPTER GRID
+========================= */
+
+.chapter-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.chapter{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+    padding:17px;
+    transition:.2s;
+}
+
+.chapter:hover{
+    border-color:#2a3e5b;
+    transform:translateY(-1px);
+}
+
+.chapter-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+}
+
+.chapter-number{
+    color:#56667c;
+    font-size:8px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.chapter-name{
+    font-size:13px;
+    font-weight:800;
+}
+
+.chapter-code{
+    color:#59687c;
+    font-size:8px;
+    margin-top:4px;
+}
+
+.mastery{
+    text-align:right;
+    min-width:55px;
+}
+
+.mastery-value{
+    font-size:17px;
+    font-weight:800;
+}
+
+.mastery-label{
+    color:#59677b;
+    font-size:7px;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress{
+    margin:14px 0;
+    height:6px;
+    background:#182438;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    width:0%;
+    background:#3478ff;
+    border-radius:20px;
+    transition:.3s;
+}
+
+/* =========================
+   CHECKLIST
+========================= */
+
+.check-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+}
+
+.check{
+    border:1px solid #1c2b3e;
+    background:#0a111c;
+    color:#68778c;
+    border-radius:7px;
+    padding:8px 4px;
+    text-align:center;
+    font-size:7px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.check.done{
+    background:#17382c;
+    border-color:#286b50;
+    color:#5ee1a7;
+}
+
+/* =========================
+   CHAPTER FOOTER
+========================= */
+
+.chapter-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px solid #182437;
+}
+
+.difficulty{
+    color:#65738a;
+    font-size:8px;
+}
+
+.status-badge{
+    font-size:7px;
+    font-weight:800;
+    padding:5px 7px;
+    border-radius:6px;
+}
+
+.status-not{
+    color:#7a8799;
+    background:#151d29;
+}
+
+.status-progress{
+    color:#dcb65d;
+    background:#302814;
+}
+
+.status-done{
+    color:#54d69b;
+    background:#143226;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    display:none;
+    text-align:center;
+    padding:50px 20px;
+    color:#56657a;
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+.mobile-menu{
+    display:none;
+    position:fixed;
+    right:15px;
+    top:15px;
+    width:40px;
+    height:40px;
+    background:#0d1420;
+    color:#fff;
+    border:1px solid #27364c;
+    border-radius:10px;
+    z-index:200;
+}
+
+@media(max-width:1100px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .filters{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:850px){
+
+    .chapter-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+
+    .topbar{
+        padding-right:50px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .filters{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:480px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .check-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-box">
+            V
+        </div>
+
+        <div class="logo-text">
+            VIJAY<span>.JEE</span>
+        </div>
+
+    </a>
+
+
+    <div class="nav-title">
+        COMMAND
+    </div>
+
+    <a href="dashboard.html" class="nav-link">
+        <span class="icon">⌂</span>
+        Dashboard
+    </a>
+
+    <a href="daily-target.html" class="nav-link">
+        <span class="icon">✓</span>
+        Daily Mission
+    </a>
+
+
+    <div class="nav-title">
+        PREPARATION
+    </div>
+
+    <a href="syllabus.html" class="nav-link active">
+        <span class="icon">▣</span>
+        Syllabus
+    </a>
+
+    <a href="backlog.html" class="nav-link">
+        <span class="icon">◫</span>
+        Backlog
+    </a>
+
+    <a href="revision.html" class="nav-link">
+        <span class="icon">↻</span>
+        Revision
+    </a>
+
+    <a href="questions.html" class="nav-link">
+        <span class="icon">?</span>
+        Questions
+    </a>
+
+    <a href="pyq-tracker.html" class="nav-link">
+        <span class="icon">◷</span>
+        PYQ Tracker
+    </a>
+
+    <a href="mistakes.html" class="nav-link">
+        <span class="icon">!</span>
+        Mistake Book
+    </a>
+
+
+    <div class="nav-title">
+        TESTING
+    </div>
+
+    <a href="mock-tests.html" class="nav-link">
+        <span class="icon">▤</span>
+        Mock Tests
+    </a>
+
+    <a href="analytics.html" class="nav-link">
+        <span class="icon">⌁</span>
+        Analytics
+    </a>
+
+
+    <div class="nav-title">
+        PERSONAL
+    </div>
+
+    <a href="journal.html" class="nav-link">
+        <span class="icon">✎</span>
+        Journal
+    </a>
+
+    <a href="achievements.html" class="nav-link">
+        <span class="icon">★</span>
+        Achievements
+    </a>
+
+
+    <div class="sidebar-bottom">
+
+        <a href="settings.html" class="nav-link">
+            <span class="icon">⚙</span>
+            Settings
+        </a>
+
+        <a href="index.html" class="nav-link">
+            <span class="icon">←</span>
+            Home
+        </a>
+
+    </div>
+
+</aside>
+
+
+<button
+    class="mobile-menu"
+    onclick="toggleSidebar()"
+>
+    ☰
+</button>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="topbar">
+
+        <div class="title">
+
+            <h1>
+                JEE Syllabus
+            </h1>
+
+            <p>
+                Master every chapter. Track every layer of preparation.
+            </p>
+
+        </div>
+
+        <div class="status">
+            ● TRACKING ACTIVE
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         STATS
+    ====================================================== -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                TOTAL CHAPTERS
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalChapters"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                MASTERED
+            </div>
+
+            <div
+                class="stat-value"
+                id="masteredChapters"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                IN PROGRESS
+            </div>
+
+            <div
+                class="stat-value"
+                id="progressChapters"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                NOT STARTED
+            </div>
+
+            <div
+                class="stat-value"
+                id="notStartedChapters"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                SYLLABUS MASTERY
+            </div>
+
+            <div
+                class="stat-value"
+                id="overallMastery"
+            >
+                0%
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FILTER
+    ====================================================== -->
+
+    <section class="filter-card">
+
+        <div class="filters">
+
+            <input
+                class="input"
+                id="search"
+                placeholder="Search chapter..."
+                oninput="render()"
+            >
+
+
+            <select
+                class="select"
+                id="classFilter"
+                onchange="render()"
+            >
+
+                <option value="all">
+                    All Classes
+                </option>
+
+                <option value="11">
+                    Class 11
+                </option>
+
+                <option value="12">
+                    Class 12
+                </option>
+
+            </select>
+
+
+            <select
+                class="select"
+                id="levelFilter"
+                onchange="render()"
+            >
+
+                <option value="all">
+                    All Levels
+                </option>
+
+                <option value="not">
+                    Not Started
+                </option>
+
+                <option value="progress">
+                    In Progress
+                </option>
+
+                <option value="done">
+                    Mastered
+                </option>
+
+            </select>
+
+
+            <select
+                class="select"
+                id="sortFilter"
+                onchange="render()"
+            >
+
+                <option value="default">
+                    Default Order
+                </option>
+
+                <option value="progress">
+                    Lowest Mastery First
+                </option>
+
+                <option value="highest">
+                    Highest Mastery First
+                </option>
+
+                <option value="name">
+                    Alphabetical
+                </option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SUBJECT TABS
+    ====================================================== -->
+
+    <div class="subject-tabs">
+
+        <button
+            class="subject-tab active"
+            id="tab-all"
+            onclick="setSubject('all')"
+        >
+            ALL
+        </button>
+
+        <button
+            class="subject-tab"
+            id="tab-physics"
+            onclick="setSubject('Physics')"
+        >
+            PHYSICS
+        </button>
+
+        <button
+            class="subject-tab"
+            id="tab-chemistry"
+            onclick="setSubject('Chemistry')"
+        >
+            CHEMISTRY
+        </button>
+
+        <button
+            class="subject-tab"
+            id="tab-maths"
+            onclick="setSubject('Mathematics')"
+        >
+            MATHEMATICS
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         CHAPTERS
+    ====================================================== -->
+
+    <section
+        class="chapter-grid"
+        id="chapterGrid"
+    ></section>
+
+
+    <div
+        class="empty"
+        id="empty"
+    >
+        No chapters match your current filters.
+    </div>
+
+
+    <div
+        style="
+        text-align:center;
+        color:#48566a;
+        font-size:9px;
+        padding:20px 0;
+        "
+    >
+        Vijay's IIT JEE 2027 Command Center • Syllabus Engine
+    </div>
+
+</div>
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+const STORAGE_KEY =
+    "vijayJEESyllabus";
+
+
+/*
+    Each chapter has 7 preparation layers:
+
+    1. Concepts
+    2. Lectures
+    3. Notes
+    4. Practice
+    5. PYQ
+    6. Revision
+    7. Advanced
+
+    A chapter gets mastery according to
+    completed layers.
+*/
+
+
+const chapters = [
+
+/* =========================================================
+   PHYSICS CLASS 11
+========================================================= */
+
+{
+id:"phy11_01",
+subject:"Physics",
+class:"11",
+name:"Units and Measurements"
+},
+
+{
+id:"phy11_02",
+subject:"Physics",
+class:"11",
+name:"Motion in a Straight Line"
+},
+
+{
+id:"phy11_03",
+subject:"Physics",
+class:"11",
+name:"Motion in a Plane"
+},
+
+{
+id:"phy11_04",
+subject:"Physics",
+class:"11",
+name:"Laws of Motion"
+},
+
+{
+id:"phy11_05",
+subject:"Physics",
+class:"11",
+name:"Work, Energy and Power"
+},
+
+{
+id:"phy11_06",
+subject:"Physics",
+class:"11",
+name:"System of Particles and Rotational Motion"
+},
+
+{
+id:"phy11_07",
+subject:"Physics",
+class:"11",
+name:"Gravitation"
+},
+
+{
+id:"phy11_08",
+subject:"Physics",
+class:"11",
+name:"Mechanical Properties of Solids"
+},
+
+{
+id:"phy11_09",
+subject:"Physics",
+class:"11",
+name:"Mechanical Properties of Fluids"
+},
+
+{
+id:"phy11_10",
+subject:"Physics",
+class:"11",
+name:"Thermal Properties of Matter"
+},
+
+{
+id:"phy11_11",
+subject:"Physics",
+class:"11",
+name:"Thermodynamics"
+},
+
+{
+id:"phy11_12",
+subject:"Physics",
+class:"11",
+name:"Kinetic Theory"
+},
+
+{
+id:"phy11_13",
+subject:"Physics",
+class:"11",
+name:"Oscillations"
+},
+
+{
+id:"phy11_14",
+subject:"Physics",
+class:"11",
+name:"Waves"
+},
+
+
+/* =========================================================
+   PHYSICS CLASS 12
+========================================================= */
+
+{
+id:"phy12_01",
+subject:"Physics",
+class:"12",
+name:"Electric Charges and Fields"
+},
+
+{
+id:"phy12_02",
+subject:"Physics",
+class:"12",
+name:"Electrostatic Potential and Capacitance"
+},
+
+{
+id:"phy12_03",
+subject:"Physics",
+class:"12",
+name:"Current Electricity"
+},
+
+{
+id:"phy12_04",
+subject:"Physics",
+class:"12",
+name:"Moving Charges and Magnetism"
+},
+
+{
+id:"phy12_05",
+subject:"Physics",
+class:"12",
+name:"Magnetism and Matter"
+},
+
+{
+id:"phy12_06",
+subject:"Physics",
+class:"12",
+name:"Electromagnetic Induction"
+},
+
+{
+id:"phy12_07",
+subject:"Physics",
+class:"12",
+name:"Alternating Current"
+},
+
+{
+id:"phy12_08",
+subject:"Physics",
+class:"12",
+name:"Electromagnetic Waves"
+},
+
+{
+id:"phy12_09",
+subject:"Physics",
+class:"12",
+name:"Ray Optics and Optical Instruments"
+},
+
+{
+id:"phy12_10",
+subject:"Physics",
+class:"12",
+name:"Wave Optics"
+},
+
+{
+id:"phy12_11",
+subject:"Physics",
+class:"12",
+name:"Dual Nature of Radiation and Matter"
+},
+
+{
+id:"phy12_12",
+subject:"Physics",
+class:"12",
+name:"Atoms"
+},
+
+{
+id:"phy12_13",
+subject:"Physics",
+class:"12",
+name:"Nuclei"
+},
+
+{
+id:"phy12_14",
+subject:"Physics",
+class:"12",
+name:"Semiconductor Electronics"
+},
+
+
+/* =========================================================
+   CHEMISTRY CLASS 11
+========================================================= */
+
+{
+id:"chem11_01",
+subject:"Chemistry",
+class:"11",
+name:"Some Basic Concepts of Chemistry"
+},
+
+{
+id:"chem11_02",
+subject:"Chemistry",
+class:"11",
+name:"Structure of Atom"
+},
+
+{
+id:"chem11_03",
+subject:"Chemistry",
+class:"11",
+name:"Classification of Elements and Periodicity"
+},
+
+{
+id:"chem11_04",
+subject:"Chemistry",
+class:"11",
+name:"Chemical Bonding and Molecular Structure"
+},
+
+{
+id:"chem11_05",
+subject:"Chemistry",
+class:"11",
+name:"Thermodynamics"
+},
+
+{
+id:"chem11_06",
+subject:"Chemistry",
+class:"11",
+name:"Equilibrium"
+},
+
+{
+id:"chem11_07",
+subject:"Chemistry",
+class:"11",
+name:"Redox Reactions"
+},
+
+{
+id:"chem11_08",
+subject:"Chemistry",
+class:"11",
+name:"Organic Chemistry - Basic Principles"
+},
+
+{
+id:"chem11_09",
+subject:"Chemistry",
+class:"11",
+name:"Hydrocarbons"
+},
+
+{
+id:"chem11_10",
+subject:"Chemistry",
+class:"11",
+name:"States of Matter"
+},
+
+
+/* =========================================================
+   CHEMISTRY CLASS 12
+========================================================= */
+
+{
+id:"chem12_01",
+subject:"Chemistry",
+class:"12",
+name:"Solutions"
+},
+
+{
+id:"chem12_02",
+subject:"Chemistry",
+class:"12",
+name:"Electrochemistry"
+},
+
+{
+id:"chem12_03",
+subject:"Chemistry",
+class:"12",
+name:"Chemical Kinetics"
+},
+
+{
+id:"chem12_04",
+subject:"Chemistry",
+class:"12",
+name:"Surface Chemistry"
+},
+
+{
+id:"chem12_05",
+subject:"Chemistry",
+class:"12",
+name:"Coordination Compounds"
+},
+
+{
+id:"chem12_06",
+subject:"Chemistry",
+class:"12",
+name:"d and f Block Elements"
+},
+
+{
+id:"chem12_07",
+subject:"Chemistry",
+class:"12",
+name:"Haloalkanes and Haloarenes"
+},
+
+{
+id:"chem12_08",
+subject:"Chemistry",
+class:"12",
+name:"Alcohols, Phenols and Ethers"
+},
+
+{
+id:"chem12_09",
+subject:"Chemistry",
+class:"12",
+name:"Aldehydes, Ketones and Carboxylic Acids"
+},
+
+{
+id:"chem12_10",
+subject:"Chemistry",
+class:"12",
+name:"Amines"
+},
+
+{
+id:"chem12_11",
+subject:"Chemistry",
+class:"12",
+name:"Biomolecules"
+},
+
+{
+id:"chem12_12",
+subject:"Chemistry",
+class:"12",
+name:"Polymers"
+},
+
+{
+id:"chem12_13",
+subject:"Chemistry",
+class:"12",
+name:"Chemistry in Everyday Life"
+},
+
+
+/* =========================================================
+   MATHEMATICS CLASS 11
+========================================================= */
+
+{
+id:"math11_01",
+subject:"Mathematics",
+class:"11",
+name:"Sets"
+},
+
+{
+id:"math11_02",
+subject:"Mathematics",
+class:"11",
+name:"Relations and Functions"
+},
+
+{
+id:"math11_03",
+subject:"Mathematics",
+class:"11",
+name:"Trigonometric Functions"
+},
+
+{
+id:"math11_04",
+subject:"Mathematics",
+class:"11",
+name:"Principle of Mathematical Induction"
+},
+
+{
+id:"math11_05",
+subject:"Mathematics",
+class:"11",
+name:"Complex Numbers and Quadratic Equations"
+},
+
+{
+id:"math11_06",
+subject:"Mathematics",
+class:"11",
+name:"Linear Inequalities"
+},
+
+{
+id:"math11_07",
+subject:"Mathematics",
+class:"11",
+name:"Permutations and Combinations"
+},
+
+{
+id:"math11_08",
+subject:"Mathematics",
+class:"11",
+name:"Binomial Theorem"
+},
+
+{
+id:"math11_09",
+subject:"Mathematics",
+class:"11",
+name:"Sequences and Series"
+},
+
+{
+id:"math11_10",
+subject:"Mathematics",
+class:"11",
+name:"Straight Lines"
+},
+
+{
+id:"math11_11",
+subject:"Mathematics",
+class:"11",
+name:"Conic Sections"
+},
+
+{
+id:"math11_12",
+subject:"Mathematics",
+class:"11",
+name:"Introduction to Three Dimensional Geometry"
+},
+
+{
+id:"math11_13",
+subject:"Mathematics",
+class:"11",
+name:"Limits and Derivatives"
+},
+
+{
+id:"math11_14",
+subject:"Mathematics",
+class:"11",
+name:"Statistics"
+},
+
+{
+id:"math11_15",
+subject:"Mathematics",
+class:"11",
+name:"Probability"
+},
+
+
+/* =========================================================
+   MATHEMATICS CLASS 12
+========================================================= */
+
+{
+id:"math12_01",
+subject:"Mathematics",
+class:"12",
+name:"Relations and Functions"
+},
+
+{
+id:"math12_02",
+subject:"Mathematics",
+class:"12",
+name:"Inverse Trigonometric Functions"
+},
+
+{
+id:"math12_03",
+subject:"Mathematics",
+class:"12",
+name:"Matrices"
+},
+
+{
+id:"math12_04",
+subject:"Mathematics",
+class:"12",
+name:"Determinants"
+},
+
+{
+id:"math12_05",
+subject:"Mathematics",
+class:"12",
+name:"Continuity and Differentiability"
+},
+
+{
+id:"math12_06",
+subject:"Mathematics",
+class:"12",
+name:"Applications of Derivatives"
+},
+
+{
+id:"math12_07",
+subject:"Mathematics",
+class:"12",
+name:"Integrals"
+},
+
+{
+id:"math12_08",
+subject:"Mathematics",
+class:"12",
+name:"Applications of Integrals"
+},
+
+{
+id:"math12_09",
+subject:"Mathematics",
+class:"12",
+name:"Differential Equations"
+},
+
+{
+id:"math12_10",
+subject:"Mathematics",
+class:"12",
+name:"Vector Algebra"
+},
+
+{
+id:"math12_11",
+subject:"Mathematics",
+class:"12",
+name:"Three Dimensional Geometry"
+},
+
+{
+id:"math12_12",
+subject:"Mathematics",
+class:"12",
+name:"Linear Programming"
+},
+
+{
+id:"math12_13",
+subject:"Mathematics",
+class:"12",
+name:"Probability"
+}
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let selectedSubject = "all";
+
+
+/* =========================================================
+   GET DATA
+========================================================= */
+
+function getProgress(){
+
+    const saved =
+        localStorage.getItem(
+            STORAGE_KEY
+        );
+
+    if(saved){
+
+        try{
+
+            return JSON.parse(saved);
+
+        }catch(e){
+
+            return {};
+
+        }
+
+    }
+
+    return {};
+
+}
+
+
+function saveProgress(data){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =========================================================
+   DEFAULT CHAPTER
+========================================================= */
+
+function getChapterState(id){
+
+    const data =
+        getProgress();
+
+
+    if(!data[id]){
+
+        data[id] = {
+
+            concepts:false,
+
+            lectures:false,
+
+            notes:false,
+
+            practice:false,
+
+            pyq:false,
+
+            revision:false,
+
+            advanced:false
+
+        };
+
+        saveProgress(data);
+
+    }
+
+
+    return data[id];
+
+}
+
+
+/* =========================================================
+   MASTERY
+========================================================= */
+
+function getMastery(id){
+
+    const state =
+        getChapterState(id);
+
+
+    const keys = [
+
+        "concepts",
+
+        "lectures",
+
+        "notes",
+
+        "practice",
+
+        "pyq",
+
+        "revision",
+
+        "advanced"
+
+    ];
+
+
+    let completed = 0;
+
+
+    keys.forEach(key => {
+
+        if(state[key]){
+
+            completed++;
+
+        }
+
+    });
+
+
+    return Math.round(
+        (completed / keys.length) * 100
+    );
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function getStatus(mastery){
+
+    if(mastery === 0){
+
+        return "not";
+
+    }
+
+    if(mastery === 100){
+
+        return "done";
+
+    }
+
+    return "progress";
+
+}
+
+
+/* =========================================================
+   TOGGLE
+========================================================= */
+
+function toggleLayer(id,layer){
+
+    const data =
+        getProgress();
+
+
+    if(!data[id]){
+
+        data[id] = {};
+
+    }
+
+
+    data[id][layer] =
+        !data[id][layer];
+
+
+    saveProgress(data);
+
+
+    render();
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function filteredChapters(){
+
+    let result =
+        [...chapters];
+
+
+    const search =
+        document.getElementById(
+            "search"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const classFilter =
+        document.getElementById(
+            "classFilter"
+        ).value;
+
+
+    const levelFilter =
+        document.getElementById(
+            "levelFilter"
+        ).value;
+
+
+    const sortFilter =
+        document.getElementById(
+            "sortFilter"
+        ).value;
+
+
+    if(selectedSubject !== "all"){
+
+        result =
+            result.filter(
+                chapter =>
+                    chapter.subject ===
+                    selectedSubject
+            );
+
+    }
+
+
+    if(search){
+
+        result =
+            result.filter(
+                chapter =>
+                    chapter.name
+                    .toLowerCase()
+                    .includes(search)
+            );
+
+    }
+
+
+    if(classFilter !== "all"){
+
+        result =
+            result.filter(
+                chapter =>
+                    chapter.class ===
+                    classFilter
+            );
+
+    }
+
+
+    if(levelFilter !== "all"){
+
+        result =
+            result.filter(
+                chapter =>
+                    getStatus(
+                        getMastery(
+                            chapter.id
+                        )
+                    ) === levelFilter
+            );
+
+    }
+
+
+    if(sortFilter === "progress"){
+
+        result.sort(
+            (a,b) =>
+                getMastery(a.id) -
+                getMastery(b.id)
+        );
+
+    }
+
+
+    if(sortFilter === "highest"){
+
+        result.sort(
+            (a,b) =>
+                getMastery(b.id) -
+                getMastery(a.id)
+        );
+
+    }
+
+
+    if(sortFilter === "name"){
+
+        result.sort(
+            (a,b) =>
+                a.name.localeCompare(
+                    b.name
+                )
+        );
+
+    }
+
+
+    return result;
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render(){
+
+    const grid =
+        document.getElementById(
+            "chapterGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    const result =
+        filteredChapters();
+
+
+    document.getElementById(
+        "empty"
+    ).style.display =
+        result.length === 0
+            ? "block"
+            : "none";
+
+
+    result.forEach(
+        (chapter,index) => {
+
+            const mastery =
+                getMastery(
+                    chapter.id
+                );
+
+
+            const state =
+                getChapterState(
+                    chapter.id
+                );
+
+
+            const status =
+                getStatus(mastery);
+
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+
+            card.className =
+                "chapter";
+
+
+            card.innerHTML = `
+
+                <div class="chapter-top">
+
+                    <div>
+
+                        <div class="chapter-number">
+
+                            ${chapter.subject.toUpperCase()}
+                            • CLASS ${chapter.class}
+
+                        </div>
+
+                        <div class="chapter-name">
+
+                            ${escapeHTML(chapter.name)}
+
+                        </div>
+
+                        <div class="chapter-code">
+
+                            JEE PREPARATION MODULE
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="mastery">
+
+                        <div class="mastery-value">
+
+                            ${mastery}%
+
+                        </div>
+
+                        <div class="mastery-label">
+
+                            MASTERY
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                        class="progress-fill"
+                        style="width:${mastery}%"
+                    ></div>
+
+                </div>
+
+
+                <div class="check-grid">
+
+                    <button
+                        class="check ${state.concepts ? "done" : ""}"
+                        onclick="toggleLayer('${chapter.id}','concepts')"
+                    >
+                        CONCEPTS
+                    </button>
+
+
+                    <button
+                        class="check ${state.lectures ? "done" : ""}"
+                        onclick="toggleLayer('${chapter.id}','lectures')"
+                    >
+                        LECTURES
+                    </button>
+
+
+                    <button
+                        class="check ${state.notes ? "done" : ""}"
+                        onclick="toggleLayer('${chapter.id}','notes')"
+                    >
+                        NOTES
+                    </button>
+
+
+                    <button
+                        class="check ${state.practice ? "done" : ""}"
+                        onclick="toggleLayer('${chapter.id}','practice')"
+                    >
+                        PRACTICE
+                    </button>
+
+
+                    <button
+                        class="check ${state.pyq ? "done" : ""}"
+                        onclick="toggleLayer('${chapter.id}','pyq')"
+                    >
+                        PYQ
+                    </button>
+
+
+                    <button
+                        class="check ${state.revision ? "done" : ""}"
+                        onclick="toggleLayer('${chapter.id}','revision')"
+                    >
+                        REVISION
+                    </button>
+
+
+                    <button
+                        class="check ${state.advanced ? "done" : ""}"
+                        onclick="toggleLayer('${chapter.id}','advanced')"
+                    >
+                        ADVANCED
+                    </button>
+
+
+                    <button
+                        class="check"
+                        onclick="completeChapter('${chapter.id}')"
+                    >
+                        100%
+                    </button>
+
+                </div>
+
+
+                <div class="chapter-footer">
+
+                    <div class="difficulty">
+
+                        ${chapter.subject === "Mathematics"
+                            ? "HIGH PROBLEM SOLVING"
+                            : chapter.subject === "Physics"
+                            ? "CONCEPT + NUMERICAL"
+                            : "CONCEPT + APPLICATION"}
+
+                    </div>
+
+
+                    <div
+                        class="status-badge ${
+                            status === "done"
+                                ? "status-done"
+                                : status === "progress"
+                                ? "status-progress"
+                                : "status-not"
+                        }"
+                    >
+
+                        ${
+                            status === "done"
+                                ? "MASTERED"
+                                : status === "progress"
+                                ? "IN PROGRESS"
+                                : "NOT STARTED"
+                        }
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            grid.appendChild(card);
+
+        }
+    );
+
+
+    updateStats();
+
+}
+
+
+/* =========================================================
+   COMPLETE CHAPTER
+========================================================= */
+
+function completeChapter(id){
+
+    const data =
+        getProgress();
+
+
+    data[id] = {
+
+        concepts:true,
+
+        lectures:true,
+
+        notes:true,
+
+        practice:true,
+
+        pyq:true,
+
+        revision:true,
+
+        advanced:true
+
+    };
+
+
+    saveProgress(data);
+
+    render();
+
+}
+
+
+/* =========================================================
+   SUBJECT
+========================================================= */
+
+function setSubject(subject){
+
+    selectedSubject =
+        subject;
+
+
+    document
+        .querySelectorAll(
+            ".subject-tab"
+        )
+        .forEach(
+            tab =>
+                tab.classList.remove(
+                    "active"
+                )
+        );
+
+
+    document
+        .getElementById(
+            "tab-" +
+            (
+                subject === "Mathematics"
+                    ? "maths"
+                    : subject.toLowerCase()
+            )
+        )
+        .classList.add(
+            "active"
+        );
+
+
+    render();
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+    const total =
+        chapters.length;
+
+
+    let mastered = 0;
+
+    let progress = 0;
+
+    let notStarted = 0;
+
+    let masterySum = 0;
+
+
+    chapters.forEach(
+        chapter => {
+
+            const mastery =
+                getMastery(
+                    chapter.id
+                );
+
+
+            masterySum +=
+                mastery;
+
+
+            if(mastery === 100){
+
+                mastered++;
+
+            }else if(mastery === 0){
+
+                notStarted++;
+
+            }else{
+
+                progress++;
+
+            }
+
+        }
+    );
+
+
+    const overall =
+        total === 0
+            ? 0
+            : Math.round(
+                masterySum / total
+            );
+
+
+    document.getElementById(
+        "totalChapters"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "masteredChapters"
+    ).textContent =
+        mastered;
+
+
+    document.getElementById(
+        "progressChapters"
+    ).textContent =
+        progress;
+
+
+    document.getElementById(
+        "notStartedChapters"
+    ).textContent =
+        notStarted;
+
+
+    document.getElementById(
+        "overallMastery"
+    ).textContent =
+        overall + "%";
+
+
+    /*
+       Sync subject progress with
+       dashboard localStorage.
+    */
+
+    syncDashboard(overall);
+
+}
+
+
+/* =========================================================
+   DASHBOARD SYNC
+========================================================= */
+
+function syncDashboard(overall){
+
+    const physics =
+        calculateSubject(
+            "Physics"
+        );
+
+
+    const chemistry =
+        calculateSubject(
+            "Chemistry"
+        );
+
+
+    const maths =
+        calculateSubject(
+            "Mathematics"
+        );
+
+
+    const key =
+        "vijayJEEData";
+
+
+    let dashboard = {};
+
+
+    const saved =
+        localStorage.getItem(
+            key
+        );
+
+
+    if(saved){
+
+        try{
+
+            dashboard =
+                JSON.parse(saved);
+
+        }catch(e){}
+
+    }
+
+
+    dashboard.physics =
+        physics;
+
+
+    dashboard.chemistry =
+        chemistry;
+
+
+    dashboard.maths =
+        maths;
+
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(
+            dashboard
+        )
+    );
+
+}
+
+
+/* =========================================================
+   SUBJECT CALCULATION
+========================================================= */
+
+function calculateSubject(subject){
+
+    const list =
+        chapters.filter(
+            chapter =>
+                chapter.subject ===
+                subject
+        );
+
+
+    if(list.length === 0){
+
+        return 0;
+
+    }
+
+
+    let total = 0;
+
+
+    list.forEach(
+        chapter => {
+
+            total +=
+                getMastery(
+                    chapter.id
+                );
+
+        }
+    );
+
+
+    return Math.round(
+        total / list.length
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById(
+            "sidebar"
+        )
+        .classList.toggle(
+            "open"
+        );
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+render();
+
+</script>
+
+</body>
+</html>
