@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b14">
+
+<title>Revision Engine | Vijay JEE Command Center</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#070b14;
+    color:#f4f7fb;
+    min-height:100vh;
+}
+
+button,input,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:245px;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    background:#0a101a;
+    border-right:1px solid #1b2638;
+    padding:22px 14px;
+    overflow-y:auto;
+    z-index:100;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px 25px;
+    font-weight:900;
+}
+
+.logo-box{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#3478ff,#7b4dff);
+}
+
+.logo-text{
+    font-size:14px;
+}
+
+.logo-text span{
+    color:#69778c;
+}
+
+.nav-title{
+    color:#536178;
+    font-size:9px;
+    letter-spacing:.15em;
+    margin:15px 10px 8px;
+}
+
+.nav-link{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 12px;
+    margin:3px 0;
+    border-radius:9px;
+    color:#77859a;
+    font-size:12px;
+}
+
+.nav-link:hover{
+    background:#111a29;
+    color:#fff;
+}
+
+.nav-link.active{
+    background:#15233b;
+    color:#79a7ff;
+}
+
+.icon{
+    width:18px;
+    text-align:center;
+}
+
+.sidebar-bottom{
+    margin-top:30px;
+    padding-top:15px;
+    border-top:1px solid #182437;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:245px;
+    padding:28px;
+}
+
+.container{
+    width:min(1250px,100%);
+    margin:auto;
+}
+
+/* HEADER */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    align-items:flex-start;
+    margin-bottom:22px;
+}
+
+.title h1{
+    font-size:28px;
+    letter-spacing:-.04em;
+}
+
+.title p{
+    color:#65738a;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.status{
+    color:#35d58a;
+    font-size:9px;
+    font-weight:900;
+    padding-top:7px;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:13px;
+    padding:15px;
+}
+
+.stat-label{
+    color:#65738a;
+    font-size:8px;
+    letter-spacing:.08em;
+    font-weight:900;
+}
+
+.stat-value{
+    margin-top:7px;
+    font-size:22px;
+    font-weight:900;
+}
+
+/* INFO */
+
+.engine-info{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:7px;
+    margin-bottom:15px;
+}
+
+.stage-info{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:10px;
+    padding:11px 7px;
+    text-align:center;
+}
+
+.stage-number{
+    color:#79a7ff;
+    font-size:9px;
+    font-weight:900;
+}
+
+.stage-name{
+    color:#78869a;
+    font-size:7px;
+    margin-top:4px;
+    font-weight:800;
+}
+
+/* FILTER */
+
+.filter-card{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:15px;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:1fr 170px 170px 170px;
+    gap:8px;
+}
+
+.input,
+.select{
+    width:100%;
+    padding:11px;
+    background:#090f19;
+    border:1px solid #1d2b40;
+    border-radius:9px;
+    color:#dce3ed;
+    outline:none;
+    font-size:10px;
+}
+
+/* TABS */
+
+.tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:15px;
+}
+
+.tab{
+    border:1px solid #1c2b41;
+    background:#0d1420;
+    color:#6f7e93;
+    padding:10px 16px;
+    border-radius:9px;
+    font-size:9px;
+    font-weight:900;
+}
+
+.tab.active{
+    background:#162641;
+    color:#79a7ff;
+    border-color:#2d4d7c;
+}
+
+/* GRID */
+
+.revision-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.chapter{
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+    padding:17px;
+}
+
+.chapter-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.subject{
+    color:#64748a;
+    font-size:8px;
+    font-weight:900;
+    letter-spacing:.1em;
+}
+
+.chapter-name{
+    font-size:14px;
+    font-weight:900;
+    margin-top:5px;
+}
+
+.class-text{
+    color:#59677b;
+    font-size:8px;
+    margin-top:5px;
+}
+
+/* DUE */
+
+.due{
+    padding:6px 8px;
+    border-radius:6px;
+    font-size:7px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+.due-today{
+    background:#17382c;
+    color:#62e5a8;
+}
+
+.due-overdue{
+    background:#381919;
+    color:#ff7777;
+}
+
+.due-future{
+    background:#17202e;
+    color:#7d8da3;
+}
+
+.due-none{
+    background:#17202e;
+    color:#65748a;
+}
+
+/* PROGRESS */
+
+.progress-info{
+    display:flex;
+    justify-content:space-between;
+    margin-top:15px;
+    font-size:8px;
+    color:#65748a;
+}
+
+.progress{
+    height:6px;
+    background:#182438;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:6px;
+}
+
+.progress-fill{
+    height:100%;
+    background:#3478ff;
+    border-radius:20px;
+}
+
+/* STAGES */
+
+.stages{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    margin-top:14px;
+}
+
+.stage{
+    background:#09111c;
+    border:1px solid #1c2b3e;
+    border-radius:7px;
+    padding:9px 5px;
+    text-align:center;
+    color:#66758a;
+    font-size:7px;
+    font-weight:900;
+}
+
+.stage.done{
+    background:#17382c;
+    border-color:#286b50;
+    color:#5ee1a7;
+}
+
+.stage.next{
+    background:#172d4e;
+    border-color:#315d99;
+    color:#83b1ff;
+}
+
+/* FOOTER */
+
+.chapter-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:14px;
+    padding-top:11px;
+    border-top:1px solid #182437;
+}
+
+.revision-count{
+    color:#68768a;
+    font-size:8px;
+}
+
+.action-btn{
+    padding:8px 10px;
+    border-radius:7px;
+    border:1px solid #315d99;
+    background:#17315c;
+    color:#82b0ff;
+    font-size:8px;
+    font-weight:900;
+}
+
+/* EMPTY */
+
+.empty{
+    display:none;
+    padding:55px 20px;
+    text-align:center;
+    color:#59677b;
+    background:#0d1420;
+    border:1px solid #1c293c;
+    border-radius:15px;
+}
+
+/* MOBILE */
+
+.mobile-menu{
+    display:none;
+    position:fixed;
+    right:15px;
+    top:15px;
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    border:1px solid #27364c;
+    background:#0d1420;
+    color:white;
+    z-index:200;
+}
+
+@media(max-width:1100px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .engine-info{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+    .filters{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:850px){
+
+    .revision-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+
+    .topbar{
+        padding-right:50px;
+    }
+
+    .filters{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:500px){
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .engine-info{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .stages{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar" id="sidebar">
+
+<a href="index.html" class="logo">
+<div class="logo-box">V</div>
+<div class="logo-text">VIJAY<span>.JEE</span></div>
+</a>
+
+<div class="nav-title">COMMAND</div>
+
+<a href="dashboard.html" class="nav-link">
+<span class="icon">⌂</span> Dashboard
+</a>
+
+<a href="daily-target.html" class="nav-link">
+<span class="icon">✓</span> Daily Mission
+</a>
+
+<div class="nav-title">PREPARATION</div>
+
+<a href="syllabus.html" class="nav-link">
+<span class="icon">▣</span> Syllabus
+</a>
+
+<a href="backlog.html" class="nav-link">
+<span class="icon">◫</span> Backlog
+</a>
+
+<a href="revision.html" class="nav-link active">
+<span class="icon">↻</span> Revision
+</a>
+
+<a href="questions.html" class="nav-link">
+<span class="icon">?</span> Questions
+</a>
+
+<a href="pyq-tracker.html" class="nav-link">
+<span class="icon">◷</span> PYQ Tracker
+</a>
+
+<a href="mistakes.html" class="nav-link">
+<span class="icon">!</span> Mistake Book
+</a>
+
+<div class="nav-title">TESTING</div>
+
+<a href="mock-tests.html" class="nav-link">
+<span class="icon">▤</span> Mock Tests
+</a>
+
+<a href="analytics.html" class="nav-link">
+<span class="icon">⌁</span> Analytics
+</a>
+
+<div class="nav-title">PERSONAL</div>
+
+<a href="journal.html" class="nav-link">
+<span class="icon">✎</span> Journal
+</a>
+
+<a href="achievements.html" class="nav-link">
+<span class="icon">★</span> Achievements
+</a>
+
+<div class="sidebar-bottom">
+
+<a href="settings.html" class="nav-link">
+<span class="icon">⚙</span> Settings
+</a>
+
+<a href="index.html" class="nav-link">
+<span class="icon">←</span> Home
+</a>
+
+</div>
+
+</aside>
+
+<button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+
+
+<main class="main">
+
+<div class="container">
+
+<div class="topbar">
+
+<div class="title">
+
+<h1>Revision Engine</h1>
+
+<p>
+Spaced repetition system for long-term JEE retention.
+</p>
+
+</div>
+
+<div class="status">
+● MEMORY ENGINE ACTIVE
+</div>
+
+</div>
+
+
+<section class="stats">
+
+<div class="stat">
+<div class="stat-label">TOTAL CHAPTERS</div>
+<div class="stat-value" id="total">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">DUE TODAY</div>
+<div class="stat-value" id="today">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">OVERDUE</div>
+<div class="stat-value" id="overdue">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">MASTERED</div>
+<div class="stat-value" id="mastered">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">REVISION %</div>
+<div class="stat-value" id="overall">0%</div>
+</div>
+
+</section>
+
+
+<div class="engine-info">
+
+<div class="stage-info">
+<div class="stage-number">R1</div>
+<div class="stage-name">FIRST REVISION</div>
+</div>
+
+<div class="stage-info">
+<div class="stage-number">R2</div>
+<div class="stage-name">SECOND REVISION</div>
+</div>
+
+<div class="stage-info">
+<div class="stage-number">D7</div>
+<div class="stage-name">7 DAYS</div>
+</div>
+
+<div class="stage-info">
+<div class="stage-number">D21</div>
+<div class="stage-name">21 DAYS</div>
+</div>
+
+<div class="stage-info">
+<div class="stage-number">D45</div>
+<div class="stage-name">45 DAYS</div>
+</div>
+
+<div class="stage-info">
+<div class="stage-number">PYQ</div>
+<div class="stage-name">REATTEMPT</div>
+</div>
+
+<div class="stage-info">
+<div class="stage-number">ADV</div>
+<div class="stage-name">ADVANCED</div>
+</div>
+
+</div>
+
+
+<section class="filter-card">
+
+<div class="filters">
+
+<input
+id="search"
+class="input"
+placeholder="Search chapter..."
+oninput="render()"
+>
+
+<select
+id="subjectFilter"
+class="select"
+onchange="render()">
+
+<option value="all">All Subjects</option>
+<option value="Physics">Physics</option>
+<option value="Chemistry">Chemistry</option>
+<option value="Mathematics">Mathematics</option>
+
+</select>
+
+
+<select
+id="classFilter"
+class="select"
+onchange="render()">
+
+<option value="all">All Classes</option>
+<option value="11">Class 11</option>
+<option value="12">Class 12</option>
+
+</select>
+
+
+<select
+id="statusFilter"
+class="select"
+onchange="render()">
+
+<option value="all">All Status</option>
+<option value="today">Due Today</option>
+<option value="overdue">Overdue</option>
+<option value="mastered">Mastered</option>
+
+</select>
+
+</div>
+
+</section>
+
+
+<div class="tabs">
+
+<button
+class="tab active"
+id="tab-all"
+onclick="setSubject('all')">
+ALL
+</button>
+
+<button
+class="tab"
+id="tab-physics"
+onclick="setSubject('Physics')">
+PHYSICS
+</button>
+
+<button
+class="tab"
+id="tab-chemistry"
+onclick="setSubject('Chemistry')">
+CHEMISTRY
+</button>
+
+<button
+class="tab"
+id="tab-mathematics"
+onclick="setSubject('Mathematics')">
+MATHEMATICS
+</button>
+
+</div>
+
+
+<section
+class="revision-grid"
+id="revisionGrid">
+</section>
+
+<div
+class="empty"
+id="empty">
+No chapters match your filters.
+</div>
+
+
+<div style="
+text-align:center;
+color:#48566a;
+font-size:9px;
+padding:20px 0;
+">
+Vijay's IIT JEE 2027 Command Center • Spaced Revision Engine
+</div>
+
+</div>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+CONFIGURATION
+===================================================== */
+
+const STORAGE_KEY =
+"vijayJEERevision";
+
+
+/*
+Hard spaced repetition schedule.
+
+0 = Revision 1
+1 = Revision 2
+2 = Day 7
+3 = Day 21
+4 = Day 45
+5 = PYQ Reattempt
+6 = Advanced Reattempt
+*/
+
+const stages = [
+
+{
+key:"r1",
+name:"R1",
+label:"REVISION 1",
+days:1
+},
+
+{
+key:"r2",
+name:"R2",
+label:"REVISION 2",
+days:3
+},
+
+{
+key:"d7",
+name:"D7",
+label:"DAY 7",
+days:7
+},
+
+{
+key:"d21",
+name:"D21",
+label:"DAY 21",
+days:21
+},
+
+{
+key:"d45",
+name:"D45",
+label:"DAY 45",
+days:45
+},
+
+{
+key:"pyq",
+name:"PYQ",
+label:"PYQ REATTEMPT",
+days:60
+},
+
+{
+key:"advanced",
+name:"ADV",
+label:"ADVANCED REATTEMPT",
+days:90
+}
+
+];
+
+
+/* =====================================================
+CHAPTER DATA
+
+You can expand this later.
+===================================================== */
+
+const chapters = [
+
+{ id:"r1", subject:"Physics", class:"11", name:"Laws of Motion" },
+{ id:"r2", subject:"Physics", class:"11", name:"Work, Energy and Power" },
+{ id:"r3", subject:"Physics", class:"12", name:"Current Electricity" },
+{ id:"r4", subject:"Physics", class:"12", name:"Electrostatic Potential and Capacitance" },
+
+{ id:"r5", subject:"Chemistry", class:"11", name:"Chemical Bonding" },
+{ id:"r6", subject:"Chemistry", class:"11", name:"Thermodynamics" },
+{ id:"r7", subject:"Chemistry", class:"12", name:"Chemical Kinetics" },
+{ id:"r8", subject:"Chemistry", class:"12", name:"Coordination Compounds" },
+
+{ id:"r9", subject:"Mathematics", class:"11", name:"Trigonometric Functions" },
+{ id:"r10", subject:"Mathematics", class:"11", name:"Complex Numbers" },
+{ id:"r11", subject:"Mathematics", class:"12", name:"Integrals" },
+{ id:"r12", subject:"Mathematics", class:"12", name:"Probability" }
+
+];
+
+
+let selectedSubject="all";
+
+
+/* =====================================================
+DATE FUNCTIONS
+===================================================== */
+
+function todayDate(){
+
+const date=new Date();
+
+date.setHours(0,0,0,0);
+
+return date;
+
+}
+
+
+function dateString(date){
+
+const year=date.getFullYear();
+
+const month=
+String(
+date.getMonth()+1
+).padStart(2,"0");
+
+const day=
+String(
+date.getDate()
+).padStart(2,"0");
+
+return `${year}-${month}-${day}`;
+
+}
+
+
+function parseDate(value){
+
+if(!value)return null;
+
+const date=
+new Date(value+"T00:00:00");
+
+date.setHours(0,0,0,0);
+
+return date;
+
+}
+
+
+function daysDifference(a,b){
+
+const ms=
+24*60*60*1000;
+
+return Math.round(
+(a-b)/ms
+);
+
+}
+
+
+/* =====================================================
+LOAD
+===================================================== */
+
+function loadData(){
+
+const saved=
+localStorage.getItem(
+STORAGE_KEY
+);
+
+if(saved){
+
+try{
+
+return JSON.parse(saved);
+
+}catch(e){
+
+return {};
+
+}
+
+}
+
+return {};
+
+}
+
+
+function saveData(data){
+
+localStorage.setItem(
+STORAGE_KEY,
+JSON.stringify(data)
+);
+
+}
+
+
+/* =====================================================
+GET CHAPTER STATE
+===================================================== */
+
+function getState(id){
+
+const data=
+loadData();
+
+
+if(!data[id]){
+
+data[id]={
+
+completed:[],
+
+started:dateString(
+todayDate()
+)
+
+};
+
+saveData(data);
+
+}
+
+
+return data[id];
+
+}
+
+
+/* =====================================================
+NEXT DUE DATE
+===================================================== */
+
+function getNextDue(chapter){
+
+const state=
+getState(chapter.id);
+
+
+const completed=
+state.completed.length;
+
+
+if(completed>=stages.length){
+
+return null;
+
+}
+
+
+const lastDate=
+completed===0
+?parseDate(state.started)
+:parseDate(
+state.completed[
+completed-1
+].date
+);
+
+
+const stage=
+stages[completed];
+
+
+const due=
+new Date(lastDate);
+
+due.setDate(
+due.getDate()+
+stage.days
+);
+
+
+return due;
+
+}
+
+
+/* =====================================================
+STATUS
+===================================================== */
+
+function getDueStatus(chapter){
+
+const due=
+getNextDue(chapter);
+
+
+if(!due){
+
+return "mastered";
+
+}
+
+
+const today=
+todayDate();
+
+
+const diff=
+daysDifference(
+due,
+today
+);
+
+
+if(diff<0){
+
+return "overdue";
+
+}
+
+
+if(diff===0){
+
+return "today";
+
+}
+
+
+return "future";
+
+}
+
+
+/* =====================================================
+COMPLETE NEXT REVISION
+===================================================== */
+
+function completeNext(id){
+
+const data=
+loadData();
+
+
+if(!data[id]){
+
+data[id]={
+completed:[],
+started:dateString(
+todayDate()
+)
+};
+
+}
+
+
+const state=
+data[id];
+
+
+const completedCount=
+state.completed.length;
+
+
+if(
+completedCount>=
+stages.length
+){
+
+return;
+
+}
+
+
+state.completed.push({
+
+stage:
+stages[completedCount].key,
+
+date:
+dateString(
+todayDate()
+)
+
+});
+
+
+saveData(data);
+
+render();
+
+}
+
+
+/* =====================================================
+PROGRESS
+===================================================== */
+
+function getProgress(chapter){
+
+const state=
+getState(
+chapter.id
+);
+
+
+return Math.round(
+(
+state.completed.length/
+stages.length
+)*100
+);
+
+}
+
+
+/* =====================================================
+FILTER
+===================================================== */
+
+function getFiltered(){
+
+let result=
+[...chapters];
+
+
+const search=
+document
+.getElementById("search")
+.value
+.toLowerCase()
+.trim();
+
+
+const subject=
+document
+.getElementById("subjectFilter")
+.value;
+
+
+const classFilter=
+document
+.getElementById("classFilter")
+.value;
+
+
+const status=
+document
+.getElementById("statusFilter")
+.value;
+
+
+if(selectedSubject!=="all"){
+
+result=
+result.filter(
+chapter=>
+chapter.subject===
+selectedSubject
+);
+
+}
+
+
+if(search){
+
+result=
+result.filter(
+chapter=>
+chapter.name
+.toLowerCase()
+.includes(search)
+);
+
+}
+
+
+if(subject!=="all"){
+
+result=
+result.filter(
+chapter=>
+chapter.subject===
+subject
+);
+
+}
+
+
+if(classFilter!=="all"){
+
+result=
+result.filter(
+chapter=>
+chapter.class===
+classFilter
+);
+
+}
+
+
+if(status!=="all"){
+
+result=
+result.filter(
+chapter=>
+getDueStatus(chapter)
+===
+status
+);
+
+}
+
+
+return result;
+
+}
+
+
+/* =====================================================
+RENDER
+===================================================== */
+
+function render(){
+
+const grid=
+document.getElementById(
+"revisionGrid"
+);
+
+
+grid.innerHTML="";
+
+
+const result=
+getFiltered();
+
+
+document
+.getElementById("empty")
+.style.display=
+result.length===0
+?"block"
+:"none";
+
+
+result.forEach(chapter=>{
+
+const state=
+getState(
+chapter.id
+);
+
+
+const completed=
+state.completed.length;
+
+
+const progress=
+getProgress(
+chapter
+);
+
+
+const due=
+getNextDue(
+chapter
+);
+
+
+const status=
+getDueStatus(
+chapter
+);
+
+
+let stageHTML="";
+
+
+stages.forEach(
+(stage,index)=>{
+
+let className=
+"stage";
+
+
+if(index<completed){
+
+className+=" done";
+
+}else if(index===completed){
+
+className+=" next";
+
+}
+
+
+stageHTML+=`
+
+<div class="${className}">
+
+${stage.name}
+
+</div>
+
+`;
+
+});
+
+
+let dueText="";
+let dueClass="";
+
+
+if(status==="mastered"){
+
+dueText="MASTERED";
+dueClass="due-none";
+
+}
+
+else if(status==="today"){
+
+dueText="DUE TODAY";
+dueClass="due-today";
+
+}
+
+else if(status==="overdue"){
+
+const diff=
+Math.abs(
+daysDifference(
+due,
+todayDate()
+)
+);
+
+dueText=
+`${diff} DAY OVERDUE`;
+
+dueClass="due-overdue";
+
+}
+
+else{
+
+dueText=
+`NEXT: ${dateString(due)}`;
+
+dueClass="due-future";
+
+}
+
+
+const nextStage=
+completed<
+stages.length
+?stages[completed]
+:null;
+
+
+const card=
+document.createElement(
+"article"
+);
+
+card.className=
+"chapter";
+
+
+card.innerHTML=`
+
+<div class="chapter-top">
+
+<div>
+
+<div class="subject">
+
+${chapter.subject.toUpperCase()}
+
+</div>
+
+<div class="chapter-name">
+
+${escapeHTML(
+chapter.name
+)}
+
+</div>
+
+<div class="class-text">
+
+CLASS ${chapter.class}
+
+</div>
+
+</div>
+
+
+<div class="due ${dueClass}">
+
+${dueText}
+
+</div>
+
+</div>
+
+
+<div class="progress-info">
+
+<span>
+
+REVISION PROGRESS
+
+</span>
+
+<span>
+
+${completed}/${stages.length}
+•
+${progress}%
+
+</span>
+
+</div>
+
+
+<div class="progress">
+
+<div
+class="progress-fill"
+style="width:${progress}%">
+</div>
+
+</div>
+
+
+<div class="stages">
+
+${stageHTML}
+
+</div>
+
+
+<div class="chapter-footer">
+
+<div class="revision-count">
+
+${
+completed>=stages.length
+?"FULL REVISION COMPLETE"
+:`NEXT: ${nextStage.label}`
+}
+
+</div>
+
+
+${
+completed<
+stages.length
+?`
+
+<button
+class="action-btn"
+onclick="completeNext('${chapter.id}')">
+
+COMPLETE ${nextStage.name}
+
+</button>
+
+`
+:`
+<div class="action-btn">
+
+MASTERED ✓
+
+</div>
+`
+}
+
+</div>
+
+`;
+
+
+grid.appendChild(card);
+
+});
+
+
+updateStats();
+
+}
+
+
+/* =====================================================
+STATS
+===================================================== */
+
+function updateStats(){
+
+let total=
+chapters.length;
+
+let today=0;
+
+let overdue=0;
+
+let mastered=0;
+
+let progressSum=0;
+
+
+chapters.forEach(
+chapter=>{
+
+const status=
+getDueStatus(
+chapter
+);
+
+
+const progress=
+getProgress(
+chapter
+);
+
+
+progressSum+=
+progress;
+
+
+if(status==="today"){
+
+today++;
+
+}
+
+
+if(status==="overdue"){
+
+overdue++;
+
+}
+
+
+if(status==="mastered"){
+
+mastered++;
+
+}
+
+});
+
+
+const overall=
+total
+?Math.round(
+progressSum/total
+)
+:0;
+
+
+document
+.getElementById("total")
+.textContent=
+total;
+
+
+document
+.getElementById("today")
+.textContent=
+today;
+
+
+document
+.getElementById("overdue")
+.textContent=
+overdue;
+
+
+document
+.getElementById("mastered")
+.textContent=
+mastered;
+
+
+document
+.getElementById("overall")
+.textContent=
+overall+"%";
+
+
+syncDashboard(
+today,
+overdue,
+overall
+);
+
+}
+
+
+/* =====================================================
+DASHBOARD SYNC
+===================================================== */
+
+function syncDashboard(
+dueToday,
+overdue,
+progress
+){
+
+const KEY=
+"vijayJEEDashboard";
+
+
+let dashboard={};
+
+
+const saved=
+localStorage.getItem(
+KEY
+);
+
+
+if(saved){
+
+try{
+
+dashboard=
+JSON.parse(saved);
+
+}catch(e){}
+
+}
+
+
+dashboard.revisionDue=
+dueToday;
+
+dashboard.revisionOverdue=
+overdue;
+
+dashboard.revisionProgress=
+progress;
+
+
+localStorage.setItem(
+KEY,
+JSON.stringify(
+dashboard
+)
+);
+
+}
+
+
+/* =====================================================
+SUBJECT
+===================================================== */
+
+function setSubject(subject){
+
+selectedSubject=
+subject;
+
+
+document
+.querySelectorAll(".tab")
+.forEach(
+tab=>
+tab.classList.remove(
+"active"
+)
+);
+
+
+document
+.getElementById(
+"tab-"+
+(
+subject==="all"
+?"all"
+:subject.toLowerCase()
+)
+)
+.classList.add(
+"active"
+);
+
+
+render();
+
+}
+
+
+/* =====================================================
+SIDEBAR
+===================================================== */
+
+function toggleSidebar(){
+
+document
+.getElementById(
+"sidebar"
+)
+.classList.toggle(
+"open"
+);
+
+}
+
+
+/* =====================================================
+ESCAPE
+===================================================== */
+
+function escapeHTML(value){
+
+return String(value)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================================
+START
+===================================================== */
+
+render();
+
+</script>
+
+</body>
+</html>
