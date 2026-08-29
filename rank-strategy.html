@@ -1,0 +1,2753 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rank Strategy | Vijay JEE Command Center</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --bg:#070b14;
+    --panel:#0d1420;
+    --panel2:#09101a;
+    --border:#1c293c;
+    --text:#f4f7fb;
+    --muted:#718096;
+    --blue:#6fa3ff;
+    --green:#38d996;
+    --red:#ff7182;
+    --yellow:#ffc857;
+    --purple:#9d7cff;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:245px;
+    background:#0a101a;
+    border-right:1px solid var(--border);
+    padding:20px 14px;
+    overflow-y:auto;
+    z-index:100;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px 25px;
+}
+
+.logo-box{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:900;
+    background:linear-gradient(135deg,#3478ff,#7a4dff);
+}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+}
+
+.logo-text span{
+    color:#64748b;
+}
+
+.nav-title{
+    color:#536178;
+    font-size:9px;
+    letter-spacing:.15em;
+    margin:15px 10px 8px;
+}
+
+.nav-link{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 12px;
+    border-radius:9px;
+    margin:3px 0;
+    color:#78869a;
+    font-size:12px;
+}
+
+.nav-link:hover{
+    background:#111a29;
+    color:#fff;
+}
+
+.nav-link.active{
+    background:#15233b;
+    color:var(--blue);
+}
+
+.icon{
+    width:18px;
+    text-align:center;
+}
+
+.sidebar-bottom{
+    margin-top:30px;
+    padding-top:15px;
+    border-top:1px solid #182437;
+}
+
+/* =========================
+MAIN
+========================= */
+
+.main{
+    margin-left:245px;
+    padding:28px;
+}
+
+.container{
+    width:min(1450px,100%);
+    margin:auto;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    margin-bottom:22px;
+}
+
+.title h1{
+    font-size:30px;
+    letter-spacing:-.04em;
+}
+
+.title p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:6px;
+}
+
+.status{
+    color:var(--green);
+    font-size:9px;
+    font-weight:900;
+    padding-top:8px;
+}
+
+.btn{
+    border:1px solid #315d99;
+    background:#17315c;
+    color:#82b0ff;
+    padding:10px 14px;
+    border-radius:9px;
+    font-size:9px;
+    font-weight:900;
+}
+
+.btn:hover{
+    background:#20457e;
+}
+
+/* =========================
+PANELS
+========================= */
+
+.panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:17px;
+    margin-bottom:15px;
+}
+
+.panel-title{
+    font-size:12px;
+    font-weight:900;
+    margin-bottom:6px;
+}
+
+.panel-note{
+    color:var(--muted);
+    font-size:9px;
+    margin-bottom:14px;
+}
+
+.grid-2{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+/* =========================
+HERO
+========================= */
+
+.hero{
+    background:
+        linear-gradient(135deg,#101e36,#111528);
+    border:1px solid #2a456d;
+    border-radius:18px;
+    padding:24px;
+    margin-bottom:15px;
+}
+
+.hero-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+}
+
+.hero-kicker{
+    color:#82a7d9;
+    font-size:9px;
+    letter-spacing:.14em;
+    font-weight:900;
+}
+
+.hero h2{
+    font-size:26px;
+    margin-top:9px;
+}
+
+.hero-description{
+    color:#8b9bb1;
+    font-size:10px;
+    line-height:1.6;
+    max-width:700px;
+    margin-top:7px;
+}
+
+.rank-badge{
+    min-width:170px;
+    text-align:center;
+    padding:16px;
+    border:1px solid #34557f;
+    border-radius:13px;
+    background:#0b1526;
+}
+
+.rank-badge small{
+    display:block;
+    color:#7d90a9;
+    font-size:8px;
+    font-weight:900;
+}
+
+.rank-badge strong{
+    display:block;
+    color:#78a9ff;
+    font-size:28px;
+    margin-top:6px;
+}
+
+/* =========================
+COUNTDOWN
+========================= */
+
+.countdown-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+.count-card{
+    border:1px solid #1f314b;
+    background:#0b1422;
+    border-radius:11px;
+    padding:13px;
+}
+
+.count-name{
+    color:#72849b;
+    font-size:8px;
+    font-weight:900;
+}
+
+.count-value{
+    font-size:20px;
+    font-weight:900;
+    margin-top:6px;
+}
+
+/* =========================
+TARGET FORM
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.field label{
+    display:block;
+    color:#7c8ca1;
+    font-size:8px;
+    font-weight:900;
+    margin-bottom:6px;
+    letter-spacing:.06em;
+}
+
+.field input,
+.field select{
+    width:100%;
+    border:1px solid #223249;
+    background:#080e17;
+    color:#fff;
+    border-radius:8px;
+    padding:10px;
+    outline:none;
+    font-size:10px;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#3d6da8;
+}
+
+/* =========================
+METRICS
+========================= */
+
+.metric{
+    padding:13px 0;
+    border-bottom:1px solid #172236;
+}
+
+.metric:last-child{
+    border-bottom:none;
+}
+
+.metric-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.metric-name{
+    font-size:10px;
+    font-weight:800;
+}
+
+.metric-value{
+    font-size:11px;
+    color:var(--blue);
+    font-weight:900;
+}
+
+.metric-note{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:4px;
+}
+
+.bar{
+    height:7px;
+    margin-top:8px;
+    background:#080f19;
+    border:1px solid #172236;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.fill{
+    height:100%;
+    border-radius:10px;
+    background:linear-gradient(90deg,#3478ff,#7b4dff);
+}
+
+/* =========================
+SUBJECTS
+========================= */
+
+.subject-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.subject{
+    border:1px solid #1b2a3f;
+    background:#090f18;
+    border-radius:12px;
+    padding:15px;
+}
+
+.subject-name{
+    font-size:10px;
+    font-weight:900;
+}
+
+.subject-score{
+    font-size:27px;
+    font-weight:900;
+    color:var(--blue);
+    margin-top:7px;
+}
+
+.subject-label{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:4px;
+}
+
+/* =========================
+PRIORITY
+========================= */
+
+.priority{
+    border:1px solid #1b2b41;
+    background:#090f18;
+    border-radius:11px;
+    padding:13px;
+    margin-bottom:9px;
+}
+
+.priority:last-child{
+    margin-bottom:0;
+}
+
+.priority-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.priority-name{
+    font-size:10px;
+    font-weight:900;
+}
+
+.priority-level{
+    font-size:8px;
+    font-weight:900;
+}
+
+.priority-description{
+    color:#738298;
+    font-size:8px;
+    line-height:1.5;
+    margin-top:5px;
+}
+
+/* =========================
+STRATEGY
+========================= */
+
+.strategy{
+    padding:13px 0;
+    border-bottom:1px solid #172236;
+}
+
+.strategy:last-child{
+    border-bottom:none;
+}
+
+.strategy h3{
+    font-size:10px;
+    margin-bottom:5px;
+}
+
+.strategy p{
+    color:#8290a3;
+    font-size:9px;
+    line-height:1.55;
+}
+
+/* =========================
+WEEK PLAN
+========================= */
+
+.day{
+    display:grid;
+    grid-template-columns:75px 1fr 80px;
+    align-items:center;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid #172236;
+}
+
+.day:last-child{
+    border-bottom:none;
+}
+
+.day-name{
+    font-size:9px;
+    font-weight:900;
+}
+
+.day-task{
+    font-size:9px;
+}
+
+.day-focus{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:3px;
+}
+
+.day-hours{
+    text-align:right;
+    color:var(--blue);
+    font-size:9px;
+    font-weight:900;
+}
+
+/* =========================
+RISK
+========================= */
+
+.risk{
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #28364a;
+    background:#0c1420;
+    margin-bottom:9px;
+}
+
+.risk:last-child{
+    margin-bottom:0;
+}
+
+.risk-title{
+    font-size:10px;
+    font-weight:900;
+}
+
+.risk-text{
+    color:#7d8ca0;
+    font-size:8px;
+    line-height:1.5;
+    margin-top:4px;
+}
+
+/* =========================
+RULES
+========================= */
+
+.rule{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    padding:10px 0;
+    border-bottom:1px solid #172236;
+}
+
+.rule:last-child{
+    border-bottom:none;
+}
+
+.rule-number{
+    width:24px;
+    height:24px;
+    min-width:24px;
+    border-radius:7px;
+    background:#15233b;
+    color:var(--blue);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:8px;
+    font-weight:900;
+}
+
+.rule-text{
+    font-size:9px;
+    line-height:1.5;
+}
+
+/* =========================
+FOOTER
+========================= */
+
+.footer{
+    text-align:center;
+    color:#465469;
+    font-size:9px;
+    padding:15px 0;
+}
+
+.mobile-menu{
+    display:none;
+    position:fixed;
+    right:15px;
+    top:15px;
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    border:1px solid #27364c;
+    background:#0d1420;
+    color:#fff;
+    z-index:200;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+    .grid-3{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:850px){
+
+    .grid-2{
+        grid-template-columns:1fr;
+    }
+
+    .hero-top{
+        flex-direction:column;
+    }
+
+    .rank-badge{
+        width:100%;
+    }
+
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+
+    .topbar{
+        padding-right:50px;
+    }
+
+    .countdown-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:520px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .subject-grid{
+        grid-template-columns:1fr;
+    }
+
+    .day{
+        grid-template-columns:65px 1fr;
+    }
+
+    .day-hours{
+        display:none;
+    }
+
+    .title h1{
+        font-size:23px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+SIDEBAR
+========================= -->
+
+<aside class="sidebar" id="sidebar">
+
+<a href="index.html" class="logo">
+    <div class="logo-box">V</div>
+    <div class="logo-text">VIJAY<span>.JEE</span></div>
+</a>
+
+<div class="nav-title">COMMAND</div>
+
+<a href="dashboard.html" class="nav-link">
+    <span class="icon">⌂</span>
+    Dashboard
+</a>
+
+<a href="daily-target.html" class="nav-link">
+    <span class="icon">✓</span>
+    Daily Mission
+</a>
+
+<div class="nav-title">PREPARATION</div>
+
+<a href="syllabus.html" class="nav-link">
+    <span class="icon">▣</span>
+    Syllabus
+</a>
+
+<a href="backlog.html" class="nav-link">
+    <span class="icon">◫</span>
+    Backlog
+</a>
+
+<a href="revision.html" class="nav-link">
+    <span class="icon">↻</span>
+    Revision
+</a>
+
+<a href="questions.html" class="nav-link">
+    <span class="icon">?</span>
+    Questions
+</a>
+
+<a href="pyq-tracker.html" class="nav-link">
+    <span class="icon">◷</span>
+    PYQ Tracker
+</a>
+
+<a href="mistakes.html" class="nav-link">
+    <span class="icon">!</span>
+    Mistake Book
+</a>
+
+<div class="nav-title">TESTING</div>
+
+<a href="mock-tests.html" class="nav-link">
+    <span class="icon">▤</span>
+    Mock Tests
+</a>
+
+<a href="analytics.html" class="nav-link">
+    <span class="icon">⌁</span>
+    Analytics
+</a>
+
+<a href="rank-strategy.html" class="nav-link active">
+    <span class="icon">⚔</span>
+    Rank Strategy
+</a>
+
+<div class="nav-title">PERSONAL</div>
+
+<a href="journal.html" class="nav-link">
+    <span class="icon">✎</span>
+    Journal
+</a>
+
+<a href="achievements.html" class="nav-link">
+    <span class="icon">★</span>
+    Achievements
+</a>
+
+<div class="sidebar-bottom">
+
+<a href="settings.html" class="nav-link">
+    <span class="icon">⚙</span>
+    Settings
+</a>
+
+<a href="index.html" class="nav-link">
+    <span class="icon">←</span>
+    Home
+</a>
+
+</div>
+
+</aside>
+
+
+<button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+
+
+<!-- =========================
+MAIN
+========================= -->
+
+<main class="main">
+
+<div class="container">
+
+<!-- HEADER -->
+
+<div class="topbar">
+
+<div class="title">
+
+<h1>Rank Strategy War Room</h1>
+
+<p>
+A decision system for converting preparation data into your next highest-value action.
+</p>
+
+</div>
+
+<div>
+
+<div class="status">
+● STRATEGY ENGINE ACTIVE
+</div>
+
+<button class="btn" style="margin-top:10px"
+onclick="runStrategy()">
+RECALCULATE
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+HERO
+========================= -->
+
+<section class="hero">
+
+<div class="hero-top">
+
+<div>
+
+<div class="hero-kicker">
+MISSION
+</div>
+
+<h2>
+Build the preparation required for your target rank.
+</h2>
+
+<div class="hero-description">
+This page does not predict your rank. It measures your current
+performance, identifies gaps and creates a practical strategy.
+Your target is ambitious; your execution must be measurable.
+</div>
+
+</div>
+
+
+<div class="rank-badge">
+
+<small>
+TARGET AIR
+</small>
+
+<strong id="heroRank">
+2-DIGIT
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="countdown-grid">
+
+<div class="count-card">
+
+<div class="count-name">
+JEE MAIN
+</div>
+
+<div class="count-value"
+id="mainDays">
+-- DAYS
+</div>
+
+</div>
+
+
+<div class="count-card">
+
+<div class="count-name">
+JEE ADVANCED
+</div>
+
+<div class="count-value"
+id="advancedDays">
+-- DAYS
+</div>
+
+</div>
+
+
+<div class="count-card">
+
+<div class="count-name">
+TARGET SCORE
+</div>
+
+<div class="count-value"
+id="targetScore">
+--%
+</div>
+
+</div>
+
+
+<div class="count-card">
+
+<div class="count-name">
+TARGET AIR
+</div>
+
+<div class="count-value"
+id="targetAIR">
+--
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+TARGET SETTINGS
+========================= -->
+
+<section class="panel">
+
+<div class="panel-title">
+MISSION PARAMETERS
+</div>
+
+<div class="panel-note">
+Set your current strategic target. Values are stored locally in your browser.
+</div>
+
+<div class="form-grid">
+
+<div class="field">
+
+<label>TARGET AIR</label>
+
+<input
+type="number"
+id="airInput"
+min="1"
+placeholder="Example: 99"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>JEE MAIN TARGET PERCENTILE</label>
+
+<input
+type="number"
+id="mainTargetInput"
+min="1"
+max="100"
+placeholder="Example: 99.9"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>JEE ADVANCED TARGET SCORE %</label>
+
+<input
+type="number"
+id="advancedTargetInput"
+min="1"
+max="100"
+placeholder="Example: 70"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>DAILY DEEP WORK HOURS</label>
+
+<input
+type="number"
+id="hoursInput"
+min="1"
+max="18"
+placeholder="Example: 10"
+>
+
+</div>
+
+</div>
+
+<button
+class="btn"
+style="margin-top:14px"
+onclick="saveSettings()">
+SAVE MISSION
+</button>
+
+</section>
+
+
+<!-- =========================
+CURRENT LEVEL
+========================= -->
+
+<section class="grid-2">
+
+<div class="panel">
+
+<div class="panel-title">
+CURRENT PERFORMANCE
+</div>
+
+<div class="panel-note">
+Calculated from available mock-test data.
+</div>
+
+<div id="currentPerformance"></div>
+
+</div>
+
+
+<div class="panel">
+
+<div class="panel-title">
+TARGET GAP
+</div>
+
+<div class="panel-note">
+The gap between your present measurable level and your selected target.
+</div>
+
+<div id="targetGap"></div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+SUBJECT STRATEGY
+========================= -->
+
+<section class="panel">
+
+<div class="panel-title">
+SUBJECT WAR MAP
+</div>
+
+<div class="panel-note">
+Use this to decide where the next hours of preparation should go.
+</div>
+
+<div class="subject-grid" id="subjectMap"></div>
+
+</section>
+
+
+<!-- =========================
+PRIORITY + RISKS
+========================= -->
+
+<section class="grid-2">
+
+<div class="panel">
+
+<div class="panel-title">
+PRIORITY ENGINE
+</div>
+
+<div class="panel-note">
+Highest priority = largest opportunity for improvement.
+</div>
+
+<div id="priorityEngine"></div>
+
+</div>
+
+
+<div class="panel">
+
+<div class="panel-title">
+RANK RISK DETECTOR
+</div>
+
+<div class="panel-note">
+These are preparation risks, not a prediction of your final AIR.
+</div>
+
+<div id="riskEngine"></div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+MAIN STRATEGY
+========================= -->
+
+<section class="grid-2">
+
+<div class="panel">
+
+<div class="panel-title">
+JEE MAIN EXECUTION PLAN
+</div>
+
+<div id="mainStrategy">
+
+<div class="strategy">
+
+<h3>
+01 · SPEED
+</h3>
+
+<p>
+Train fast recognition, short calculations and disciplined
+question selection. Do not spend disproportionate time on one problem.
+</p>
+
+</div>
+
+
+<div class="strategy">
+
+<h3>
+02 · ACCURACY
+</h3>
+
+<p>
+Every avoidable error is expensive. Review incorrect and guessed
+questions after every test.
+</p>
+
+</div>
+
+
+<div class="strategy">
+
+<h3>
+03 · MOCK DISCIPLINE
+</h3>
+
+<p>
+Use full-length tests to measure endurance, time management,
+attempt selection and consistency.
+</p>
+
+</div>
+
+
+<div class="strategy">
+
+<h3>
+04 · NCERT CONTROL
+</h3>
+
+<p>
+For Chemistry especially, maintain systematic NCERT-based revision
+where applicable instead of relying only on problem solving.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<div class="panel-title">
+JEE ADVANCED EXECUTION PLAN
+</div>
+
+<div id="advancedStrategy">
+
+<div class="strategy">
+
+<h3>
+01 · DEPTH
+</h3>
+
+<p>
+Prioritise multi-concept problems and learn why a method works,
+not just which formula produces an answer.
+</p>
+
+</div>
+
+
+<div class="strategy">
+
+<h3>
+02 · QUESTION SELECTION
+</h3>
+
+<p>
+Practice deciding which problems deserve immediate attention,
+which require deeper work and which should be temporarily skipped.
+</p>
+
+</div>
+
+
+<div class="strategy">
+
+<h3>
+03 · PARTIAL MARKING AWARENESS
+</h3>
+
+<p>
+Understand the marking scheme of each test and practise extracting
+maximum marks without reckless attempts.
+</p>
+
+</div>
+
+
+<div class="strategy">
+
+<h3>
+04 · STAMINA
+</h3>
+
+<p>
+Build the ability to maintain high-quality reasoning throughout
+long, difficult examination sessions.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+WEEKLY WAR PLAN
+========================= -->
+
+<section class="panel">
+
+<div class="panel-title">
+7-DAY WAR PLAN
+</div>
+
+<div class="panel-note">
+A default high-intensity cycle. Adjust the workload according to your actual syllabus status and recovery.
+</div>
+
+<div id="weeklyPlan"></div>
+
+</section>
+
+
+<!-- =========================
+NON NEGOTIABLES
+========================= -->
+
+<section class="grid-2">
+
+<div class="panel">
+
+<div class="panel-title">
+NON-NEGOTIABLE RULES
+</div>
+
+<div class="panel-note">
+Rules designed to protect preparation quality.
+</div>
+
+<div>
+
+<div class="rule">
+
+<div class="rule-number">01</div>
+
+<div class="rule-text">
+Never count a lecture as preparation completion. Count
+questions solved, concepts mastered and mistakes eliminated.
+</div>
+
+</div>
+
+
+<div class="rule">
+
+<div class="rule-number">02</div>
+
+<div class="rule-text">
+Every serious mock test must be followed by structured analysis.
+</div>
+
+</div>
+
+
+<div class="rule">
+
+<div class="rule-number">03</div>
+
+<div class="rule-text">
+Repeated mistakes become revision priorities.
+</div>
+
+</div>
+
+
+<div class="rule">
+
+<div class="rule-number">04</div>
+
+<div class="rule-text">
+Weak chapters receive targeted practice before random question volume.
+</div>
+
+</div>
+
+
+<div class="rule">
+
+<div class="rule-number">05</div>
+
+<div class="rule-text">
+Protect sleep, concentration and recovery. More study hours are
+not automatically better study hours.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<div class="panel-title">
+NEXT MOST IMPORTANT ACTION
+</div>
+
+<div class="panel-note">
+The single action currently offering the highest strategic value.
+</div>
+
+<div id="nextAction"></div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+FOOTER
+========================= -->
+
+<div class="footer">
+
+Vijay JEE Command Center • Rank Strategy War Room
+
+</div>
+
+</div>
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+const SETTINGS_KEY =
+"vijayJEERankStrategy";
+
+
+const MOCK_KEY =
+"vijayJEEMockTests";
+
+
+const DEFAULT_SETTINGS = {
+
+    air:99,
+
+    mainTarget:99.9,
+
+    advancedTarget:70,
+
+    hours:10,
+
+    mainDate:"2027-01-24",
+
+    advancedDate:"2027-04-18"
+
+};
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function loadSettings(){
+
+    try{
+
+        const data =
+        JSON.parse(
+            localStorage.getItem(
+                SETTINGS_KEY
+            )
+        );
+
+        return {
+
+            ...DEFAULT_SETTINGS,
+            ...(data || {})
+
+        };
+
+    }
+    catch(error){
+
+        return {
+            ...DEFAULT_SETTINGS
+        };
+
+    }
+
+}
+
+
+function saveSettings(){
+
+    const settings = {
+
+        air:
+        Number(
+            document.getElementById(
+                "airInput"
+            ).value
+        ) || DEFAULT_SETTINGS.air,
+
+
+        mainTarget:
+        Number(
+            document.getElementById(
+                "mainTargetInput"
+            ).value
+        ) || DEFAULT_SETTINGS.mainTarget,
+
+
+        advancedTarget:
+        Number(
+            document.getElementById(
+                "advancedTargetInput"
+            ).value
+        ) || DEFAULT_SETTINGS.advancedTarget,
+
+
+        hours:
+        Number(
+            document.getElementById(
+                "hoursInput"
+            ).value
+        ) || DEFAULT_SETTINGS.hours,
+
+
+        mainDate:
+        DEFAULT_SETTINGS.mainDate,
+
+
+        advancedDate:
+        DEFAULT_SETTINGS.advancedDate
+
+    };
+
+
+    localStorage.setItem(
+        SETTINGS_KEY,
+        JSON.stringify(settings)
+    );
+
+
+    runStrategy();
+
+    alert(
+        "Mission parameters saved."
+    );
+
+}
+
+
+function loadForm(){
+
+    const s =
+    loadSettings();
+
+
+    document.getElementById(
+        "airInput"
+    ).value =
+    s.air;
+
+
+    document.getElementById(
+        "mainTargetInput"
+    ).value =
+    s.mainTarget;
+
+
+    document.getElementById(
+        "advancedTargetInput"
+    ).value =
+    s.advancedTarget;
+
+
+    document.getElementById(
+        "hoursInput"
+    ).value =
+    s.hours;
+
+}
+
+
+/* =========================================================
+   MOCK DATA
+========================================================= */
+
+function getTests(){
+
+    try{
+
+        const data =
+        JSON.parse(
+            localStorage.getItem(
+                MOCK_KEY
+            )
+        );
+
+        return Array.isArray(data)
+        ? data
+        : [];
+
+    }
+    catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+function percentage(value,total){
+
+    if(!total || total <= 0){
+        return 0;
+    }
+
+    return Math.round(
+        value / total * 100
+    );
+
+}
+
+
+function average(values){
+
+    if(!values.length){
+        return 0;
+    }
+
+    return Math.round(
+        values.reduce(
+            (a,b)=>a+b,
+            0
+        ) / values.length
+    );
+
+}
+
+
+function testScore(test){
+
+    return percentage(
+        Number(test.obtainedMarks) || 0,
+        Number(test.totalMarks) || 0
+    );
+
+}
+
+
+function testAccuracy(test){
+
+    return percentage(
+        Number(test.correct) || 0,
+        Number(test.attempted) || 0
+    );
+
+}
+
+
+function subjectAccuracy(
+    tests,
+    subject
+){
+
+    const values = [];
+
+
+    tests.forEach(test=>{
+
+        const item =
+        test[subject];
+
+        if(item){
+
+            const attempted =
+            Number(
+                item.attempted
+            ) || 0;
+
+            const correct =
+            Number(
+                item.correct
+            ) || 0;
+
+
+            if(attempted > 0){
+
+                values.push(
+                    percentage(
+                        correct,
+                        attempted
+                    )
+                );
+
+            }
+
+        }
+
+    });
+
+
+    return average(values);
+
+}
+
+
+/* =========================================================
+   ANALYTICS
+========================================================= */
+
+function getAnalytics(){
+
+    const tests =
+    getTests();
+
+
+    const scores =
+    tests.map(
+        testScore
+    );
+
+
+    const accuracies =
+    tests.map(
+        testAccuracy
+    );
+
+
+    const subjects = {
+
+        Physics:
+        subjectAccuracy(
+            tests,
+            "physics"
+        ),
+
+        Chemistry:
+        subjectAccuracy(
+            tests,
+            "chemistry"
+        ),
+
+        Mathematics:
+        subjectAccuracy(
+            tests,
+            "mathematics"
+        )
+
+    };
+
+
+    const avgScore =
+    average(scores);
+
+
+    const avgAccuracy =
+    average(accuracies);
+
+
+    const bestScore =
+    scores.length
+    ? Math.max(...scores)
+    : 0;
+
+
+    const sorted =
+    [...tests].sort(
+        (a,b)=>
+        new Date(
+            a.date || 0
+        )
+        -
+        new Date(
+            b.date || 0
+        )
+    );
+
+
+    const latestScore =
+    sorted.length
+    ? testScore(
+        sorted[
+            sorted.length - 1
+        ]
+    )
+    : 0;
+
+
+    let trend = 0;
+
+
+    if(sorted.length >= 2){
+
+        trend =
+        testScore(
+            sorted[
+                sorted.length - 1
+            ]
+        )
+        -
+        testScore(
+            sorted[0]
+        );
+
+    }
+
+
+    const attempted =
+    tests.reduce(
+        (sum,test)=>
+        sum +
+        (
+            Number(
+                test.attempted
+            ) || 0
+        ),
+        0
+    );
+
+
+    const totalQuestions =
+    tests.reduce(
+        (sum,test)=>
+        sum +
+        (
+            Number(
+                test.totalQuestions
+            ) || 0
+        ),
+        0
+    );
+
+
+    const attemptRate =
+    percentage(
+        attempted,
+        totalQuestions
+    );
+
+
+    const wrong =
+    tests.reduce(
+        (sum,test)=>
+        sum +
+        (
+            Number(
+                test.wrong
+            ) || 0
+        ),
+        0
+    );
+
+
+    return {
+
+        tests,
+        scores,
+        avgScore,
+        avgAccuracy,
+        bestScore,
+        latestScore,
+        trend,
+        attemptRate,
+        wrong,
+        subjects
+
+    };
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+function daysUntil(dateString){
+
+    const now =
+    new Date();
+
+
+    const target =
+    new Date(
+        dateString +
+        "T00:00:00"
+    );
+
+
+    const diff =
+    target.getTime()
+    -
+    now.getTime();
+
+
+    return Math.max(
+        0,
+        Math.ceil(
+            diff /
+            (1000*60*60*24)
+        )
+    );
+
+}
+
+
+function renderCountdown(){
+
+    const s =
+    loadSettings();
+
+
+    document.getElementById(
+        "mainDays"
+    ).textContent =
+    daysUntil(
+        s.mainDate
+    ) + " DAYS";
+
+
+    document.getElementById(
+        "advancedDays"
+    ).textContent =
+    daysUntil(
+        s.advancedDate
+    ) + " DAYS";
+
+
+    document.getElementById(
+        "targetScore"
+    ).textContent =
+    s.advancedTarget + "%";
+
+
+    document.getElementById(
+        "targetAIR"
+    ).textContent =
+    s.air;
+
+
+    document.getElementById(
+        "heroRank"
+    ).textContent =
+    "AIR " + s.air;
+
+}
+
+
+/* =========================================================
+   CURRENT PERFORMANCE
+========================================================= */
+
+function renderCurrent(stats){
+
+    document.getElementById(
+        "currentPerformance"
+    ).innerHTML = `
+
+        <div class="metric">
+
+            <div class="metric-top">
+
+                <div class="metric-name">
+                    Average Mock Score
+                </div>
+
+                <div class="metric-value">
+                    ${stats.avgScore}%
+                </div>
+
+            </div>
+
+            <div class="metric-note">
+                Average percentage across recorded tests.
+            </div>
+
+            <div class="bar">
+                <div class="fill"
+                style="width:${stats.avgScore}%"></div>
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-top">
+
+                <div class="metric-name">
+                    Average Accuracy
+                </div>
+
+                <div class="metric-value">
+                    ${stats.avgAccuracy}%
+                </div>
+
+            </div>
+
+            <div class="metric-note">
+                Correct answers divided by attempted questions.
+            </div>
+
+            <div class="bar">
+                <div class="fill"
+                style="width:${stats.avgAccuracy}%"></div>
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-top">
+
+                <div class="metric-name">
+                    Attempt Rate
+                </div>
+
+                <div class="metric-value">
+                    ${stats.attemptRate}%
+                </div>
+
+            </div>
+
+            <div class="metric-note">
+                Measures how much of the available question set is being attempted.
+            </div>
+
+            <div class="bar">
+                <div class="fill"
+                style="width:${stats.attemptRate}%"></div>
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-top">
+
+                <div class="metric-name">
+                    Recorded Tests
+                </div>
+
+                <div class="metric-value">
+                    ${stats.tests.length}
+                </div>
+
+            </div>
+
+            <div class="metric-note">
+                More high-quality tests create better trend data.
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   TARGET GAP
+========================================================= */
+
+function renderGap(stats){
+
+    const s =
+    loadSettings();
+
+
+    const scoreGap =
+    Math.max(
+        0,
+        s.advancedTarget -
+        stats.avgScore
+    );
+
+
+    const accuracyGap =
+    Math.max(
+        0,
+        85 -
+        stats.avgAccuracy
+    );
+
+
+    const testsGap =
+    Math.max(
+        0,
+        8 -
+        stats.tests.length
+    );
+
+
+    document.getElementById(
+        "targetGap"
+    ).innerHTML = `
+
+        <div class="metric">
+
+            <div class="metric-top">
+
+                <div class="metric-name">
+                    Advanced Score Gap
+                </div>
+
+                <div class="metric-value">
+                    ${scoreGap}%
+                </div>
+
+            </div>
+
+            <div class="metric-note">
+                Difference between current mock average and your selected Advanced target.
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-top">
+
+                <div class="metric-name">
+                    Accuracy Gap
+                </div>
+
+                <div class="metric-value">
+                    ${accuracyGap}%
+                </div>
+
+            </div>
+
+            <div class="metric-note">
+                Strategic benchmark used by this dashboard: 85% accuracy.
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-top">
+
+                <div class="metric-name">
+                    Test Sample Gap
+                </div>
+
+                <div class="metric-value">
+                    ${testsGap}
+                </div>
+
+            </div>
+
+            <div class="metric-note">
+                Dashboard target: at least 8 recorded serious tests before making strong trend conclusions.
+            </div>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="metric-top">
+
+                <div class="metric-name">
+                    Trend
+                </div>
+
+                <div class="metric-value">
+                    ${stats.trend > 0 ? "+" : ""}
+                    ${stats.trend}%
+                </div>
+
+            </div>
+
+            <div class="metric-note">
+                Latest recorded test compared with earliest recorded test.
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   SUBJECT MAP
+========================================================= */
+
+function renderSubjects(stats){
+
+    const entries =
+    Object.entries(
+        stats.subjects
+    );
+
+
+    document.getElementById(
+        "subjectMap"
+    ).innerHTML =
+    entries.map(
+        ([name,value])=>`
+
+        <div class="subject">
+
+            <div class="subject-name">
+                ${name}
+            </div>
+
+            <div class="subject-score">
+                ${value}%
+            </div>
+
+            <div class="subject-label">
+                Average mock accuracy
+            </div>
+
+            <div class="bar">
+
+                <div
+                class="fill"
+                style="width:${value}%">
+                </div>
+
+            </div>
+
+        </div>
+
+    `
+    ).join("");
+
+}
+
+
+/* =========================================================
+   PRIORITY ENGINE
+========================================================= */
+
+function renderPriority(stats){
+
+    const priorities =
+    Object.entries(
+        stats.subjects
+    )
+    .map(
+        ([name,value])=>({
+
+            name,
+            value,
+
+            gap:
+            Math.max(
+                0,
+                85 - value
+            )
+
+        })
+    )
+    .sort(
+        (a,b)=>
+        b.gap - a.gap
+    );
+
+
+    document.getElementById(
+        "priorityEngine"
+    ).innerHTML =
+    priorities.map(
+        (item,index)=>{
+
+            let level =
+            "LOW";
+
+            if(item.value < 50){
+                level = "CRITICAL";
+            }
+            else if(item.value < 65){
+                level = "HIGH";
+            }
+            else if(item.value < 80){
+                level = "MEDIUM";
+            }
+
+
+            return `
+
+            <div class="priority">
+
+                <div class="priority-top">
+
+                    <div class="priority-name">
+                        ${index + 1}. ${item.name}
+                    </div>
+
+                    <div class="priority-level">
+                        ${level}
+                    </div>
+
+                </div>
+
+                <div class="priority-description">
+
+                    Current accuracy:
+                    ${item.value}% ·
+                    Strategic gap:
+                    ${item.gap}%.
+
+                    ${
+                        item.value < 65
+                        ? " Start with concept repair + targeted PYQs."
+                        : item.value < 80
+                        ? " Focus on mixed practice + timed questions."
+                        : " Maintain with advanced problems + revision."
+                    }
+
+                </div>
+
+            </div>
+
+            `;
+
+        }
+    ).join("");
+
+}
+
+
+/* =========================================================
+   RISK ENGINE
+========================================================= */
+
+function renderRisks(stats){
+
+    const risks = [];
+
+
+    if(stats.tests.length === 0){
+
+        risks.push({
+
+            title:"NO MOCK DATA",
+
+            text:
+            "You currently have no recorded mock-test performance. Do not use this dashboard as a rank predictor."
+
+        });
+
+    }
+
+
+    if(stats.tests.length > 0){
+
+        if(stats.avgAccuracy < 60){
+
+            risks.push({
+
+                title:"ACCURACY RISK",
+
+                text:
+                "Accuracy is below 60%. Analyse wrong questions before increasing raw question volume."
+
+            });
+
+        }
+
+
+        if(stats.avgScore < 50){
+
+            risks.push({
+
+                title:"SCORE GAP",
+
+                text:
+                "Current average score is below 50%. Prioritise syllabus completion, concept repair and basic-to-advanced progression."
+
+            });
+
+        }
+
+
+        if(stats.attemptRate < 60){
+
+            risks.push({
+
+                title:"ATTEMPT EFFICIENCY",
+
+                text:
+                "Attempt rate is low. Investigate speed, question selection and syllabus gaps."
+
+            });
+
+        }
+
+
+        if(stats.trend < 0){
+
+            risks.push({
+
+                title:"NEGATIVE TREND",
+
+                text:
+                "Latest performance is below your earliest recorded performance. Diagnose the cause instead of simply increasing hours."
+
+            });
+
+        }
+
+
+        if(stats.wrong > 30){
+
+            risks.push({
+
+                title:"MISTAKE LOAD",
+
+                text:
+                `${stats.wrong} wrong answers are recorded across your tests. Repeated error patterns should become revision targets.`
+
+            });
+
+        }
+
+
+        if(stats.tests.length < 8){
+
+            risks.push({
+
+                title:"LOW SAMPLE SIZE",
+
+                text:
+                "Build more serious tests before making strong conclusions about long-term performance."
+
+            });
+
+        }
+
+    }
+
+
+    if(!risks.length){
+
+        risks.push({
+
+            title:"NO MAJOR SIGNAL",
+
+            text:
+            "Continue collecting high-quality data. Absence of an alert does not guarantee a rank outcome."
+
+        });
+
+    }
+
+
+    document.getElementById(
+        "riskEngine"
+    ).innerHTML =
+    risks.map(
+        risk=>`
+
+        <div class="risk">
+
+            <div class="risk-title">
+                ${risk.title}
+            </div>
+
+            <div class="risk-text">
+                ${risk.text}
+            </div>
+
+        </div>
+
+    `
+    ).join("");
+
+}
+
+
+/* =========================================================
+   WEEKLY PLAN
+========================================================= */
+
+function renderWeeklyPlan(stats){
+
+    const entries =
+    Object.entries(
+        stats.subjects
+    );
+
+
+    const weakest =
+    entries.length
+    ? entries.reduce(
+        (a,b)=>
+        a[1] <= b[1]
+        ? a
+        : b
+    )[0]
+    : "Weakest Subject";
+
+
+    const strongest =
+    entries.length
+    ? entries.reduce(
+        (a,b)=>
+        a[1] >= b[1]
+        ? a
+        : b
+    )[0]
+    : "Strongest Subject";
+
+
+    const plan = [
+
+        [
+            "MON",
+            `${weakest} Concept Repair`,
+            "Theory + examples + targeted PYQs",
+            "3h"
+        ],
+
+        [
+            "TUE",
+            "PYQ Attack",
+            "Recent + difficult chapter-wise PYQs",
+            "3h"
+        ],
+
+        [
+            "WED",
+            "Advanced Problems",
+            "Multi-concept JEE Advanced practice",
+            "3h"
+        ],
+
+        [
+            "THU",
+            "Mistake Elimination",
+            "Mistake book + reattempt without solutions",
+            "2.5h"
+        ],
+
+        [
+            "FRI",
+            "Mixed Timed Practice",
+            "PCM mixed set under strict timing",
+            "3h"
+        ],
+
+        [
+            "SAT",
+            "FULL MOCK",
+            "Exam simulation — no interruptions",
+            "3-6h"
+        ],
+
+        [
+            "SUN",
+            "ANALYSIS + REVISION",
+            "Test analysis + weak areas + ${strongest} maintenance",
+            "3h"
+
+        ]
+
+    ];
+
+
+    document.getElementById(
+        "weeklyPlan"
+    ).innerHTML =
+    plan.map(
+        day=>`
+
+        <div class="day">
+
+            <div class="day-name">
+                ${day[0]}
+            </div>
+
+            <div>
+
+                <div class="day-task">
+                    ${day[1]}
+                </div>
+
+                <div class="day-focus">
+                    ${day[2]}
+                </div>
+
+            </div>
+
+            <div class="day-hours">
+                ${day[3]}
+            </div>
+
+        </div>
+
+    `
+    ).join("");
+
+}
+
+
+/* =========================================================
+   NEXT ACTION
+========================================================= */
+
+function renderNextAction(stats){
+
+    let title =
+    "Create your baseline.";
+
+    let text =
+    "Take a serious full-length test and record accurate performance data.";
+
+
+    if(stats.tests.length > 0){
+
+        const weakest =
+        Object.entries(
+            stats.subjects
+        )
+        .reduce(
+            (a,b)=>
+            a[1] <= b[1]
+            ? a
+            : b
+        );
+
+
+        if(stats.avgAccuracy < 60){
+
+            title =
+            "Fix accuracy first.";
+
+            text =
+            "Review wrong and guessed questions. Identify whether the root cause is concept, calculation, reading, selection or time.";
+
+        }
+        else if(stats.trend < 0){
+
+            title =
+            "Reverse the negative trend.";
+
+            text =
+            "Compare your latest test with your strongest test and identify exactly which chapters and error types caused the decline.";
+
+        }
+        else if(weakest[1] < 75){
+
+            title =
+            `Repair ${weakest[0]}.`;
+
+            text =
+            `Your weakest measured subject is ${weakest[0]} at ${weakest[1]}% accuracy. Give it targeted practice before adding random volume.`;
+
+        }
+        else{
+
+            title =
+            "Increase difficulty.";
+
+            text =
+            "Your measured fundamentals are relatively stable. Shift more practice toward timed mixed sets and difficult multi-concept problems.";
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "nextAction"
+    ).innerHTML = `
+
+        <div class="hero"
+        style="margin:0;padding:20px;">
+
+            <div class="hero-kicker">
+                NEXT HIGH-VALUE ACTION
+            </div>
+
+            <h2 style="font-size:20px;">
+                ${title}
+            </h2>
+
+            <div class="hero-description">
+                ${text}
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   MAIN STRATEGY
+========================================================= */
+
+function runStrategy(){
+
+    const stats =
+    getAnalytics();
+
+
+    renderCountdown();
+
+    renderCurrent(stats);
+
+    renderGap(stats);
+
+    renderSubjects(stats);
+
+    renderPriority(stats);
+
+    renderRisks(stats);
+
+    renderWeeklyPlan(stats);
+
+    renderNextAction(stats);
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+function toggleSidebar(){
+
+    document
+    .getElementById(
+        "sidebar"
+    )
+    .classList
+    .toggle("open");
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+loadForm();
+
+runStrategy();
+
+setInterval(
+    renderCountdown,
+    60000
+);
+
+</script>
+
+</body>
+</html>
+```
